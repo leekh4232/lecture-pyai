@@ -11,7 +11,7 @@ layout: cover
 
 기호 몇 개로 글에 제목, 목록, 표, 코드를 붙이는 법
 
-<p class="sub">[LAB-00] AI의 이해 2 · ITWILL · {teacher} 강사</p>
+<p class="sub">[LAB-01] 파이썬 시작하기 5 · ITWILL · {teacher} 강사</p>
 
 ---
 class: tight

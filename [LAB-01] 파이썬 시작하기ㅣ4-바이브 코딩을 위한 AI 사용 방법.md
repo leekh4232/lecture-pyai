@@ -11,7 +11,7 @@ layout: cover
 
 AI 지침 설정과 올바른 프롬프트 작성 방법
 
-<p class="sub">[LAB-00] AI의 이해 1 · ITWILL · {teacher} 강사</p>
+<p class="sub">[LAB-01] 파이썬 시작하기 4 · ITWILL · {teacher} 강사</p>
 
 ---
 
@@ -515,4 +515,4 @@ hideInToc: true
 
 질문과 토론 환영
 
-<p class="sub">[LAB-00] AI의 이해 1 · ITWILL · {teacher} 강사</p>
+<p class="sub">[LAB-01] 파이썬 시작하기 4 · ITWILL · {teacher} 강사</p>
