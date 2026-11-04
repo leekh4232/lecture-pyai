@@ -1,5 +1,6 @@
 ---
 theme: ./slidev-themes/hossam
+manuscript: true
 colorMode: dark
 fontScale: 1
 title: 파이썬 기초 · 바이브 코딩을 위한 AI 사용 방법

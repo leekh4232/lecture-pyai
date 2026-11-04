@@ -1,5 +1,6 @@
 ---
 theme: ./slidev-themes/hossam
+manuscript: true
 colorMode: dark
 fontScale: 1
 title: 파이썬 기초 · Markdown의 이해와 활용

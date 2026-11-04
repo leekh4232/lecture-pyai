@@ -1,5 +1,6 @@
 ---
 theme: ./slidev-themes/hossam
+manuscript: true
 colorMode: dark
 fontScale: 1
 title: 프롬프트 패턴

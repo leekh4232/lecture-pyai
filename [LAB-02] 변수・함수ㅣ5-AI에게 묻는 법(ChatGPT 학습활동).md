@@ -1,5 +1,6 @@
 ---
 theme: ./slidev-themes/hossam
+manuscript: true
 colorMode: dark
 fontScale: 1
 title: 파이썬 기초 · 변수와 함수 — AI에게 묻는 법
