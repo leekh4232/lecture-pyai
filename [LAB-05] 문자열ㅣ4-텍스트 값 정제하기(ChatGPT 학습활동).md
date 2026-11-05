@@ -3,265 +3,197 @@ theme: ./slidev-themes/hossam
 manuscript: true
 colorMode: dark
 fontScale: 1
-title: 파이썬 기초 · 문자열 — 텍스트 값 정제하기
+title: 파이썬 기초 · 문자열 — 문자열 종합문제
 layout: cover
 ---
 
-# 텍스트 값 정제하기 — 문자열
+# 문자열 종합문제
 
-쉼표 · 공백이 섞인 문자열을 숫자와 문장으로 바꾸고, AI가 알려 준 방법을 공식 문서에서 확인하는 연습
+AI에게 물으며 푸는 코딩 테스트 — 프로그래머스 「이상한 문자 만들기」
 
 <p class="sub">[LAB-05] 문자열 4 · ITWILL · {teacher} 강사</p>
 
 <!--
-문자열 단원 1~3(문자열의 이해 · 문자열 포메팅 · 문자열 관련 함수)을 마친 뒤 하는 ChatGPT 학습활동. ① 조언 받기 단계(LAB-02 ~ 06)의 네 번째 실습이다. 코드는 학생이 쓰고, ChatGPT는 개념 · 처리 순서 · 결과 해석 · 에러 원인만 맡는다(「ChatGPT 지침.md」 그대로).
-오늘 새로 만드는 템플릿은 ⑮ 근거와 함께 묻기. AI가 알려 준 메서드 · 형식이 실제로 있는지 공식 문서에서 확인하는, 환각을 직접 잡아 보는 첫 활동이다.
+문자열 단원(문자열의 이해 · 문자열 포메팅 · 문자열 관련 함수)을 마친 뒤 하는 실습. ① 조언 받기 단계(LAB-02 ~ 06)라서 코드는 학생이 쓰고, ChatGPT는 개념 · 처리 순서 · 결과 해석 · 에러 원인만 맡는다(「ChatGPT 지침.md」 그대로).
+LAB-03 · 04와 같은 틀이다. LAB-02 ~ 05에서 배운 것을 모두 써야 풀리는 코딩 테스트 문제(프로그래머스 「이상한 문자 만들기」) 하나를 세 단계로 푼다. 단계마다 프롬프트 하나 또는 코드 작성 하나만 한다: 1단계 프롬프트(② + ⑤), 2단계 코드 작성, 3단계 프롬프트(⑬). 마무리는 오늘 새 템플릿 ⑮ 근거와 함께 묻기.
 -->
 
 ---
 
-## #01. 오늘의 진행 — 2교시 약 100분
+## #01. 오늘의 흐름
 
-<Timeline color="ok">
-<li><b>A 구현 · 40분</b>문제를 직접 푼다. 막히면 템플릿으로 조언을 받는다</li>
-<li><b>B 결과가 이상할 때 · 25분</b>나눠 준 코드의 틀린 값을 찾아 고친다</li>
-<li><b>C 에러 수정 · 25분</b>에러 코드의 원인을 찾아 고친다</li>
-<li><b>D 정리 · 10분</b>새 템플릿 ⑮를 추가하고 오늘 고친 실수를 한 줄 기록한다</li>
+<Timeline>
+<li><b>문제 읽기</b>코딩 테스트 문제와 입출력 예를 본다</li>
+<li><b>세 단계로 풀기</b>설계는 AI와 함께, 코드는 내가, 틀리면 다시 AI와 함께</li>
+<li class="now"><b>마무리</b>⑮ 근거와 함께 묻기로 AI 설명의 근거를 공식 문서와 실행으로 확인한다</li>
 </Timeline>
 
-<Grid cols="3" align="start">
-<Tile kind="soft" color="py" tag="오늘의 재료" title="텍스트 값 정제">
-
-`"1,200"` · `" 950"`처럼 문자열로 들어온 값을 숫자와 보고 문장으로 바꾼다
-
-</Tile>
-<Tile kind="soft" color="ai" tag="새 템플릿" title="⑮ 근거와 함께 묻기">
-
-AI가 알려 준 메서드 · 형식이 실제로 있는지 공식 문서에서 확인한다
-
-</Tile>
-<Tile kind="soft" color="ok" tag="AI의 역할" title="조언 받기 단계">
-
-코드는 내가 쓰고, AI는 개념 · 처리 순서 · 결과 해석 · 에러 원인만 맡는다
-
-</Tile>
-</Grid>
-
-<!--
-진행은 ① 조언 받기 단계 공통 진행 그대로다. B · C의 코드는 미리 준비해 나눠 준다. 강사용 원인은 각 쪽 발표자 노트에만 있다.
-시간이 모자라면 B · C에서 한 문제씩 줄이고, D의 템플릿 ⑮ 추가는 빼지 않는다.
--->
-
----
-
-## #02. 오늘의 규칙과 `## 제약` 범위
+<Grid cols="2" align="start">
 
 <Callout kind="real" title="오늘의 규칙">
 
 - 코드는 내가 쓰고, AI에게는 개념 · 처리 순서 · 결과 해석 · 에러 원인만 묻는다
-- 프롬프트는 다섯 섹션 `## 맥락` `## 상황` `## 질문` `## 제약` `## 출력 형식`
-- `## 제약`에는 아래 표의 배운 범위를 적는다
+- 첫 질문은 다섯 섹션 `## 맥락` `## 상황` `## 질문` `## 제약` `## 출력 형식`으로 자세히, 같은 대화의 후속 질문은 평서문으로
 
 </Callout>
 
-<div class="kicker">문자열 단원 · <code>## 제약</code>에 쓰는 범위</div>
+<Tile kind="soft" color="ai" tag="오늘 새로 더하는 템플릿" title="⑮ 근거와 함께 묻기">
+LAB-04의 ⑭ 뒤로 이어 매긴다. AI 설명에 공식 문서 위치를 붙여 받고, 문서와 실행으로 직접 확인한다
+</Tile>
 
-| 단원 | 범위 |
-|:--|:--|
-| 1 문자열의 이해 | 문자열 연산, 이스케이프 문자, 인덱싱 · 슬라이싱 |
-| 2 문자열 포메팅 | 형식 문자, format(), f-string, 자릿수 지정 |
-| 3 문자열 관련 함수 | len · str, count · find · rfind · isupper · islower · upper · lower · swapcase · capitalize · title · strip · lstrip · rstrip · replace · split · isnumeric |
+</Grid>
 
 <!--
-시작 전에 ChatGPT 맞춤 지침(설정 → 개인 맞춤 설정 → 사용자 지정 지침)이 「ChatGPT 지침.md」로 들어 있는지 말로 확인한다. AI가 코드를 통째로 주면 지침이 빠진 것이므로 설정을 확인하고 새 대화에서 다시 시작하게 한다.
-오늘 쓰는 모든 프롬프트의 ## 제약은 이 표에서 가져온다.
+시작 전에 ChatGPT 맞춤 지침이 들어 있는지, 템플릿마다 새 대화를 여는지 말로 확인한다.
+오늘은 문제 하나를 끝까지 푸는 것이 목표다. 단계를 건너뛰고 바로 코드를 쓰는 학생이 있으면, 막혔을 때 어느 단계로 돌아가 템플릿을 꺼낼지 묻는다.
+-->
+
+---
+
+## #02. 쓸 수 있는 문법 — 배운 것까지만
+
+<div class="kicker">코딩 테스트 문제는 지금까지 배운 문법으로 푼다. 모든 프롬프트의 <code>## 제약</code>에 이 범위를 적는다</div>
+
+| 단원 | 쓸 수 있는 것 |
+|:--|:--|
+| LAB-02 · 03 | 변수 · 연산자(`%` 포함) · `+=` · 함수 정의(파라미터 · return) · if · elif · else · while · for · range · break · continue |
+| LAB-04 리스트 | 인덱스 · 슬라이싱 · in · len · append · join · split · sorted · sort |
+| LAB-05 문자열 | 문자열 연산 · 인덱싱 · 슬라이싱 · format · f-string · count · find · upper · lower · swapcase · capitalize · title · strip · replace · split · isupper · islower · isnumeric |
+
+<Callout kind="danger" title="아직 안 배운 것 — 쓰지 않는다">
+딕셔너리 · 리스트 컴프리헨션(<code>[x for x in ...]</code>) · lambda · enumerate · ord · chr
+</Callout>
+
+<Core color="ok">AI가 안 배운 방법을 권하면 따르지 않고, 배운 범위 안의 방법으로 다시 묻는다.</Core>
+
+<!--
+범위를 적지 않으면 AI가 enumerate나 리스트 컴프리헨션 한 줄로 푸는 방법을 권한다. 오늘은 for와 인덱스 변수, += 로 결과 문자열을 한 글자씩 쌓는다.
+문자열 단원 실습코드에 나오는 메서드만 범위에 넣었다(직접 확인). isdigit · isalpha는 실습코드에 없다.
 -->
 
 ---
 layout: section
 ---
 
-# A. 구현
+# 문제
 
-문제를 직접 푼다. 막히면 「내 프롬프트 템플릿.md」에서 템플릿을 꺼내 조언을 받는다 · 40분
+LAB-02 ~ LAB-05에서 배운 것을 모두 써야 풀리는 문제 하나
 
 ---
+class: dense
+---
 
-## #03. A-1 한 줄 분리
+## #03. 문제 — 이상한 문자 만들기
 
-<div class="kicker">아래 한 줄에서 날짜 · 지점 · 금액 · 결제수단을 꺼낸다</div>
+<Grid cols="1fr 1fr" align="start">
+<div>
+
+문자열 s는 한 개 이상의 단어로 구성되어 있습니다. 각 단어는 하나 이상의 공백문자로 구분되어 있습니다. 각 단어의 짝수번째 알파벳은 대문자로, 홀수번째 알파벳은 소문자로 바꾼 문자열을 리턴하는 함수, solution을 완성하세요.
+
+<div class="kicker">제한 사항</div>
+
+- 문자열 전체의 짝/홀수 인덱스가 아니라, 단어(공백을 기준)별로 짝/홀수 인덱스를 판단해야합니다.
+- 첫 번째 글자는 0번째 인덱스로 보아 짝수번째 알파벳으로 처리해야 합니다.
+
+| s | return |
+|:--|:--|
+| "try hello world" | "TrY HeLlO WoRlD" |
+
+<p class="small muted">출처: <a href="https://school.programmers.co.kr/learn/courses/30/lessons/12930" target="_blank" rel="noopener">프로그래머스 코딩테스트 연습 「이상한 문자 만들기」</a></p>
+
+</div>
+<div>
+
+<div class="kicker">입출력 예 설명</div>
+
+"try hello world"는 세 단어 "try", "hello", "world"로 구성되어 있습니다. 각 단어의 짝수번째 문자를 대문자로, 홀수번째 문자를 소문자로 바꾸면 "TrY", "HeLlO", "WoRlD"입니다. 따라서 "TrY HeLlO WoRlD" 를 리턴합니다.
+
+<div class="kicker">기본 코드 템플릿</div>
 
 ```python
-"2024-01-05|강남점|125000|card"
+def solution(s):
+    answer = ''
+    return answer
+
+s = "try hello world"
+print(solution(s))  # TrY HeLlO WoRlD
 ```
 
-<Grid cols="5" gap="12">
-<Tile color="pastel-1" tag="날짜" value="2024-01-05" />
-<Tile color="pastel-2" tag="지점" value="강남점" />
-<Tile color="pastel-3" tag="금액 · 정수" value="125000" />
-<Tile color="pastel-4" tag="결제수단" value="card" />
-<Tile color="pastel-5" tag="월" value='"01"' />
-</Grid>
-
-<Callout kind="tip" title="조건 두 가지">
-
-- 금액은 문자열이 아니라 **정수**로 꺼낸다
-- 월은 날짜에서 `"01"`로 꺼낸다
-
+<Callout kind="warn" title="공백은 하나 이상">
+단어 사이 공백이 <b>두 개 이상</b>일 수도 있다. 공백은 그대로 둔다
 </Callout>
 
-<!--
-split("|")로 네 조각을 나누고, 금액은 int()로 바꾼다. 월은 날짜 문자열의 인덱싱 · 슬라이싱으로 꺼낸다. 금액을 type()으로 찍어 int인지 확인하게 한다.
--->
-
----
-
-## #04. A-2 숫자 정제
-
-<Grid cols="3fr 2fr" align="center">
-<div>
-
-<div class="kicker">쉼표와 공백을 지우고 정수로 바꿔 합계를 구한다</div>
-
-```python
-["1,200", " 950", "1,050 "]
-```
-
-<Flow color="ai">
-<li><b>쉼표 · 공백</b>섞인 문자열</li>
-<li><b>지우기</b>쉼표와 공백 제거</li>
-<li><b>정수</b>int로 변환</li>
-<li><b>합계</b>세 값을 더한다</li>
-</Flow>
-
-</div>
-<div>
-
-<Stat value="3200" label="정답 · 합계" color="ok" />
-
 </div>
 </Grid>
 
 <!--
-원소마다 앞뒤 공백 위치가 다르다(" 950"은 앞, "1,050 "은 뒤). 쉼표는 replace, 공백은 strip 또는 replace로 지운다. 합계가 3200이 아니면 원소 하나씩 정제 결과를 찍어 보게 한다.
+문제 원문은 프로그래머스 그대로다.
+쓰는 문법: 함수 정의와 return(LAB-02), for · if · else · %(LAB-03), 인덱스 · len · join(LAB-04), upper · lower · split · 문자열 인덱싱 · +=(LAB-05).
+핵심 함정 두 가지. ① 인덱스는 단어마다 0부터 다시 센다. ② "하나 이상의 공백"이라 단어 사이에 공백이 여러 개일 수 있고, 그 공백은 그대로 남겨야 한다. 입출력 예는 공백이 하나뿐이라 두 함정을 모두 놓친 코드도 통과한다(3단계 증상 참고).
+기본 코드 템플릿의 def 부분은 프로그래머스 Python3 편집기에 처음 들어 있는 코드와 같고, s · print 두 줄은 노트북에서 입출력 예를 확인하려고 덧붙인 것이다. 프로그래머스에 제출할 때는 solution 함수만 붙여 넣는다.
 -->
 
 ---
+layout: section
+---
 
-## #05. A-3 주소 분리
+# 풀이 단계
 
-<div class="kicker">앞뒤 공백을 지우고 시 · 구를 꺼낸다</div>
-
-```python
-"  서울특별시 강남구 테헤란로 123  "
-```
-
-<Grid cols="2" align="start">
-<Tile kind="soft" color="py" tag="정답 · 시" value="서울특별시" />
-<Tile kind="soft" color="ai" tag="정답 · 구" value="강남구" />
-</Grid>
-
-<Core color="ok">앞뒤 공백 정리 → 공백으로 나누기 → 앞의 두 조각</Core>
-
-<!--
-strip()으로 앞뒤 공백을 지운 뒤 split()으로 나누고 0번 · 1번을 꺼낸다. 앞뒤 공백을 지우지 않고 split(" ")로 나누면 빈 문자열 조각이 생겨 인덱스가 밀리는 학생이 있다.
--->
+설계 → 구현 → 원인 찾기, 세 단계로 푼다
 
 ---
 
-## #06. A-4 마스킹
+## #04. AI와 함께 푸는 세 단계
 
-<div class="kicker">전화번호 가운데 네 자리를 별표로 바꾼다</div>
+<Steps color="pastel">
+<li><b>AI에게 물어 문제를 확인하고 함수를 설계한다</b> — 내 정리를 점검받고, 처리 순서를 단계표로 받는다 <Chip color="ai">프롬프트 ② + ⑤</Chip></li>
+<li><b>코드를 직접 쓴다</b> — 단계표를 주석으로 옮겨 채우고, 결과를 예측한 뒤 실행한다 <Chip color="ok">코드 작성 · AI 없이</Chip></li>
+<li><b>틀리면 AI와 함께 원인을 찾아 고친다</b> — 예측과 실제 출력을 보내 갈라진 지점을 찾는다 <Chip color="ai">프롬프트 ⑬</Chip></li>
+</Steps>
 
-<Grid cols="2" align="center">
-<div>
-
-<Output label="원래 값">
-
-```text
-010-1234-5678
-```
-
-</Output>
-
-</div>
-<div>
-
-<Output label="바꾼 값">
-
-```text
-010-****-5678
-```
-
-</Output>
-
-</div>
-</Grid>
-
-<p>쓸 수 있는 방법 <Chip>인덱싱 · 슬라이싱</Chip> <Chip color="ai">split</Chip> <Chip color="ok">replace</Chip> <Chip kind="outline" color="muted">문자열 연산</Chip></p>
+<Core color="ai">AI는 설계와 원인 찾기를 돕는다. 코드는 처음부터 끝까지 내가 쓴다.</Core>
 
 <!--
-슬라이싱으로 앞 "010-"과 뒤 "-5678"을 잘라 "****"과 이어 붙이거나, split("-")로 세 조각을 나눈 뒤 가운데만 바꿔 다시 이어 붙인다. replace("1234", "****")는 이 값에서는 맞지만, 다른 번호에서는 쓸 수 없다는 점을 이야기해 볼 수 있다.
--->
-
----
-
-## #07. A-5 보고 문장
-
-<Grid cols="3" gap="16">
-<Tile tag="지점" value="강남점" />
-<Tile tag="매출" value="125000" color="ai" />
-<Tile tag="전체" value="333333" color="ok" />
-</Grid>
-
-<div class="kicker">매출은 천 단위 쉼표, 비율(매출 ÷ 전체)은 소수 첫째 자리로 출력한다</div>
-
-<Output label="정답">
-
-```text
-강남점 | 매출 125,000원 | 비율 37.5%
-```
-
-</Output>
-
-<Callout kind="ai" title="막히면 새 템플릿 ⑮ 근거와 함께 묻기">
-천 단위 쉼표를 넣는 형식 지정 방법과 그 방법이 공식 문서 어디에 나오는지 함께 받는다. 다음 쪽에서 만든다
-</Callout>
-
-<!--
-f-string 자릿수 지정 재료. 천 단위 쉼표는 형식 지정 기호 ","로, 비율은 ".1f"로 맞춘다. 비율은 125000 / 333333 × 100 = 37.5%.
-이 문제가 템플릿 ⑮로 이어진다. 형식 지정 기호는 AI가 그럴듯하게 틀리기 쉬운 곳이라 공식 문서 확인 연습에 알맞다.
+LAB-03 · 04와 같은 세 단계다. 단계마다 쓸 템플릿을 붙였을 뿐이다.
+1단계를 건너뛰면 2단계에서 "인덱스를 어디서 다시 0으로 만드는지"가 흔들린다. 문제 정리를 꼭 점검받게 한다.
 -->
 
 ---
 class: dense
 ---
 
-## #08. 새 템플릿 ⑮ 근거와 함께 묻기
+## #05. 1단계 — AI에게 물어 문제를 확인하고 함수를 설계한다
 
-<Callout icon="💡" title="AI가 알려 준 메서드 · 형식이 실제로 있는지 공식 문서에서 확인하고 싶은 경우" color="pastel-1"></Callout>
+<Callout icon="💡" title="문제를 제대로 이해했는지 확인하고, 어떤 순서로 코드를 쓸지 정하고 싶은 경우" color="pastel-1"></Callout>
 
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ② + ⑤번 패턴">
 
 ````md
 ## 맥락
-파이썬 문자열 단원을 배우는 중이야.
+파이썬 문자열 단원을 배우는 중이야. 코딩 테스트 문제를 풀기 전에 문제를 내 말로 정리했어.
 
 ## 상황
-숫자를 천 단위 쉼표가 들어간 문자열로 출력하고 싶어. 예: 125000 → 125,000
+문제: {문제 원문 붙여 넣기}
+
+내 정리:
+- 글자 하나로 할 일: {내가 이해한 내용}
+- 인덱스를 세는 기준: {내가 이해한 내용}
+- 공백 처리: {내가 이해한 내용}
 
 ## 질문
-f-string에서 이걸 하는 형식 지정 방법을 알려주고, 파이썬 공식 문서의 어느 부분에 나오는지 알려줘.
+1. 내 정리에서 문제와 다르게 이해한 부분과 빠진 부분을 짚어 줘
+2. 그다음 처음부터 끝까지 해야 할 일을 단계 순서로 나눠 줘
 
 ## 제약
-- 코드 대신 형식 지정 기호의 의미를 말로 설명해
-- 공식 문서(docs.python.org/ko)의 문서 이름과 절 이름을 적어. 확실하지 않으면 "확인 필요"라고 표시해
+- 코드나 의사코드 없이 말로만
+- 배운 범위(함수 정의 · 조건문 · for · 인덱스 · len · split · join · upper · lower · 문자열 연산) 안에서. 딕셔너리 · 리스트 컴프리헨션 · lambda · enumerate는 쓰지 않는 방법으로
 
 ## 출력 형식
-| 기호 | 의미 | 공식 문서 위치 | 표로
+1은 | 내 정리 | 판정(맞음 / 보완) | 이유 | 표로
+2는 | 단계 | 할 일 | 끝나면 확인할 것 | 표로
 ````
 
 </Prompt>
@@ -270,334 +202,227 @@ f-string에서 이걸 하는 형식 지정 방법을 알려주고, 파이썬 공
 <div>
 
 <div class="card ok">
-<h3><carbon:list-checked /> 사용 방법</h3>
+<h3><carbon:list-checked /> 학생 활동</h3>
 
-- 알려 준 절을 공식 문서에서 직접 열어 본다
-- 위치가 틀렸으면 기록한다
+- 문제를 다시 보지 않고 **세 줄**로 정리해 보낸다
+- **보완** 판정을 받은 줄은 내 말로 고친다
+- 받은 단계표를 노트북 **마크다운 셀**에 옮긴다
 
 </div>
 
 <Callout kind="warn" title="주의">
-AI가 적은 문서 이름 · 절 이름도 추측. 직접 열어 봐야 근거가 된다
+문제 원문은 줄이지 않고 그대로 붙인다. 답에 enumerate · 컴프리헨션이 섞이면 <code>## 제약</code>을 가리키며 다시 묻는다
 </Callout>
 
 </div>
 </Grid>
 
 <!--
-환각을 직접 잡아 보는 첫 활동이다. 지침 때문에 코드는 오지 않고 기호의 의미와 문서 위치가 표로 온다.
-학생이 확인한 결과(위치가 맞음 / 틀림 / 확인 필요)를 「문자열 정제 메모.md」에 적게 한다. 위치가 틀린 답이 나오면 실패가 아니라 AI의 환각을 잡아낸 것으로 다룬다.
+LAB-02의 ② 내 설명 점검받기와 ⑤ 단계로 쪼개기를 한 프롬프트로 묶었다(LAB-03 · 04와 같다).
+학생이 자주 빠뜨리는 정리: 인덱스는 단어마다 0부터 다시 센다, 공백은 여러 개일 수 있고 그대로 남긴다, 홀수번째는 소문자로 "바꾼다"(원래 대문자인 글자도 소문자가 된다).
+기대하는 단계표(글자를 하나씩 보는 방법): ① 결과 문자열을 빈 문자열로, 단어 안 인덱스를 0으로 준비 ② s에서 글자를 하나씩 꺼냄 ③ 공백이면 그대로 붙이고 인덱스를 0으로 되돌림 ④ 공백이 아니면 인덱스가 짝수면 대문자, 홀수면 소문자로 붙임 ⑤ 인덱스를 1 늘림 ⑥ 반복이 끝나면 결과를 돌려줌.
+AI가 split(" ")으로 단어를 나눠 바꾼 뒤 " ".join으로 다시 붙이는 단계표를 줘도 맞다. split()처럼 괄호를 비우라고 하면 공백이 여러 개일 때 틀린다(3단계 · 마무리 ⑮로 이어짐).
 -->
 
 ---
-layout: infographic
+class: dense
 ---
 
-### #08-1. 덤 활동 — 없는 메서드 물어보기
+## #06. 2단계 — 단계표를 보고 코드를 직접 쓴다
 
-<Flow color="pastel">
-<li><carbon:help /><b>일부러 묻기</b>없는 메서드<br><code>str.reverse()</code>를 물어본다</li>
-<li><carbon:chat /><b>답 기록</b>AI가 뭐라고 답했는지 그대로 적는다</li>
-<li><carbon:document /><b>공식 문서 확인</b>문자열 메서드 목록에 있는지 직접 찾는다</li>
-<li><carbon:edit /><b>메모</b>「문자열 정제 메모.md」에 결과를 남긴다</li>
-</Flow>
+<Callout icon="💡" title="1단계에서 받은 단계표를 AI 없이 내 손으로 코드로 옮기는 단계" color="pastel-1"></Callout>
 
-<Callout kind="ai" title="기록할 것">
-AI가 "없다"고 답했는지, 있는 것처럼 사용법을 지어냈는지
-</Callout>
-
-<!--
-덤 활동. ⑮ 프롬프트의 상황 · 질문만 바꿔 str.reverse()를 묻는다. 문자열에는 reverse() 메서드가 없다(리스트에는 있다). AI가 있는 것처럼 설명하면 환각 사례로, 없다고 하면 그 근거로 제시한 문서 위치를 다시 확인하게 한다.
--->
-
----
-layout: section
----
-
-# B. 결과가 이상할 때
-
-에러는 안 나는데 값이 틀렸다. 나눠 준 코드의 틀린 값을 찾아 고친다 · 25분
-
----
-
-## #09. B 진행 방법
-
-<Steps color="ai">
-<li>나눠 준 코드를 <b>내 노트북에 그대로</b> 쓰고 실행해 증상을 확인한다</li>
-<li>짐작이 있으면 <b>⑧ 내 추측 확인 방법 묻기</b>, 없으면 <b>⑦ 확인할 곳 묻기</b>를 꺼낸다</li>
-<li>AI가 알려 준 곳을 <code>print()</code> · <code>type()</code>으로 <b>내가 찍어 보고</b> 원인을 찾는다</li>
-<li>코드를 고쳐 기대한 값이 나오는지 직접 실행해 확인한다</li>
-</Steps>
-
-<Grid cols="3" gap="16">
-<Tile kind="surface" color="pastel-1" tag="B-1" title="문자열 덧셈" />
-<Tile kind="surface" color="pastel-2" tag="B-2" title="replace 뒤의 공백" />
-<Tile kind="surface" color="pastel-3" tag="B-3" title="count 결과" />
-</Grid>
-
-<!--
-LAB-02의 ⑦ · ⑧을 그대로 쓴다. ## 제약에는 #02 표의 범위를 적는다. AI가 원인을 바로 말해 주면 지침이 살아 있는지 확인한다.
--->
-
----
-
-### #09-1. B-1 · B-2 코드와 증상
-
-<Grid cols="2" align="start">
+<Grid cols="2fr 1fr" align="start">
 <div>
 
-<div class="kicker">B-1</div>
+<div class="kicker">단계표를 주석으로 옮긴 뼈대</div>
 
 ```python
-print("100" + "200")
+def solution(s):
+    # 1. {단계표 1번}
+    # 2. {단계표 2번}
+    #    ...
+    # 6. {단계표 마지막 번}
+    return answer
+
+print(solution("try hello world"))  # 내 예측: ?
+print(solution("try  hello"))       # 내 예측: ? (공백 두 칸)
 ```
-
-<Output label="실행 결과">
-
-```text
-100200
-```
-
-</Output>
-
-<Callout kind="warn" title="증상">
-<code>300</code>이 아니라 <code>100200</code>
-</Callout>
 
 </div>
 <div>
 
-<div class="kicker">B-2</div>
+<div class="card ok">
+<h3><carbon:list-checked /> 학생 활동</h3>
 
-```python
-name = "홍 길 동"
-name.replace(" ", "")
-print(name)
-```
+- 주석 아래에 **한 줄씩** 코드를 채운다
+- 실행하기 전에 두 print의 결과를 **예측**해 적는다
+- 실행해서 예측 · 기대 결과와 맞춰 본다
 
-<Output label="실행 결과">
+</div>
 
-```text
-홍 길 동
-```
-
-</Output>
-
-<Callout kind="warn" title="증상">
-공백이 그대로 남아 있다
+<Callout kind="tip" title="문자열은 고쳐 쓸 수 없다">
+<code>s[0] = "T"</code>는 에러다. 바꾼 글자를 새 문자열에 <code>+=</code>로 이어 붙인다
 </Callout>
 
 </div>
 </Grid>
 
 <!--
-강사용 원인
-B-1: 문자열 덧셈은 이어 붙이기다. 숫자로 더하려면 int()로 바꾼 뒤 더한다.
-B-2: 문자열은 바뀌지 않는다. replace는 새 문자열을 돌려줄 뿐이므로 결과를 다시 대입한다(name = name.replace(" ", "")).
+단계표의 각 줄이 코드 몇 줄이 되는지 직접 옮기는 것이 이 단계의 핵심이다. 주석은 지우지 말고 남겨 두게 한다. 3단계에서 어느 줄이 틀렸는지 찾을 때 쓴다.
+예측은 결과 값만 적는다. 첫 줄은 TrY HeLlO WoRlD, 둘째 줄은 TrY  HeLlO(공백 두 칸 그대로). 자주 빗나가는 예측: 둘째 줄의 공백을 한 칸으로 봄.
+결과를 볼 때 print(repr(solution("try  hello")))로 찍으면 따옴표 안의 공백 개수가 잘 보인다.
+막힌 문법은 ④ 고르는 기준 묻기 정도만 허용하고 "코드로 써 줘"는 묻지 않게 한다.
+
+강사용 정답 코드(학생 자료에는 없음):
+def solution(s):
+    answer = ''
+    idx = 0
+    for ch in s:
+        if ch == ' ':
+            answer += ch
+            idx = 0
+        else:
+            if idx % 2 == 0:
+                answer += ch.upper()
+            else:
+                answer += ch.lower()
+            idx += 1
+    return answer
+
+print(solution("try hello world"))  # TrY HeLlO WoRlD
+다른 풀이: words = s.split(' ')로 나눈 뒤 단어마다 for i in range(len(w))로 새 단어를 만들어 리스트에 append하고, ' '.join(리스트)로 돌려준다. split(' ')는 연속 공백 사이에 빈 문자열을 남기므로 공백 개수가 그대로 돌아온다.
+더 확인할 값(직접 실행): "try  hello" → "TrY  HeLlO", " ab" → " Ab", "a" → "A".
 -->
 
 ---
+class: dense
+---
 
-### #09-2. B-3 코드와 증상
+## #07. 3단계 — 틀리면 AI와 함께 원인을 찾아 고친다
 
-<Grid cols="2" align="center">
+<Callout icon="💡" title="실행 결과가 기대 결과나 내 예측과 달라서, 어디서 왜 갈라졌는지 알고 싶은 경우" color="pastel-1"></Callout>
+
+<Grid cols="2fr 1fr" align="start">
 <div>
 
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑬번 패턴">
+
+````md
+## 맥락
+파이썬 문자열 단원을 배우는 중이야.
+
+## 상황
+이상한 문자 만들기 solution 함수를 직접 썼는데 결과가 내 예측과 달랐어.
 ```python
-print("Seoul,seoul,SEOUL".count("seoul"))
+{내가 쓴 코드}
 ```
+입력: {예: "try  hello" (공백 두 칸)}
+내 예측: {예: "TrY  HeLlO"}
+실제 출력: {예: "TrY HeLlO" · 에러가 났으면 에러 원문 그대로}
 
-<Output label="실행 결과">
+## 질문
+내 예측이 어느 지점에서 실제 실행과 갈라졌는지, 왜 그렇게 실행되는지 알려줘.
 
-```text
-1
-```
+## 제약
+- 코드를 고쳐 쓰지 마. 실행 순서와 이유만 설명해
+- 문자열 인덱싱 · split · join · upper · lower · for 범위 안에서
 
-</Output>
+## 출력 형식
+| 갈라진 지점 | 내 예측 | 실제 | 이유 | 표로
+````
+
+</Prompt>
 
 </div>
 <div>
 
-<Stat value="3" label="기대한 값" color="ok">세 번 나온 서울을 모두 세고 싶다</Stat>
+<div class="card ok">
+<h3><carbon:list-checked /> 학생 활동</h3>
+
+- 입력 · 예측 · 실제 출력을 **그대로** 붙인다
+- 갈라진 지점과 이유만 받고, **고치는 건 내가** 한다
+- 고친 뒤 두 print를 다시 실행해 확인한다
 
 </div>
-</Grid>
 
-<Callout kind="warn" title="증상">
-<code>3</code>이 아니라 <code>1</code>
-</Callout>
-
-<!--
-강사용 원인: count는 대소문자를 구분한다. lower()로 모두 소문자로 바꾼 뒤 세면 3이 나온다.
-⑧에 "대소문자 때문인 것 같다"는 추측을 적어 보내면 확인 방법으로 upper · lower 결과를 찍어 보라는 답이 오는지 본다.
--->
-
----
-layout: section
----
-
-# C. 에러 수정
-
-빨간 글씨가 떴다. 에러 코드의 원인을 찾아 고친다 · 25분
-
----
-
-## #10. C 진행 방법
-
-<Flow color="ok">
-<li><carbon:play /><b>실행</b>나눠 준 코드를 내 노트북에서 실행한다</li>
-<li><carbon:warning-alt /><b>⑩ 에러 원문 보내기</b>코드와 에러 메시지 전체를 그대로 붙인다</li>
-<li><carbon:tools /><b>직접 고치기</b>원인과 고치는 방향만 받고 수정은 내가 한다</li>
-<li><carbon:renew /><b>⑪ 같은 실수 막기</b>같은 에러가 나는 다른 경우를 받아 하나를 직접 만든다</li>
-</Flow>
-
-| | 코드 | 에러 |
-|:--:|:--|:--|
-| C-1 | `"매출: " + 125000` | `TypeError` |
-| C-2 | `int("1,200")` | `ValueError` |
-| C-3 | `"a b".split().strip()` | `AttributeError` |
-
-<!--
-LAB-02의 ⑩ · ⑪을 그대로 쓴다. 에러 메시지는 마지막 줄만이 아니라 전체를 붙이게 한다. 같은 종류의 에러를 반복해서 묻고 있다면 ⑪로 넘어가게 한다.
--->
-
----
-
-### #10-1. C-1 · C-2 코드와 에러
-
-<Grid cols="2" align="start">
-<div>
-
-<div class="kicker">C-1</div>
-
-```python
-print("매출: " + 125000)
-```
-
-<Output label="에러">
-
-```text
-TypeError: can only concatenate str (not "int") to str
-```
-
-</Output>
-
-</div>
-<div>
-
-<div class="kicker">C-2</div>
-
-```python
-int("1,200")
-```
-
-<Output label="에러">
-
-```text
-ValueError: invalid literal for int() with base 10: '1,200'
-```
-
-</Output>
-
-</div>
-</Grid>
-
-<Callout kind="tip" title="A와 이어진 곳">
-C-1은 A-5 보고 문장, C-2는 A-2 숫자 정제에서 만날 수 있는 에러다
-</Callout>
-
-<!--
-강사용 원인
-C-1: 문자열과 정수는 + 로 이어 붙일 수 없다. str()로 바꾸거나 f-string을 쓴다.
-C-2: 쉼표가 든 문자열은 int()로 바꿀 수 없다. 쉼표를 지운 뒤 변환한다(A-2와 같은 정제).
--->
-
----
-
-### #10-2. C-3 코드와 에러
-
-<Grid cols="2" align="center">
-<div>
-
-```python
-"a b".split().strip()
-```
-
-<Output label="에러">
-
-```text
-AttributeError: 'list' object has no attribute 'strip'
-```
-
-</Output>
-
-</div>
-<div>
-
-<Callout kind="eli5" title="에러 메시지 읽기">
-
-- `'list' object` — strip을 부른 대상
-- `has no attribute 'strip'` — 그 대상에는 strip이 없다
-
+<Callout kind="danger" title="입출력 예만 맞았을 때">
+입출력 예는 공백이 한 칸뿐이다. 공백 두 칸 입력이 틀리면 <b>통과한 게 아니다</b>
 </Callout>
 
 </div>
 </Grid>
 
-<Core color="warn">메서드를 이어 쓸 때는 앞 메서드가 돌려준 값의 자료형을 먼저 확인한다</Core>
-
 <!--
-강사용 원인: split의 결과는 리스트다. 리스트에는 strip이 없다. 순서를 바꿔 strip을 먼저 하거나, 나눈 조각마다 strip을 쓴다.
-type("a b".split())을 찍어 보게 하면 <class 'list'>로 바로 확인된다.
+LAB-03에서 배운 ⑬을 그대로 쓴다. 입력이 두 가지라 ## 상황에 "입력" 줄을 더했다. AI 설명도 추측이므로, 고친 뒤 다른 입력으로 다시 예측 → 실행해 확인하게 한다.
+강사용 증상과 원인(모두 Python 3.13으로 직접 실행해 확인):
+"TrY HeLlO"(공백이 한 칸으로 줄어듦) — s.split()처럼 괄호를 비워 나눔. 연속 공백을 하나의 구분자로 보고 빈 문자열을 남기지 않는다. 입출력 예는 통과한다(마무리 ⑮로 이어짐).
+"TrY  hElLo" — 문자열 전체의 인덱스 i로 짝홀을 판단함. 입출력 예는 단어 길이가 우연히 맞아 통과하지만 공백 두 칸에서 틀린다.
+"TrY hElLo WoRlD" — 공백을 만났을 때 단어 안 인덱스를 0으로 되돌리지 않음. 입출력 예에서 바로 틀린다.
+"TrY  hElLo  wOrLd" — 공백 처리 뒤에 else 없이 아래 if로 이어져 공백이 두 번 붙고 인덱스도 어긋남.
+"try hello world"(아무것도 안 바뀜) — ch.upper()의 결과를 받지 않고 원래 ch를 붙임. 문자열 메서드는 원본을 바꾸지 않고 새 문자열을 돌려준다.
+['TrY', 'HeLlO', 'WoRlD'] — split 풀이에서 ' '.join 없이 리스트를 그대로 돌려줌.
+TypeError: 'str' object does not support item assignment — answer[i] = ...처럼 문자열의 글자를 바꾸려 함.
 -->
 
 ---
-layout: section
+class: dense
 ---
 
-# D. 정리
+## #08. 마무리 — ⑮ 근거와 함께 묻기
 
-새 템플릿을 모으고 오늘 고친 실수를 기록한다 · 10분
+<Callout icon="💡" title="AI가 알려 준 메서드의 동작이 정말 맞는지, 근거를 받아 직접 확인하고 싶은 경우" color="pastel-1"></Callout>
 
----
-layout: cards
-cols: 3
----
+<Grid cols="2fr 1fr" align="start">
+<div>
 
-## #11. 오늘의 결과물
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑮번 패턴 (오늘 새 패턴)">
 
-<div class="py">
+````md
+## 맥락
+파이썬 문자열 단원을 배우는 중이야. 이상한 문자 만들기 문제를 내가 풀었어.
 
-#### <carbon:code /> A-1 ~ A-5 풀이
+## 상황
+split()과 split(" ")이 공백이 여러 개인 문자열에서 다르게 나눈다고 들었어.
+내가 아는 차이: {내가 아는 것. 모르면 "모르겠음"}
 
-- 한 줄 분리 · 숫자 정제 · 주소 분리 · 마스킹 · 보고 문장
-- 정답과 직접 실행한 값을 대조한다
+## 질문
+두 방법이 "try  hello"(공백 두 칸)를 어떻게 나누는지, 그 근거가 파이썬 공식 문서 어디에 나오는지 알려줘.
 
-</div>
-<div class="ai">
+## 제약
+- 코드 대신 말로 설명하고, 각 설명마다 내가 직접 실행해 확인할 방법을 알려줘
+- 공식 문서(docs.python.org/ko)의 문서 이름과 절 이름을 적어. 확실하지 않으면 "확인 필요"라고 표시해
 
-#### <carbon:document /> 문자열 정제 메모.md
+## 출력 형식
+| 항목 | split() | split(" ") | 근거 (문서 · 절) | 확인 방법 | 표로
+````
 
-- 오늘 쓴 메서드
-- 그 메서드를 공식 문서에서 확인했는지 여부
-
-</div>
-<div class="ok">
-
-#### <carbon:bookmark /> 템플릿 ⑮
-
-- 「내 프롬프트 템플릿.md」에 추가
-- 오늘 고친 실수 한 줄 기록
+</Prompt>
 
 </div>
+<div>
 
-<Callout kind="real" title="데이터 분석으로 이어지는 곳">
-실제 데이터의 숫자는 <code>"1,200"</code>, <code>" 950"</code>처럼 문자열로 들어온다. LAB-07 · 08에서 같은 정제를 파일 전체에 적용한다
+<div class="card ok">
+<h3><carbon:list-checked /> 학생 활동</h3>
+
+- 보내기 전에 **내가 아는 차이**를 먼저 적는다
+- 알려 준 절을 공식 문서에서 **직접 열어** 본다
+- 「확인 방법」을 실행해 맞으면 ✔, 다르면 실제 결과를 적는다
+
+</div>
+
+<Callout kind="warn" title="주의">
+AI가 적은 문서 이름 · 절 이름도 추측이다. 직접 열어 봐야 근거가 된다
 </Callout>
 
+</div>
+</Grid>
+
 <!--
-결과물은 걷지 않고, 「문자열 정제 메모.md」에 공식 문서 확인 여부 칸이 채워졌는지만 둘러보며 확인한다. 덤 활동(str.reverse())을 한 학생은 그 결과도 메모에 있다.
-템플릿은 ①~⑫(LAB-02), ⑬(LAB-03), ⑭(LAB-04)에 이어 ⑮까지 쌓인다.
+새 템플릿 ⑮. LAB-02의 ①~⑫, LAB-03의 ⑬, LAB-04의 ⑭ 뒤로 이어 매긴다. AI가 그럴듯하게 틀리기 쉬운 "메서드의 세부 동작"을 공식 문서와 실행 두 가지로 확인하는 첫 활동이다.
+기대하는 답: split()은 sep을 주지 않으면 연속된 공백을 하나의 구분자로 보고 앞뒤 공백도 무시한다. split(" ")은 공백 한 칸마다 나누므로 연속 공백 사이에 빈 문자열이 생긴다. 근거는 공식 문서 「내장형」 → 「문자열 메서드」의 str.split 항목.
+확인 방법 예(직접 실행): "try  hello".split() → ['try', 'hello'] / "try  hello".split(" ") → ['try', '', 'hello'].
+문서 위치가 틀린 답이 나오면 실패가 아니라 AI의 환각을 잡아낸 것으로 다룬다. 학생이 split() 풀이로 3단계 증상을 겪었다면 이 표가 그 원인의 근거가 된다.
 -->
 
 ---

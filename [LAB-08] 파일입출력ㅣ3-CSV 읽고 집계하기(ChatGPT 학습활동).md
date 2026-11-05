@@ -3,232 +3,345 @@ theme: ./slidev-themes/hossam
 manuscript: true
 colorMode: dark
 fontScale: 1
-title: 파이썬 기초 · 파일입출력 — CSV 읽고 집계하기
+title: 파이썬 기초 · 파일입출력 — 파일입출력 종합문제
 layout: cover
 ---
 
-# CSV 읽고 집계하기 — 파일에서 숫자까지
+# 파일입출력 종합문제
 
-covid19.csv를 읽어 합계 · 비율 · 최댓값 · 연도별 집계를 구하고, 받은 코드를 내 데이터로 검증하는 연습
+AI에게 코드를 받아 검증하며 푸는 코딩 테스트 — 프로그래머스 「신고 결과 받기」
 
 <p class="sub">[LAB-08] 파일입출력 3 · ITWILL · {teacher} 강사</p>
 
 <!--
-「open함수의 사용」「CSV파일 다루기」를 마친 뒤 하는 ② 답 받기 단계 두 번째 실습. 지침은 「ChatGPT 지침(답 받기).md」가 들어가 있다고 전제한다.
-결과물: A-1 ~ A-4 코드(4단 확인 표시), seoul_yearly.csv, 템플릿 ⑲.
-새 템플릿은 ⑲ 하나. ⑰ 코드 받기 · ⑱ 내 코드 고쳐 받기는 LAB-07에서 만들었으므로 다시 가르치지 않고 번호로만 부른다.
+「open함수의 사용」「CSV파일 다루기」를 마친 뒤 하는 실습. ② 답 받기 단계(LAB-07 ~ 09)라서 ChatGPT가 코드를 주고, 학생은 받은 코드를 4단 확인(실행 · 범위 · 설명 · 변형)으로 검증한다. 지침은 「ChatGPT 지침(답 받기).md」가 들어가 있다고 전제한다.
+LAB-02 ~ 08에서 배운 것을 모두 써야 풀리는 코딩 테스트 문제(프로그래머스 「신고 결과 받기」) 하나를 세 단계로 푼다. 단계마다 프롬프트 하나만 한다: 1단계 프롬프트(② + ⑤), 2단계 프롬프트(오늘 새 템플릿 ⑲ 데이터 정보와 함께 받기) + 4단 확인, 3단계 프롬프트(⑱ 내 코드 고쳐 받기). 마무리는 ⑫ 거꾸로 질문.
+원래 문제는 입력을 리스트로 받는다. 오늘은 신고 기록을 CSV 파일로 저장해 두고 파일에서 읽어 오는 부분을 더했다(파일입출력 단원 연결).
 -->
 
 ---
 
-## #01. 오늘의 진행 — 답 받기 단계, 2교시
+## #01. 오늘의 흐름
 
-<Timeline color="ai">
-<li><b>A 구현 · 40분</b>15분 직접 시도 → 답 받기 → 4단 확인</li>
-<li><b>B 결과가 이상할 때 · 25분</b>"AI 답"의 함정 찾기</li>
-<li><b>C 에러 수정 · 25분</b>받은 코드를 내 노트북에 붙였을 때</li>
-<li><b>D 정리 · 10분</b>템플릿 ⑲ 추가 · 오늘 고친 실수 한 줄</li>
+<Timeline>
+<li><b>문제 읽기</b>코딩 테스트 문제와 입출력 예, 오늘 더하는 CSV 파일을 본다</li>
+<li><b>세 단계로 풀기</b>설계는 AI와 함께, 코드는 AI에게 받아 내가 검증, 틀리면 고쳐 받기</li>
+<li class="now"><b>마무리</b>⑫ 거꾸로 질문으로 받은 코드를 이해했는지 점검한다</li>
 </Timeline>
+
+<Grid cols="2" align="start">
 
 <Callout kind="real" title="오늘의 규칙">
 
-- 지침은 「ChatGPT 지침(답 받기).md」. 코드를 받되, 받은 코드는 내가 검증한다
-- 문제마다 **15분 직접 시도**. 막힌 코드를 `## 내 시도`에 붙여 답을 받는다
-- 프롬프트는 여섯 섹션. `## 맥락` `## 상황` `## 내 시도` `## 질문` `## 제약` `## 출력 형식`
-- 정답은 내 노트북 실행 결과
+- 지침은 「ChatGPT 지침(답 받기).md」. 먼저 직접 시도하고, 막힌 코드를 `## 내 시도`에 붙여 받는다
+- 프롬프트는 여섯 섹션. 받은 코드는 **4단 확인**(실행 · 범위 · 설명 · 변형)을 통과해야 내 코드
+- 첫 질문은 섹션을 갖춘 md로 자세히, 같은 대화의 후속 질문은 평서문으로
 
 </Callout>
 
-<!--
-시작 전에 개인 맞춤 설정의 지침이 「ChatGPT 지침(답 받기).md」인지 확인한다. 노트북과 같은 폴더에 covid19.csv가 있는지도 이때 확인한다(C의 FileNotFoundError를 수업 초반에 겪지 않게).
-템플릿 ⑰ · ⑱은 LAB-07의 것을 「내 프롬프트 템플릿.md」에서 꺼내 쓴다.
--->
-
----
-layout: cards
-cols: 4
----
-
-## #02. 받은 코드 4단 확인 — 넷을 통과해야 내 코드
-
-<Tile kind="soft" color="py" tag="① 실행" title="정답과 대조">
-내 노트북에서 실행해 정답과 같은 값이 나오는지
+<Tile kind="soft" color="ai" tag="오늘 새로 더하는 템플릿" title="⑲ 데이터 정보와 함께 받기">
+LAB-07의 ⑰ · ⑱ 뒤로 이어 매긴다. AI는 내 파일을 모른다. 위치 · 인코딩 · 첫 몇 줄을 함께 보낸다
 </Tile>
 
-<Tile kind="soft" color="ai" tag="② 범위" title="배운 문법인지">
-`csv` 모듈 · 리스트 컴프리헨션 · lambda처럼 배우지 않은 문법이 없는지
-</Tile>
-
-<Tile kind="soft" color="ok" tag="③ 설명" title="줄마다 말로">
-줄마다 무슨 일을 하는지 막힘없이 설명되는지
-</Tile>
-
-<Tile kind="soft" color="yellow" tag="④ 변형" title="AI 없이 풀기">
-조건 하나를 바꾼 변형 문제를 직접 풀어 정답이 나오는지
-</Tile>
-
-<Core color="ai">하나라도 통과하지 못하면 아직 AI의 코드. 배우지 않은 문법이 나오면 범위 안으로 다시 요청한다</Core>
-
-<!--
-LAB-07에서 처음 쓴 4단 확인을 다시 상기만 한다. 오늘 특히 ② 범위에서 자주 걸리는 것이 csv 모듈이다. AI는 CSV를 보면 csv 모듈부터 꺼낸다. 교안은 split 방식이므로 범위 밖이다.
--->
-
----
-
-## #03. `## 제약`에 적는 범위
-
-| 단원 | 범위 |
-|:--|:--|
-| 1 open함수의 사용 | 절대 · 상대 경로, open · read · write, with 문, readlines |
-| 2 CSV파일 다루기 | 리스트 · 딕셔너리를 CSV로 저장, CSV를 파이썬 데이터로 변환(split), encoding |
-| 이전 LAB | 조건문 · 반복문 · 리스트 · 문자열 · 딕셔너리 · 함수 · 예외처리 |
-
-<Callout kind="warn" title="AI가 자주 꺼내는 범위 밖 도구">
-<code>csv</code> 모듈 · <code>pandas</code>. 오늘은 <code>open</code> · <code>with</code> · <code>readlines</code> · <code>split</code>만 쓴다
-</Callout>
-
-<!--
-pandas는 LAB-10 이후에 배운다. 오늘은 pandas가 한 줄로 하는 일을 직접 해 보는 시간이라는 점을 짧게 말해 둔다.
--->
-
----
-layout: infographic
----
-
-## #04. 연습 데이터 — 교안의 covid19.csv
-
-<p><Chip color="py">날짜</Chip><Chip color="ai">서울시 일일 확진</Chip><Chip color="ai">서울시 일일 사망</Chip><Chip color="ok">전국 일일 확진</Chip><Chip color="ok">전국 일일 사망</Chip></p>
-
-<Grid cols="3">
-<Stat value="1,212" unit="행" label="헤더를 뺀 데이터 행" />
-<Stat value="euc-kr" label="인코딩" color="ai">쉼표로 구분</Stat>
-<Stat value="최신 → 과거" label="행의 순서" color="ok">2023-05-31 → 2020-02-05</Stat>
 </Grid>
 
-<Callout kind="warn" title="데이터 결함 두 가지">
+<!--
+시작 전에 개인 맞춤 설정의 지침이 「ChatGPT 지침(답 받기).md」인지, 템플릿마다 새 대화를 여는지 말로 확인한다.
+⑰ 코드 받기 · ⑱ 내 코드 고쳐 받기는 LAB-07에서 만들었으므로 다시 가르치지 않고 번호로만 부른다.
+-->
 
-- `2023-03-26` 행에 빈 칸 두 개(서울 확진 · 전국 확진)
-- 서울시 일일 사망은 `2022-02-28` 이전이 모두 0
+---
 
+## #02. 쓸 수 있는 문법 — 배운 것까지만
+
+<div class="kicker">받은 코드도 지금까지 배운 문법이어야 한다. 모든 프롬프트의 <code>## 제약</code>에 이 범위를 적는다</div>
+
+| 단원 | 쓸 수 있는 것 |
+|:--|:--|
+| LAB-02 ~ 04 | 변수 · 연산자 · 함수 정의 · 조건문 · 반복문 · 리스트(인덱스 · 슬라이싱 · 구조분해 · in · not in · len · append · enumerate 등) |
+| LAB-05 · 06 | 문자열(strip · split · join · format · isnumeric 등) · 딕셔너리(키 · 값 · get · keys · values · items) |
+| LAB-07 예외처리 | try · except · finally |
+| LAB-08 파일입출력 | open · close · with · read · readlines · write · 모드(r · w · a) · encoding(utf-8 · euc-kr) · CSV를 split으로 읽기 |
+
+<Callout kind="danger" title="아직 안 배운 것 — 쓰지 않는다">
+<code>csv</code> 모듈 · <code>pandas</code> · <code>set</code> · 리스트 · 딕셔너리 컴프리헨션 · lambda · <code>collections</code>(Counter 등)
 </Callout>
 
 <!--
-결함 두 가지를 처음부터 알려 준다. 첫째 결함은 A-2와 B의 "빈 칸 처리" 함정으로, 둘째 결함은 B의 치명률 0% 함정으로 이어진다. 학생이 엑셀이나 VS Code로 파일을 한 번 열어 보게 한다.
+범위는 LAB-02 ~ 08 교안 실습코드에서 확인했다. enumerate는 LAB-04 리스트의 탐색(2)와 LAB-08 CSV파일 다루기에, isnumeric은 LAB-05와 LAB-08에 나온다. set은 어느 실습코드에도 없다.
+이 문제에서 AI는 중복 신고를 지우려고 set을, CSV를 읽으려고 csv 모듈을 거의 꼭 꺼낸다. 4단 확인의 ② 범위에서 걸러 낸다.
 -->
 
 ---
 layout: section
 ---
 
-# A. 구현
+# 문제
 
-15분 직접 시도 → 답 받기 → 받은 코드 4단 확인
+LAB-02 ~ LAB-08에서 배운 것을 모두 써야 풀리는 문제 하나
 
 ---
+class: dense
+---
 
-## #05. 문제마다 같은 순서
+## #03. 문제 — 신고 결과 받기 (1)
 
-<Flow color="pastel">
-<li><carbon:pen /><b>15분 직접 시도</b>교안 방식으로 먼저 쓴다<span class="small muted">open · with · readlines · split</span></li>
-<li><carbon:chat /><b>답 받기</b>막힌 코드를 <code>## 내 시도</code>에<span class="small muted">템플릿 ⑰ · ⑱ · ⑲</span></li>
-<li><carbon:play /><b>① 실행</b>정답과 대조<span class="small muted">내 노트북 결과가 기준</span></li>
-<li><carbon:rule /><b>② 범위</b>배운 문법만<span class="small muted">csv 모듈이면 다시 요청</span></li>
-<li><carbon:education /><b>③ 설명 · ④ 변형</b>줄마다 말로, 변형은 AI 없이</li>
-</Flow>
+<Grid cols="1fr 1fr" align="start">
+<div>
 
-| 문제 | 구할 것 | 템플릿 |
+신입사원 무지는 게시판 불량 이용자를 신고하고 처리 결과를 메일로 발송하는 시스템을 개발하려 합니다. 무지가 개발하려는 시스템은 다음과 같습니다.
+
+- 각 유저는 한 번에 한 명의 유저를 신고할 수 있습니다.
+  - 신고 횟수에 제한은 없습니다. 서로 다른 유저를 계속해서 신고할 수 있습니다.
+  - 한 유저를 여러 번 신고할 수도 있지만, 동일한 유저에 대한 신고 횟수는 1회로 처리됩니다.
+- k번 이상 신고된 유저는 게시판 이용이 정지되며, 해당 유저를 신고한 모든 유저에게 정지 사실을 메일로 발송합니다.
+  - 유저가 신고한 모든 내용을 취합하여 마지막에 한꺼번에 게시판 이용 정지를 시키면서 정지 메일을 발송합니다.
+
+</div>
+<div>
+
+다음은 전체 유저 목록이 ["muzi", "frodo", "apeach", "neo"]이고, k = 2(즉, 2번 이상 신고당하면 이용 정지)인 경우의 예시입니다.
+
+| 유저 ID | 유저가 신고한 ID | 설명 |
 |:--|:--|:--|
-| A-1 기본 정보 | 헤더를 뺀 행 수, 첫 날짜와 마지막 날짜 | ⑰ |
-| A-2 전체 합계와 비율 | 서울 · 전국 확진 합계, 전국 대비 서울 비율 | ⑲ |
-| A-3 최대 확진일 | 서울 일일 확진이 가장 많은 날짜와 값 | ⑰ · ⑱ |
-| A-4 연도별 집계 후 저장 | 연도별 서울 확진 합계 → `seoul_yearly.csv` | ⑰ · ⑱ |
+| "muzi" | "frodo" | "muzi"가 "frodo"를 신고했습니다. |
+| "apeach" | "frodo" | "apeach"가 "frodo"를 신고했습니다. |
+| "frodo" | "neo" | "frodo"가 "neo"를 신고했습니다. |
+| "muzi" | "neo" | "muzi"가 "neo"를 신고했습니다. |
+| "apeach" | "muzi" | "apeach"가 "muzi"를 신고했습니다. |
 
-<!--
-A-1 · A-3 · A-4의 템플릿은 원고에 지정이 없다. 처음 받을 때는 ⑰, 내 코드가 에러를 내거나 값이 틀리면 ⑱로 안내한다. A-2는 새 템플릿 ⑲로 받는다.
--->
-
----
-
-## #06. A-1 기본 정보
-
-<Callout icon="📄" title="헤더를 뺀 행 수, 첫 날짜와 마지막 날짜를 구한다" color="pastel-1"></Callout>
-
-<Grid cols="3">
-<Stat value="1212" unit="행" label="헤더를 뺀 행 수" />
-<Stat value="2023-05-31" label="첫 날짜(첫 데이터 행)" color="ai" />
-<Stat value="2020-02-05" label="마지막 날짜(마지막 행)" color="ok" />
+</div>
 </Grid>
 
-<Callout kind="tip" title="확인 포인트">
-행 수가 1213이면 헤더까지 센 것. 첫 날짜가 더 최근이다. 최신 날짜가 위에 있는 파일이기 때문
-</Callout>
-
 <!--
-readlines()로 읽으면 리스트 길이가 1213(헤더 포함). lines[1:]의 길이가 1212. 첫 날짜는 lines[1], 마지막 날짜는 lines[-1]을 split한 첫 칸이다.
-자주 막히는 곳: 상대 경로 기준. 노트북 파일이 있는 폴더가 기준이다. euc-kr을 빼먹으면 첫 줄부터 UnicodeDecodeError가 난다(C에서 다시 다룬다).
--->
-
----
-layout: infographic
----
-
-## #07. A-2 전체 합계와 비율
-
-<Callout icon="🧮" title="서울 확진 합계, 전국 확진 합계, 전국 대비 서울 비율(소수 첫째 자리). 빈 칸은 0으로 본다" color="pastel-2"></Callout>
-
-<Grid cols="3">
-<Stat value="6,204,725" label="서울 확진 합계" />
-<Stat value="31,683,292" label="전국 확진 합계" color="ai" />
-<Stat value="19.6" unit="%" label="전국 대비 서울 비율" color="ok" />
-</Grid>
-
-<p>템플릿 <Chip color="ai" kind="outline">⑲ 데이터 정보와 함께 받기</Chip>로 받는다. 다음 쪽에서 새 템플릿을 본다</p>
-
-<!--
-빈 칸 행(2023-03-26)에서 int("")를 하면 ValueError: invalid literal for int() with base 10: ''가 난다. 이것이 학생이 15분 시도에서 가장 많이 막히는 지점이고, ⑲의 ## 내 시도에 넣을 재료가 된다.
-"빈 칸은 0으로 본다"는 분석하는 사람이 정한 규칙이다. AI가 정하지 않게 ## 상황에 적는다.
+문제 원문은 프로그래머스 그대로다(2022 KAKAO BLIND RECRUITMENT). 원문이 길어 세 쪽으로 나눴다.
+핵심 함정은 "동일한 유저에 대한 신고 횟수는 1회로 처리"다. 입출력 예 #1에는 중복 신고가 없어서, 중복을 지우지 않은 코드도 #1은 통과한다. #2에서만 드러난다.
 -->
 
 ---
 class: dense
 ---
 
-## #08. 템플릿 ⑲ 데이터 정보와 함께 받기
+## #04. 문제 — 신고 결과 받기 (2)
 
-<Callout icon="💡" title="AI는 내 파일을 모른다. 파일 위치 · 인코딩 · 첫 몇 줄을 함께 보낸다" color="pastel-2"></Callout>
+<Grid cols="2fr 3fr" align="start">
+<div>
+
+각 유저별로 신고당한 횟수는 다음과 같습니다.
+
+| 유저 ID | 신고당한 횟수 |
+|:--|:--:|
+| "muzi" | 1 |
+| "frodo" | 2 |
+| "apeach" | 0 |
+| "neo" | 2 |
+
+</div>
+<div>
+
+위 예시에서는 2번 이상 신고당한 "frodo"와 "neo"의 게시판 이용이 정지됩니다. 이때, 각 유저별로 신고한 아이디와 정지된 아이디를 정리하면 다음과 같습니다.
+
+| 유저 ID | 유저가 신고한 ID | 정지된 ID |
+|:--|:--|:--|
+| "muzi" | ["frodo", "neo"] | ["frodo", "neo"] |
+| "frodo" | ["neo"] | ["neo"] |
+| "apeach" | ["muzi", "frodo"] | ["frodo"] |
+| "neo" | 없음 | 없음 |
+
+</div>
+</Grid>
+
+따라서 "muzi"는 처리 결과 메일을 2회, "frodo"와 "apeach"는 각각 처리 결과 메일을 1회 받게 됩니다.
+
+이용자의 ID가 담긴 문자열 배열 `id_list`, 각 이용자가 신고한 이용자의 ID 정보가 담긴 문자열 배열 `report`, 정지 기준이 되는 신고 횟수 `k`가 매개변수로 주어질 때, 각 유저별로 처리 결과 메일을 받은 횟수를 배열에 담아 return 하도록 solution 함수를 완성해주세요.
+
+<!--
+메일은 "정지된 사람"이 아니라 "정지된 사람을 신고한 사람"이 받는다. 이것을 거꾸로 이해하면 결과가 [0, 1, 0, 1]이 된다(3단계 증상 참고).
+-->
+
+---
+class: dense
+---
+
+## #05. 문제 — 제한사항
+
+<Grid cols="1fr 1fr" align="start">
+<div>
+
+- 2 ≤ `id_list`의 길이 ≤ 1,000
+  - 1 ≤ `id_list`의 원소 길이 ≤ 10
+  - `id_list`의 원소는 이용자의 id를 나타내는 문자열이며 알파벳 소문자로만 이루어져 있습니다.
+  - `id_list`에는 같은 아이디가 중복해서 들어있지 않습니다.
+- 1 ≤ `k` ≤ 200, `k`는 자연수입니다.
+- return 하는 배열은 `id_list`에 담긴 id 순서대로 각 유저가 받은 결과 메일 수를 담으면 됩니다.
+
+</div>
+<div>
+
+- 1 ≤ `report`의 길이 ≤ 200,000
+  - 3 ≤ `report`의 원소 길이 ≤ 21
+  - `report`의 원소는 "이용자id 신고한id"형태의 문자열입니다.
+  - 예를 들어 "muzi frodo"의 경우 "muzi"가 "frodo"를 신고했다는 의미입니다.
+  - id는 알파벳 소문자로만 이루어져 있습니다.
+  - 이용자id와 신고한id는 공백(스페이스)하나로 구분되어 있습니다.
+  - 자기 자신을 신고하는 경우는 없습니다.
+
+</div>
+</Grid>
+
+<!--
+제한사항은 원문 그대로다. 두 단으로 나누면서 k와 return 항목을 왼쪽 단(id_list 아래)으로 옮겼다. 원문 순서는 id_list → report → k → return이다.
+제한시간 안내(정확성 테스트 10초)는 노트북 실습과 상관없어 뺐다.
+-->
+
+---
+class: dense
+---
+
+## #06. 문제 — 입출력 예
+
+| id_list | report | k | result |
+|:--|:--|:--:|:--|
+| `["muzi", "frodo", "apeach", "neo"]` | `["muzi frodo","apeach frodo","frodo neo","muzi neo","apeach muzi"]` | 2 | <span class="whitespace-nowrap">[2,1,1,0]</span> |
+| `["con", "ryan"]` | `["ryan con", "ryan con", "ryan con", "ryan con"]` | 3 | [0,0] |
+
+<div class="kicker">입출력 예 설명</div>
+
+<Steps>
+<li><b>입출력 예 #1</b> 문제의 예시와 같습니다.</li>
+<li><b>입출력 예 #2</b> "ryan"이 "con"을 4번 신고했으나, 주어진 조건에 따라 한 유저가 같은 유저를 여러 번 신고한 경우는 신고 횟수 1회로 처리합니다. 따라서 "con"은 1회 신고당했습니다. 3번 이상 신고당한 이용자는 없으며, "con"과 "ryan"은 결과 메일을 받지 않습니다. 따라서 [0, 0]을 return 합니다.</li>
+</Steps>
+
+<p class="small muted">출처: <a href="https://school.programmers.co.kr/learn/courses/30/lessons/92334" target="_blank" rel="noopener">프로그래머스 코딩테스트 연습 「신고 결과 받기」</a></p>
+
+<!--
+입출력 예와 설명은 원문 그대로다.
+#2가 이 문제의 함정을 보여 주는 예다. 중복을 지우지 않은 코드는 #1을 통과하고 #2에서만 [0, 4]가 나온다.
+-->
+
+---
+class: dense
+---
+
+## #07. 오늘 더하는 것 — 신고 기록을 CSV 파일에서 읽는다
+
+<Callout icon="💡" title="원래 문제는 report를 리스트로 받는다. 오늘은 신고 기록을 CSV 파일로 두고, 파일에서 읽어 report 리스트를 만든 뒤 solution을 부른다" color="pastel-1"></Callout>
+
+<Grid cols="2fr 2fr 3fr" align="start">
+<div>
+
+<div class="kicker">report.csv · 입출력 예 #1</div>
+
+```text
+신고자,신고당한사람
+muzi,frodo
+apeach,frodo
+frodo,neo
+muzi,neo
+apeach,muzi
+```
+
+</div>
+<div>
+
+<div class="kicker">report2.csv · 입출력 예 #2</div>
+
+```text
+신고자,신고당한사람
+ryan,con
+ryan,con
+ryan,con
+ryan,con
+```
+
+</div>
+<div>
+
+<div class="kicker">기본 코드 템플릿</div>
+
+```python
+def solution(id_list, report, k):
+    answer = []
+    return answer
+```
+
+<Steps>
+<li>VS Code에서 노트북과 <b>같은 폴더</b>에 두 파일을 새로 만들어 그대로 붙인다</li>
+<li>VS Code가 저장하는 인코딩은 <b>utf-8</b></li>
+</Steps>
+
+</div>
+</Grid>
+
+<!--
+파일에서 읽는 부분은 프로그래머스 문제에 없는, 오늘 수업에서 더한 것이다. 프로그래머스에 제출할 때는 solution 함수만 붙여 넣는다.
+CSV 한 줄 "muzi,frodo"를 split(",")한 뒤 원래 문제의 모양 "muzi frodo"로 이어 붙여 report 리스트를 만든다. 그러면 solution은 원래 문제 그대로 쓸 수 있다.
+교안의 covid19.csv는 엑셀에서 만든 euc-kr 파일이지만, 오늘 파일은 VS Code에서 만들어 utf-8이다. 헤더에 한글이 있어서 인코딩을 잘못 적으면 첫 줄부터 에러가 난다(3단계 증상).
+파일 끝에 빈 줄을 하나 더 넣지 않게 한다. 빈 줄이 있으면 split 결과가 ['']가 되어 IndexError가 난다(3단계 증상).
+-->
+
+---
+layout: section
+---
+
+# 풀이 단계
+
+설계 → 코드 받기 · 검증 → 고쳐 받기, 세 단계로 푼다
+
+---
+
+## #08. AI와 함께 푸는 세 단계
+
+<Steps color="pastel">
+<li><b>AI에게 물어 문제를 확인하고 함수를 설계한다</b> — 내 정리를 점검받고, 처리 순서를 단계표로 받는다 <Chip color="ai">프롬프트 ② + ⑤</Chip></li>
+<li><b>먼저 직접 시도하고, 막히면 코드를 받아 검증한다</b> — 내 파일 정보와 내 시도를 보내 코드를 받고, 4단 확인을 한다 <Chip color="ai">프롬프트 ⑲</Chip> <Chip color="ok">4단 확인</Chip></li>
+<li><b>틀리면 AI에게 고쳐 받는다</b> — 틀린 결과와 내가 생각한 원인을 보내 바꾼 줄만 받는다 <Chip color="ai">프롬프트 ⑱</Chip></li>
+</Steps>
+
+<Core color="ai">코드는 AI에게 받아도 된다. 4단 확인을 통과해야 내 코드다.</Core>
+
+<!--
+LAB-03 ~ 06과 같은 세 단계에서 2단계만 바뀌었다. 조언 받기 단계에서는 2단계를 AI 없이 썼고, 답 받기 단계에서는 직접 시도한 뒤 코드를 받아 검증한다.
+1단계를 건너뛰면 받은 코드가 맞는지 판단할 기준이 없다. 특히 "중복 신고는 1회"와 "메일은 신고한 사람이 받는다"를 1단계에서 확인해 둔다.
+-->
+
+---
+class: dense
+---
+
+## #09. 1단계 — AI에게 물어 문제를 확인하고 함수를 설계한다
+
+<Callout icon="💡" title="문제를 제대로 이해했는지 확인하고, 어떤 순서로 코드를 쓸지 정하고 싶은 경우" color="pastel-1"></Callout>
 
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ② + ⑤번 패턴">
 
 ````md
 ## 맥락
-파이썬 파일입출력 단원을 배우는 중이야. VS Code 주피터 노트북에서 실행해.
+파이썬 파일입출력 단원을 배우는 중이야. 코딩 테스트 문제를 풀기 전에 문제를 내 말로 정리했어.
 
 ## 상황
-- 노트북과 같은 폴더에 covid19.csv가 있어. 인코딩은 euc-kr
-- 첫 3줄:
-  날짜,서울시 일일 확진,서울시 일일 사망,전국 일일 확진,전국 일일 사망
-  2023-05-31,5987,6,24411,17
-  2023-05-30,3326,1,13529,7
-- 빈 칸이 있는 행이 있어. 빈 칸은 0으로 볼 거야
-- 원하는 것: 서울 확진 합계, 전국 확진 합계, 전국 대비 서울 비율(소수 첫째 자리)
+문제: {문제 원문 붙여 넣기}
+신고 기록은 report.csv 파일(헤더 한 줄 + "신고자,신고당한사람" 행)에서 읽어 올 거야.
 
-## 내 시도
-{내 코드와 막힌 지점}
+내 정리:
+- 세어야 할 것: {내가 이해한 내용}
+- 정지되는 조건: {내가 이해한 내용}
+- 돌려줄 값: {내가 이해한 내용}
 
 ## 질문
-내 시도를 이어서 완성한 코드를 줘.
+1. 내 정리에서 문제와 다르게 이해한 부분과 빠진 부분을 짚어 줘
+2. 그다음 파일 읽기부터 결과를 돌려주기까지 해야 할 일을 단계 순서로 나눠 줘
 
 ## 제약
-- open · with · readlines · split만 써. csv 모듈 · pandas는 쓰지 마
-- 열 이름과 파일 이름은 위에 적은 그대로 써
+- 코드나 의사코드 없이 말로만
+- 배운 범위(#02 표) 안에서. csv 모듈 · set · 컴프리헨션은 쓰지 않는 방법으로
 
 ## 출력 형식
-1. 코드
-2. | 줄 | 하는 일 | 표로
-3. 결과가 맞는지 확인할 방법 2줄
+1은 | 내 정리 | 판정(맞음 / 보완) | 이유 | 표로
+2는 | 단계 | 할 일 | 끝나면 확인할 것 | 표로
 ````
 
 </Prompt>
@@ -237,420 +350,268 @@ class: dense
 <div>
 
 <div class="card ok">
-<h3><carbon:list-checked /> 사용 방법</h3>
+<h3><carbon:list-checked /> 학생 활동</h3>
 
-- 첫 3줄은 파일에서 그대로 복사한다
-- 15분 시도한 코드와 막힌 지점을 `{내 코드와 막힌 지점}`에 넣는다
-- 받은 코드는 #02의 4단 확인을 거친다
+- 문제를 다시 보지 않고 **세 줄**로 정리해 보낸다
+- **보완** 판정을 받은 줄은 내 말로 고친다
+- 받은 단계표를 노트북 **마크다운 셀**에 옮긴다
 
 </div>
 
 <Callout kind="warn" title="주의">
-CSV를 첨부해도 ChatGPT가 계산한 값은 정답이 아니다. 정답은 내 노트북 실행 결과
+1단계는 코드를 받는 단계가 아니다. <code>## 내 시도</code>를 넣지 않고 말로만 받는다
 </Callout>
 
 </div>
 </Grid>
 
 <!--
-⑰과 다른 점은 ## 상황에 "내 데이터의 정보"가 들어간다는 것. 위치(같은 폴더) · 인코딩(euc-kr) · 첫 3줄(열 이름) · 빈 칸 처리 규칙. C의 에러 네 가지 중 세 가지(UnicodeDecodeError · FileNotFoundError · 열 이름 추측)가 이 정보가 빠졌을 때 생긴다. C를 마친 뒤 이 쪽으로 돌아와 짚어 준다.
+LAB-02의 ② 내 설명 점검받기와 ⑤ 단계로 쪼개기를 한 프롬프트로 묶었다(LAB-03 ~ 06과 같다). 답 받기 지침이 들어가 있어도 ## 내 시도가 없고 "말로만"이라고 적으면 코드가 오지 않는다.
+학생이 자주 빠뜨리는 정리: 같은 사람이 같은 사람을 여러 번 신고하면 1회, 메일은 정지된 사람이 아니라 그 사람을 신고한 사람이 받는다, 결과는 id_list 순서, 정지는 k번 "이상"(같아도 정지).
+기대하는 단계표: ① 파일을 열어 줄 목록으로 읽기 ② 헤더를 건너뛰고 줄마다 줄바꿈을 지우고 쉼표로 나눠 report 리스트 만들기 ③ 사람마다 "나를 신고한 사람 목록"을 빈 리스트로 준비 ④ 신고마다 신고자가 목록에 없을 때만 추가(중복 제거) ⑤ 목록 길이가 k 이상인 사람을 신고한 사람마다 메일 수 1 증가 ⑥ id_list 순서대로 메일 수를 담아 돌려주기.
 -->
 
 ---
-layout: magazine
+class: dense
 ---
 
-## #09. A-3 최대 확진일
+## #10. 2단계 — 먼저 직접 시도하고, 막히면 코드를 받아 검증한다
 
-서울 일일 확진이 가장 많은 날짜와 값을 구한다.
+<Callout icon="💡" title="단계표대로 직접 써 보다 막혔고, 내 파일에 맞는 코드를 받아 검증하고 싶은 경우" color="pastel-1"></Callout>
 
-- 날짜와 값을 **함께** 기억해야 한다
-- 빈 칸 행도 지나가야 한다. 빈 칸은 0으로 본다
-- 처음 받으면 ⑰, 내 코드가 틀리면 ⑱
-
-::right::
-
-<Stat value="128,375" label="서울 일일 확진 최댓값" color="ai">2022-03-17</Stat>
-
-<Callout kind="tip" title="정답 대조">
-날짜와 값이 둘 다 맞아야 통과. 값만 맞고 날짜가 다르면 날짜를 기억하는 줄을 다시 본다
-</Callout>
-
-<!--
-학생 코드에서 자주 보이는 것: 최댓값만 갱신하고 날짜는 갱신하지 않음, 문자열끼리 비교함("9" > "128375"가 True). 문자열 비교면 값이 틀리게 나온다. int로 바꾼 뒤 비교했는지 ③ 설명 단계에서 말로 확인한다.
--->
-
----
-
-## #10. A-4 연도별 집계 후 저장
-
-<Callout icon="💾" title="연도별 서울 확진 합계를 딕셔너리로 만들어 seoul_yearly.csv로 저장하고 엑셀로 연다" color="pastel-3"></Callout>
-
-<Grid cols="4">
-<Tile color="pastel-1" tag="2020" value="18,395">서울 확진 합계</Tile>
-<Tile color="pastel-2" tag="2021" value="206,375">서울 확진 합계</Tile>
-<Tile color="pastel-3" tag="2022" value="5,440,196">서울 확진 합계</Tile>
-<Tile color="pastel-4" tag="2023" value="539,759">서울 확진 합계</Tile>
-</Grid>
-
-<Callout kind="ai" title="④ 변형 — AI 없이 직접">
-연도별 <b>행 수</b>를 구한다. 정답 2020 <code>331</code> · 2021 <code>365</code> · 2022 <code>365</code> · 2023 <code>151</code>
-</Callout>
-
-<Core color="ok">네 연도의 합은 A-2의 서울 합계 6,204,725와 같아야 한다</Core>
-
-<!--
-연도는 날짜 문자열의 앞 네 글자(LAB-05 문자열 슬라이싱). 딕셔너리에 연도별로 더하는 것은 LAB-06의 그룹별 집계와 같다.
-④ 변형은 "더하는 값"을 "1"로 바꾸면 되는 문제다. 받은 코드를 이해했다면 한 줄만 바꾸면 된다. AI 없이 풀었는지 꼭 확인한다.
-네 연도 합의 검산: 18,395 + 206,375 + 5,440,196 + 539,759 = 6,204,725. 행 수 합 331 + 365 + 365 + 151 = 1,212.
-엑셀에서 연 채로 다시 저장하면 PermissionError가 난다(C에서 다룬다).
--->
-
----
-layout: section
----
-
-# B. "AI 답"의 함정
-
-실행은 되지만 틀린 값, 또는 맞는 값이지만 범위 밖. 강사가 미리 받아 둔 AI 답을 검증한다
-
----
-
-## #11. 함정 ① 빈 칸이 있는 행
-
-<Grid cols="3fr 2fr" align="start">
+<Grid cols="2fr 1fr" align="start">
 <div>
 
-```python
-with open("covid19.csv", "r", encoding="euc-kr") as f:
-    lines = f.readlines()
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑲번 패턴 (오늘 새 패턴)">
 
-death_sum = 0
-for line in lines[1:]:
-    cols = line.strip().split(",")
-    if "" in cols:
+````md
+## 맥락
+파이썬 파일입출력 단원을 배우는 중이야. VS Code 주피터 노트북에서 실행해.
+
+## 상황
+- 노트북과 같은 폴더에 report.csv · report2.csv가 있어. 인코딩은 utf-8
+- report.csv 첫 3줄:
+  신고자,신고당한사람
+  muzi,frodo
+  apeach,frodo
+- 문제: {문제 원문 붙여 넣기}
+- 정답: report.csv는 [2, 1, 1, 0], report2.csv는 [0, 0]
+  (id_list와 k는 문제의 입출력 예 #1 · #2 그대로)
+
+## 내 시도
+{내 코드와 막힌 지점}
+
+## 질문
+내 시도를 이어서 완성한 코드를 줘.
+
+## 제약
+- 배운 범위(#02 표)만 써. csv 모듈 · pandas · set · 컴프리헨션은 쓰지 마
+- 파일 이름 · 열 이름 · 변수 이름은 위에 적은 그대로 써
+
+## 출력 형식
+1. 코드
+2. | 줄 | 하는 일 | 표로
+3. 정답과 맞는지 내가 확인할 방법 2줄
+````
+
+</Prompt>
+
+</div>
+<div>
+
+<div class="card ok">
+<h3><carbon:list-checked /> 받은 코드 4단 확인</h3>
+
+- **① 실행** 두 파일 모두 정답이 나오는지
+- **② 범위** csv · set · 컴프리헨션이 없는지
+- **③ 설명** 줄별 표 없이 줄마다 말로
+- **④ 변형** 아래 문제를 AI 없이
+
+</div>
+
+<Callout kind="tip" title="④ 변형 문제">
+메일 수 대신 <b>신고당한 횟수</b>(중복은 1회)를 id_list 순서로. report.csv면 <span class="whitespace-nowrap"><b>[1, 2, 0, 2]</b></span>
+</Callout>
+
+</div>
+</Grid>
+
+<!--
+새 템플릿 ⑲. ⑰ 코드 받기와 다른 점은 ## 상황에 "내 데이터의 정보"가 들어간다는 것이다: 위치(같은 폴더) · 인코딩(utf-8) · 첫 3줄(열 이름) · 정답. 3단계 증상 중 UnicodeDecodeError · FileNotFoundError · 헤더를 데이터로 센 KeyError가 이 정보가 빠졌을 때 생긴다.
+## 내 시도가 비어 있으면 지침 2-1에 따라 코드 대신 처리 순서가 온다. 1단계 단계표대로 파일 읽기까지라도 직접 써서 넣게 한다.
+① 실행은 report.csv 하나로 끝내지 않는다. 중복 신고를 지우지 않은 코드도 report.csv는 [2, 1, 1, 0]으로 통과하고, report2.csv에서만 [0, 4]가 나온다.
+④ 변형 정답(직접 실행): report.csv → [1, 2, 0, 2], report2.csv → [1, 0]. 받은 코드를 이해했다면 "나를 신고한 사람 목록"의 길이만 꺼내면 된다.
+
+강사용 정답 코드(학생 자료에는 없음):
+def solution(id_list, report, k):
+    reporters = {}                 # 신고당한 사람: 나를 신고한 사람 목록
+    for name in id_list:
+        reporters[name] = []
+    for r in report:
+        user, target = r.split(" ")
+        if user not in reporters[target]:
+            reporters[target].append(user)
+    mail = {}
+    for name in id_list:
+        mail[name] = 0
+    for target in reporters:
+        if len(reporters[target]) >= k:
+            for user in reporters[target]:
+                mail[user] += 1
+    answer = []
+    for name in id_list:
+        answer.append(mail[name])
+    return answer
+
+report = []
+with open("report.csv", "r", encoding="utf-8") as f:
+    lines = f.readlines()
+for i, line in enumerate(lines):
+    if i == 0:
         continue
-    death_sum += int(cols[2])
-
-print(death_sum)
-```
-
-</div>
-<div>
-
-<Output>4118</Output>
-
-<Callout kind="danger" icon="🔍" title="증상">
-서울 사망 합계 정답은 <b>4120</b>. 실행은 되지만 2가 모자란다
-</Callout>
-
-<Steps color="ai">
-<li>정답과 다른 값이 나온 줄을 찾는다</li>
-<li>의심 가는 행을 원본 파일에서 직접 연다</li>
-</Steps>
-
-</div>
-</Grid>
-
-<!--
-강사용 원인: 빈 칸이 있는 행을 통째로 건너뛰었다. 2023-03-26 행은 서울 확진 · 전국 확진만 비어 있고 서울 사망 값(2)은 있다. 행을 버리면 그 행의 다른 열 값까지 사라진다.
-빈 칸 처리 방식(0으로 보기 · 행 버리기)은 분석하는 사람이 정한다. AI가 정하게 두지 않는다. 그래서 ⑲의 ## 상황에 "빈 칸은 0으로 볼 거야"를 적는다.
--->
-
----
-
-## #12. 함정 ② `csv` 모듈로 받은 코드
-
-<Grid cols="3fr 2fr" align="start">
-<div>
-
-```python
-import csv
-
-seoul_sum = 0
-with open("covid19.csv", "r", encoding="euc-kr") as f:
-    reader = csv.reader(f)
-    next(reader)
-    for row in reader:
-        if row[1] != "":
-            seoul_sum += int(row[1])
-
-print(seoul_sum)
-```
-
-</div>
-<div>
-
-<Output>6204725</Output>
-
-<Callout kind="tip" icon="✔️" title="① 실행은 통과">
-A-2의 서울 합계와 같은 값
-</Callout>
-
-<Callout kind="warn" title="4단 확인 ② 범위">
-<code>import csv</code> · <code>csv.reader</code> · <code>next</code>가 배운 문법인지 #03 표와 대조한다
-</Callout>
-
-</div>
-</Grid>
-
-<!--
-강사용 원인: 값은 맞지만 ② 범위 위반. csv 모듈은 교안에 없다. 교안의 split 방식으로 다시 요청한다. ## 제약에 "csv 모듈 · pandas는 쓰지 마"를 적으면 처음부터 막을 수 있다.
-값이 맞으면 학생은 통과시키기 쉽다. 4단 확인이 실행 하나로 끝나지 않는다는 것을 보여 주는 사례다.
--->
-
----
-
-## #13. 함정 ③ 연도별 저장
-
-<Grid cols="3fr 2fr" align="start">
-<div>
-
-```python
-# yearly: A-4에서 만든 연도별 서울 확진 합계 딕셔너리
-for year in yearly:
-    with open("seoul_yearly.csv", "w", encoding="euc-kr") as f:
-        f.write(year + "," + str(yearly[year]) + "\n")
-```
-
-</div>
-<div>
-
-<Callout kind="danger" icon="🔍" title="증상">
-에러 없이 끝나지만, 엑셀로 열면 파일에 <b>마지막 연도 한 줄만</b> 있다
-</Callout>
-
-<Callout kind="tip" title="확인할 곳">
-저장 결과는 출력이 아니라 <b>파일을 직접 열어</b> 확인한다. 네 연도 네 줄이 있어야 한다
-</Callout>
-
-</div>
-</Grid>
-
-<!--
-강사용 원인: open(..., "w")를 반복문 안에서 호출했다. w 모드는 열 때마다 내용을 지운다. 그래서 반복의 마지막 연도만 남는다. 파일을 반복문 바깥에서 한 번 열고, 반복문 안에서는 write만 한다.
-A-4의 "엑셀로 연다"가 이 함정을 잡는 단계다.
--->
-
----
-
-## #14. 함정 ④ 연도별 서울 치명률
-
-<Grid cols="3fr 2fr" align="start">
-<div>
-
-```python
-# 치명률 = 사망 ÷ 확진 × 100, 빈 칸은 0
-with open("covid19.csv", "r", encoding="euc-kr") as f:
-    lines = f.readlines()
-
-cases = {}
-deaths = {}
-for line in lines[1:]:
     cols = line.strip().split(",")
-    year = cols[0][:4]
-    if year not in cases:
-        cases[year] = 0
-        deaths[year] = 0
-    if cols[1] != "":
-        cases[year] += int(cols[1])
-    deaths[year] += int(cols[2])
+    report.append(cols[0] + " " + cols[1])
 
-for year in cases:
-    print(year, round(deaths[year] / cases[year] * 100, 1))
+print(solution(["muzi", "frodo", "apeach", "neo"], report, 2))   # [2, 1, 1, 0]
+report2.csv로 같은 순서를 밟고 solution(["con", "ryan"], report2, 3)이면 [0, 0]. 더 확인할 값: report.csv에 k = 1이면 [2, 1, 2, 0].
+-->
+
+---
+class: dense
+---
+
+## #11. 3단계 — 틀리면 AI에게 고쳐 받는다
+
+<Callout icon="💡" title="받은 코드나 내가 고친 코드에서 에러가 나거나 값이 틀렸고, 원인을 짐작해 봤는데 어떻게 고칠지 막힌 경우" color="pastel-1"></Callout>
+
+<Grid cols="2fr 1fr" align="start">
+<div>
+
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑱번 패턴">
+
+````md
+## 맥락
+파이썬 파일입출력 단원을 배우는 중이야.
+
+## 상황
+```python
+{내 코드}
 ```
+기대 결과: {예: report2.csv로 [0, 0]}
+실제 출력: {예: [0, 4] · 에러가 났으면 에러 원문 그대로}
+
+## 내 시도
+내가 생각한 원인: {내 생각}
+
+## 질문
+내 코드를 고친 코드를 줘.
+
+## 제약
+- 내 코드에서 바꾼 줄만 바꿔. 나머지는 그대로 둬
+- 배운 범위(#02 표)만 써. csv 모듈 · set · 컴프리헨션은 쓰지 마
+
+## 출력 형식
+1. 고친 코드 (바꾼 줄 끝에 # 변경 표시)
+2. | 바꾼 줄 | 바꾼 이유 | 표로
+3. 내가 생각한 원인이 맞았는지 한 줄
+````
+
+</Prompt>
 
 </div>
 <div>
 
-<Grid cols="2" gap="8 16">
-<Stat value="0" unit="%" label="2020년 치명률" color="ai" />
-<Stat value="0" unit="%" label="2021년 치명률" color="ai" />
-</Grid>
+<div class="card ok">
+<h3><carbon:list-checked /> 학생 활동</h3>
 
-<Callout kind="danger" icon="🔍" title="증상">
-2020 · 2021년 서울 치명률이 0%. 코드를 아무리 봐도 틀린 줄이 없다
+- 실제 출력은 **그대로** 붙인다
+- 원인을 **먼저 내 말로** 적고 보낸다
+- `# 변경` 줄만 비교하고, 두 파일로 다시 ① 실행
+
+</div>
+
+<Callout kind="danger" title="에러가 파일 쪽이면">
+코드만 보지 말고 파일 이름 · 위치 · 인코딩 · 마지막 빈 줄을 먼저 확인한다
 </Callout>
 
 </div>
 </Grid>
 
 <!--
-꼭 다루는 사례. 학생은 코드에서 원인을 찾으려고 오래 헤맨다. 코드는 맞다. 충분히 헤매게 둔 뒤 다음 쪽으로 넘어간다.
+LAB-07에서 만든 ⑱을 그대로 쓴다. 고친 뒤에는 두 파일로 ① 실행부터 4단 확인을 다시 한다.
+강사용 증상과 원인(모두 Python 3.13으로 직접 실행해 확인):
+report2.csv가 [0, 4] — 중복 신고를 지우지 않고 신고 줄마다 셌다. con이 4번 신고당해 정지되고, ryan이 신고한 줄 수만큼 4통을 받는다. report.csv는 [2, 1, 1, 0]으로 통과해서 놓치기 쉽다.
+KeyError: '신고당한사람' — 헤더 줄을 건너뛰지 않아 "신고자 신고당한사람"이 신고 기록으로 들어갔다.
+KeyError: 'frodo\n' — 줄 끝의 줄바꿈을 strip으로 지우지 않았다. 읽은 report가 ['muzi frodo\n', ...]가 된다.
+UnicodeDecodeError: 'euc_kr' codec can't decode byte 0xec in position 0: illegal multibyte sequence — 교안 covid19.csv처럼 euc-kr로 열었다. 오늘 파일은 utf-8.
+FileNotFoundError: [Errno 2] No such file or directory: 'data/report.csv' — AI가 폴더 구조를 지어냈다. ⑲의 "노트북과 같은 폴더"가 막아 준다.
+IndexError: list index out of range — 파일 끝에 빈 줄이 하나 더 있어 split 결과가 ['']이다.
+[0, 0, 0, 0] — 정지 조건을 > k로 썼다. k번 "이상"이므로 >= k.
+[0, 1, 0, 1] — 메일을 신고한 사람이 아니라 정지된 사람에게 셌다.
 -->
 
 ---
-
-### #14-1. 결과가 이상하면 원본 데이터도 연다
-
-<Timeline color="ok">
-<li><b>2020-02-05</b>데이터 시작(파일의 마지막 행)</li>
-<li class="now"><b>2022-02-28</b>서울시 일일 사망 기록이 이날부터 있음</li>
-<li><b>2023-05-31</b>데이터 끝(파일의 첫 행)</li>
-</Timeline>
-
-<Grid cols="2">
-<Tile kind="surface" color="danger" tag="2022-02-28 이전" title="서울시 일일 사망이 모두 0">
-2020년과 2021년은 이 구간에 모두 들어간다
-</Tile>
-<Tile kind="surface" color="ok" tag="판단" title="코드가 아니라 데이터 문제">
-0 ÷ 확진은 0. 계산은 맞고, 기록이 없을 뿐이다
-</Tile>
-</Grid>
-
-<Core color="warn">결과가 이상하면 코드만 보지 말고 원본 데이터도 연다</Core>
-
-<!--
-강사용 원인: 코드가 아니라 데이터 문제. 서울시 사망 기록이 2022-02-28부터 있다. #04에서 미리 알려 준 결함 두 번째가 여기서 나온다.
-이 0%를 "2020 · 2021년에는 아무도 죽지 않았다"로 해석해 보고서에 쓰면 틀린 결론이 된다. 데이터 분석에서 가장 흔한 실수 중 하나다. ChatGPT에게 물어도 데이터를 보지 못하면 코드만 의심한다.
--->
-
----
-layout: section
+class: dense
 ---
 
-# C. 에러 수정
+## #12. 마무리 — ⑫ 거꾸로 질문
 
-받은 코드를 내 노트북에 붙였을 때 나는 에러를 고친다
+<Callout icon="💡" title="정답은 나왔는데, 받은 코드를 정말 이해했는지 점검하고 싶은 경우" color="pastel-1"></Callout>
 
----
-
-## #15. 에러 ① · ② 파일을 열지 못한다
-
-<Grid cols="2" align="start">
+<Grid cols="2fr 1fr" align="start">
 <div>
 
-<div class="kicker">AI 답이 encoding 없이 열기</div>
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑫번 패턴">
 
+````md
+## 맥락
+파이썬 파일입출력 단원을 배우는 중이야. 신고 결과 받기 문제를 AI에게 받은 코드로 풀었어.
+
+## 상황
+4단 확인을 통과한 코드:
 ```python
-with open("covid19.csv", "r") as f:
-    lines = f.readlines()
+{내 코드}
 ```
 
-<Output label="에러">UnicodeDecodeError: 'utf-8' codec can't decode byte ...</Output>
+## 질문
+이 코드를 내가 이해했는지 점검하는 문제를 한 번에 하나씩 내 줘.
+내가 답하면 맞았는지 알려 주고 다음 문제로 넘어가.
+다섯 문제가 끝나면 내가 약한 부분을 정리해 줘.
+
+## 제약
+- 문제는 이 코드의 실행 결과를 예측하거나 줄의 역할을 설명하는 것으로. 코드를 작성하라는 문제는 내지 마
+- 배운 범위(#02 표) 안에서
+
+## 출력 형식
+문제는 아래 예시와 같은 모양으로, 한 번에 하나만.
+- 예시: report.csv에서 strip()을 빼면 어느 줄에서 무슨 일이 생길까?
+다섯 문제가 끝나면 | 약한 부분 | 어느 단원 | 다시 볼 것 | 표로
+````
+
+</Prompt>
 
 </div>
 <div>
 
-<div class="kicker">AI 답의 파일 경로가 내 폴더와 다름</div>
+<div class="card ok">
+<h3><carbon:list-checked /> 학생 활동</h3>
 
-```python
-with open("data/covid19.csv", "r", encoding="euc-kr") as f:
-    lines = f.readlines()
-```
-
-<Output label="에러">FileNotFoundError</Output>
+- 답은 **실행해 보기 전에** 먼저 적는다
+- 답한 뒤 직접 실행해 맞는지 확인한다
+- 약한 부분 표에서 다시 볼 교안 쪽을 찾아 둔다
 
 </div>
-</Grid>
 
-<Callout kind="tip">
-트레이스백은 맨 아래 줄부터 읽는다. 에러 이름과 내 파일 정보(인코딩 · 위치)를 맞춰 본다
+<Callout kind="warn" title="주의">
+틀린 문제는 AI 설명만 읽고 넘기지 않는다. 그 줄에 print를 넣어 내 눈으로 확인한다
 </Callout>
 
-<!--
-강사용 원인
-- UnicodeDecodeError: 이 파일은 euc-kr. AI는 내 파일의 인코딩을 모른다. ⑲의 "인코딩은 euc-kr"이 막아 준다.
-- FileNotFoundError: 상대 경로의 기준은 노트북 위치. AI는 내 폴더 구조를 모른다. ⑲의 "노트북과 같은 폴더에"가 막아 준다.
-경로 예시는 설명용이다. 실제 AI 답의 경로는 다를 수 있다.
--->
-
----
-
-## #16. 에러 ③ · ④ 열 이름과 저장
-
-<Grid cols="2" align="start">
-<div>
-
-<div class="kicker">AI 답이 열 이름을 지어냄</div>
-
-```python
-header = lines[0].strip().split(",")
-idx = header.index("서울 확진")
-```
-
-<Output label="에러">ValueError: '서울 확진' is not in list</Output>
-
-<p class="small muted">에러가 나지 않고 엉뚱한 열을 계산하는 경우도 있다</p>
-
-</div>
-<div>
-
-<div class="kicker">엑셀에서 열어 둔 CSV에 저장</div>
-
-```python
-with open("seoul_yearly.csv", "w", encoding="euc-kr") as f:
-    f.write("2020,18395\n")
-```
-
-<Output label="에러">PermissionError</Output>
-
 </div>
 </Grid>
 
-<Steps color="ok">
-<li>에러 원문을 그대로 두고 원인을 먼저 내 말로 적는다</li>
-<li>스스로 못 고치면 템플릿 ⑱ 내 코드 고쳐 받기로 보낸다. <code>## 내 시도</code>에 내가 생각한 원인을 쓴다</li>
-</Steps>
-
 <!--
-강사용 원인
-- 열 이름: 첫 줄(헤더)을 붙여 넣지 않으면 AI가 열을 추측한다. 실제 열 이름은 "서울시 일일 확진". 열 위치(cols[1])를 추측해 엉뚱한 열을 계산하는 경우가 더 위험하다. 에러가 없기 때문. ⑲의 "첫 3줄"이 막아 준다.
-- PermissionError: 엑셀이 파일을 잡고 있다. 파일을 닫고 다시 실행한다.
-C를 마친 뒤 #08(템플릿 ⑲)로 돌아가 상황 섹션의 각 줄이 어느 에러를 막는지 함께 짚는다.
--->
-
----
-layout: section
----
-
-# D. 정리
-
-새 템플릿을 내 파일에 추가하고, 오늘 고친 실수를 한 줄로 남긴다
-
----
-layout: cards
-cols: 3
----
-
-## #17. 오늘의 결과물
-
-<div class="py">
-
-#### <carbon:code /> A-1 ~ A-4 코드
-
-- 문제마다 4단 확인 표시
-- ① 실행 · ② 범위 · ③ 설명 · ④ 변형
-
-</div>
-<div class="ai">
-
-#### <carbon:document /> seoul_yearly.csv
-
-- 연도별 서울 확진 합계 네 줄
-- 엑셀로 열어 확인
-
-</div>
-<div class="ok">
-
-#### <carbon:template /> 템플릿 ⑲
-
-- 「내 프롬프트 템플릿.md」에 추가
-- 오늘 고친 실수 한 줄 기록
-
-</div>
-
-<Callout kind="real" title="한 장으로 기억하기">
-<b>받기</b> AI는 내 파일을 모른다. 위치 · 인코딩 · 첫 몇 줄을 보낸다(⑲)<br>
-<b>빈 칸</b> 처리 방식은 내가 정한다<br>
-<b>검증</b> 값이 맞아도 범위를 보고, 값이 이상하면 원본 데이터를 연다<br>
-<b>정답</b> 내 노트북 실행 결과
-</Callout>
-
-<!--
-자주 막히는 곳: 상대 경로 기준, euc-kr, 빈 칸 처리 결정.
-데이터 분석 연결: 읽기 → 정제(LAB-05 · 07) → 집계(LAB-06) → 저장. LAB-10 이후 pandas가 한 줄로 하는 일을 오늘 직접 해 봤다.
-다음 LAB-09에서는 클래스로 기록을 관리하고, ② 답 받기 단계를 마무리한다.
+LAB-02의 ⑫를 받은 코드에 맞춰 쓴다. 답 받기 단계에서 ⑫는 4단 확인의 ③ 설명을 한 번 더 다지는 역할이다. 받은 코드를 읽기만 하고 넘어간 학생은 여기서 드러난다.
+예시 문제의 답: strip()을 빼면 report가 ['muzi frodo\n', ...]가 되어 solution 안에서 KeyError: 'frodo\n'가 난다(3단계 증상).
 -->
 
 ---

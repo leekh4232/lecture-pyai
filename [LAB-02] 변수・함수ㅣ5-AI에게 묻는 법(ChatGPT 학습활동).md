@@ -17,7 +17,7 @@ layout: cover
 「변수의 이해」「연산자의 이해」「함수의 이해」「함수의 정의」 실습 코드를 모두 돌려 본 학생이 하는 활동. 「바이브 코딩을 위한 AI 사용 방법」에서 지침 설정을 마쳤다고 전제한다. 제출물은 없다.
 결과물은 「내 프롬프트 템플릿.md」 한 파일. 막히는 상황 다섯 가지에 템플릿 열두 개를 모은다. 네 단원 지식을 다시 가르치는 시간이 아니라, 막혔을 때 "지금 어떤 상황인지" 가려내고 맞는 템플릿을 꺼내는 습관을 만드는 시간이다.
 4단원 수업 슬라이드 첫 장에 "연습문제가 없는 단원"이라고 되어 있다. 이 활동의 ⑥ → ⑨ → ⑪(할인 함수)이 4단원 연습문제 역할을 한다.
-두 시간이면 A · B(이해 · 시작)를 1교시, C · D · E(결과 · 에러 · 복습)를 2교시로 나눈다. 시간이 모자라도 ⑦(확인할 곳) · ⑩(에러 원문) · ⑫(거꾸로 질문)는 빼지 않는다.
+시간이 모자라도 ⑦(확인할 곳) · ⑩(에러 원문) · ⑫(거꾸로 질문)는 빼지 않는다.
 -->
 
 ---
@@ -149,6 +149,58 @@ layout: cards
 | `## 출력 형식` | 답을 받고 싶은 모양.<br>표의 열 이름 · 번호 목록 · 한두 줄처럼 정해 두면 답을 비교하고 옮겨 적기 쉽다 |
 
 ---
+
+### #04-1. 첫 질문은 자세하게, 이어지는 질문은 평서문으로
+
+<Grid cols="2" align="start">
+<div>
+
+<div class="kicker">첫 질문 — 새 대화를 열 때는 다섯 섹션 md로</div>
+
+<Prompt class="small" title="첫 질문">
+
+````md
+## 맥락
+파이썬 변수 · 함수 단원을 배우는 중이야.
+## 상황
+23 / 4, 23 // 4, 23 % 4를 실행했더니 5.75, 5, 3이 나왔어.
+## 질문
+세 연산자가 각각 무엇을 계산하는지 알려줘.
+## 제약
+코드 없이 말로만. 연산자 단원 범위 안에서
+## 출력 형식
+| 연산자 | 하는 일 | 23과 4의 결과 | 표로
+````
+
+</Prompt>
+
+</div>
+<div>
+
+<div class="kicker">이어지는 질문 — 같은 대화 안에서는 한 문장으로</div>
+
+<Steps>
+<li>"// 줄을 예 하나 더 들어서 다시 설명해 줘"</li>
+<li>"음수 -23 // 4는 왜 -6이 되는지 알려줘"</li>
+<li>"방금 표에 ** 연산자도 한 줄 넣어 줘"</li>
+</Steps>
+
+<Callout kind="warn" title="다시 다섯 섹션으로 쓰는 때">
+새 대화를 열 때 · 묻는 주제가 바뀔 때 · 답이 처음 정한 범위나 형식을 벗어나기 시작할 때
+</Callout>
+
+</div>
+</Grid>
+
+<Core color="ai">맥락과 제약은 첫 질문에 한 번만 자세히 쓴다. 같은 대화 안에서는 AI가 이어서 기억한다.</Core>
+
+<!--
+템플릿은 첫 질문용이다. 같은 대화에서 덧붙이는 질문까지 매번 다섯 섹션으로 쓰면 시간만 들고, 학생이 AI와 묻고 답하며 생각을 이어 가는 흐름이 끊긴다.
+첫 질문에 적은 맥락 · 상황 · 제약 · 출력 형식은 같은 대화 안에서 계속 유효하다. 후속 질문은 "그 표에서", "방금 2번"처럼 앞 답을 가리키며 한 문장으로 묻게 한다.
+다시 다섯 섹션으로 돌아가는 때: 새 대화를 열 때(템플릿마다 새 대화), 묻는 주제가 바뀔 때, 대화가 길어져 AI가 처음 제약(코드 금지 · 단원 범위)이나 출력 형식을 놓치기 시작할 때. 마지막 경우는 제약을 한 줄 다시 붙이거나 LAB-01 6 #03-3처럼 요약해 새 대화로 옮긴다.
+-->
+
+---
 layout: section
 ---
 
@@ -167,7 +219,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ①번 패턴">
 
 ````md
 ## 맥락
@@ -232,7 +284,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ②번 패턴">
 
 ````md
 ## 맥락
@@ -284,7 +336,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ③번 패턴">
 
 ````md
 ## 맥락
@@ -352,7 +404,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ④번 패턴">
 
 ````md
 ## 맥락
@@ -410,7 +462,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑤번 패턴">
 
 ````md
 ## 맥락
@@ -470,7 +522,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑥번 패턴">
 
 ````md
 ## 맥락
@@ -544,7 +596,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑦번 패턴">
 
 ````md
 ## 맥락
@@ -607,7 +659,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑧번 패턴">
 
 ````md
 ## 맥락
@@ -668,7 +720,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑨번 패턴">
 
 ````md
 ## 맥락
@@ -760,7 +812,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑩번 패턴">
 
 ````md
 ## 맥락
@@ -821,7 +873,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="3" title="프롬프트 실습 - ⑪번 패턴">
 
 ````md
 ## 맥락
@@ -941,7 +993,7 @@ class: dense
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑫번 패턴">
 
 ````md
 ## 맥락

@@ -3,252 +3,222 @@ theme: ./slidev-themes/hossam
 manuscript: true
 colorMode: dark
 fontScale: 1
-title: 파이썬 기초 · 딕셔너리 — 그룹별로 모아 세기
+title: 파이썬 기초 · 딕셔너리 — 딕셔너리 종합문제
 layout: cover
 ---
 
-# 그룹별로 모아 세기 — 딕셔너리
+# 딕셔너리 종합문제
 
-주문 기록을 지점별 · 품목별로 모아 더하고, 중첩 구조에서 원하는 값까지 가는 경로를 점검받는 연습
+AI에게 물으며 푸는 코딩 테스트 — 프로그래머스 「완주하지 못한 선수」
 
 <p class="sub">[LAB-06] 딕셔너리 3 · ITWILL · {teacher} 강사</p>
 
 <!--
-딕셔너리 단원 1~2(딕셔너리의 이해 · 딕셔너리 관련 함수)를 마친 뒤 하는 ChatGPT 학습활동. ① 조언 받기 단계(LAB-02 ~ 06)의 마지막 실습이다. 코드는 학생이 쓰고, ChatGPT는 개념 · 처리 순서 · 결과 해석 · 에러 원인만 맡는다(「ChatGPT 지침.md」 그대로).
-오늘 새로 만드는 템플릿은 ⑯ 값까지 가는 경로 묻기. 다음 LAB-07부터는 AI에게 코드를 직접 받는 단계로 넘어가므로, 조언 받기 단계를 마무리하는 시간이기도 하다.
--->
-
----
-layout: infographic
----
-
-## #01. 오늘의 진행 — 2교시 약 100분
-
-<Grid cols="4" gap="16">
-<Stat value="40" unit="분" label="A 구현" color="py">문제를 직접 푼다. 막히면 템플릿으로 조언을 받는다</Stat>
-<Stat value="25" unit="분" label="B 결과가 이상할 때" color="ai">나눠 준 코드의 틀린 값을 찾아 고친다</Stat>
-<Stat value="25" unit="분" label="C 에러 수정" color="ok">에러 코드의 원인을 찾아 고친다</Stat>
-<Stat value="10" unit="분" label="D 정리" color="py">새 템플릿 ⑯ 추가, 오늘 고친 실수 한 줄 기록</Stat>
-</Grid>
-
-<Core color="ai">코드는 내가 쓰고, AI는 개념 · 처리 순서 · 결과 해석 · 에러 원인만 맡는다</Core>
-
-<!--
-진행은 ① 조언 받기 단계 공통 진행 그대로다. B · C의 코드는 미리 준비해 나눠 준다. 강사용 원인은 각 쪽 발표자 노트에만 있다.
-시간이 모자라도 A-4와 템플릿 ⑯은 빼지 않는다.
+딕셔너리 단원 1~2(딕셔너리의 이해 · 딕셔너리 관련 함수)를 마친 뒤 하는 실습. ① 조언 받기 단계(LAB-02 ~ 06)의 마지막 실습이다. 코드는 학생이 쓰고, ChatGPT는 개념 · 처리 순서 · 결과 해석 · 에러 원인만 맡는다(「ChatGPT 지침.md」 그대로).
+LAB-03 · 04와 같은 틀이다. LAB-02 ~ 06에서 배운 것을 모두 써야 풀리는 코딩 테스트 문제(프로그래머스 「완주하지 못한 선수」) 하나를 세 단계로 푼다. 단계마다 프롬프트 하나 또는 코드 작성 하나만 한다: 1단계 프롬프트(② + ⑤), 2단계 코드 작성, 3단계 프롬프트(⑬). 마무리는 오늘 새 템플릿 ⑯ 값까지 가는 경로 묻기.
+다음 LAB-07부터는 AI에게 코드를 직접 받는 단계로 넘어가므로, 조언 받기 단계를 마무리하는 시간이기도 하다.
 -->
 
 ---
 
-## #02. 오늘의 규칙과 `## 제약` 범위
+## #01. 오늘의 흐름
+
+<Timeline>
+<li><b>문제 읽기</b>코딩 테스트 문제와 입출력 예를 본다</li>
+<li><b>세 단계로 풀기</b>설계는 AI와 함께, 코드는 내가, 틀리면 다시 AI와 함께</li>
+<li class="now"><b>마무리</b>⑯ 값까지 가는 경로 묻기로 딕셔너리 값이 어떻게 바뀌는지 점검한다</li>
+</Timeline>
+
+<Grid cols="2" align="start">
 
 <Callout kind="real" title="오늘의 규칙">
 
 - 코드는 내가 쓰고, AI에게는 개념 · 처리 순서 · 결과 해석 · 에러 원인만 묻는다
-- 프롬프트는 다섯 섹션 `## 맥락` `## 상황` `## 질문` `## 제약` `## 출력 형식`
-- `## 제약`에는 아래 표의 배운 범위를 적는다
+- 첫 질문은 다섯 섹션 `## 맥락` `## 상황` `## 질문` `## 제약` `## 출력 형식`으로 자세히, 같은 대화의 후속 질문은 평서문으로
 
 </Callout>
 
-<div class="kicker">딕셔너리 단원 · <code>## 제약</code>에 쓰는 범위</div>
+<Tile kind="soft" color="ai" tag="오늘 새로 더하는 템플릿" title="⑯ 값까지 가는 경로 묻기">
+LAB-05의 ⑮ 뒤로 이어 매긴다. 값 하나가 지금 모습이 되기까지 거친 단계를 내가 먼저 적고 점검받는다
+</Tile>
 
-| 단원 | 범위 |
-|:--|:--|
-| 1 딕셔너리의 이해 | 키 · 값, 확장, key 중복, 딕셔너리를 원소로 갖는 리스트 등 복합 구조 |
-| 2 딕셔너리 관련 함수 | len · del, get · keys · values · items · update · copy · clear |
+</Grid>
 
 <!--
-시작 전에 ChatGPT 맞춤 지침이 「ChatGPT 지침.md」로 들어 있는지 말로 확인한다. AI가 코드를 통째로 주면 지침이 빠진 것이므로 설정을 확인하고 새 대화에서 다시 시작하게 한다.
-오늘 쓰는 모든 프롬프트의 ## 제약은 이 표에서 가져온다.
+시작 전에 ChatGPT 맞춤 지침이 들어 있는지, 템플릿마다 새 대화를 여는지 말로 확인한다.
+오늘은 문제 하나를 끝까지 푸는 것이 목표다. 단계를 건너뛰고 바로 코드를 쓰는 학생이 있으면, 막혔을 때 어느 단계로 돌아가 템플릿을 꺼낼지 묻는다.
 -->
 
 ---
 
-## #03. 연습 데이터
+## #02. 쓸 수 있는 문법 — 배운 것까지만
 
-<Grid cols="3fr 2fr" align="start">
-<div>
+<div class="kicker">코딩 테스트 문제는 지금까지 배운 문법으로 푼다. 모든 프롬프트의 <code>## 제약</code>에 이 범위를 적는다</div>
 
-<div class="kicker">orders · 주문 기록 여섯 건</div>
+| 단원 | 쓸 수 있는 것 |
+|:--|:--|
+| LAB-02 · 03 | 변수 · 연산자 · 함수 정의(파라미터 · return) · if · elif · else · while · for · range · 중첩 · break · continue |
+| LAB-04 리스트 | 인덱스 · 슬라이싱 · 2차원 리스트 · 구조분해 · in · not in · len · sorted · sort · append · count · index 등 |
+| LAB-05 문자열 | 문자열 연산 · 인덱싱 · 슬라이싱 · 포메팅 · f-string · upper · lower · strip · replace · split 등 |
+| LAB-06 딕셔너리 | 키 · 값 · 추가 · 변경 · 복합 구조 · len · del · get(기본값 포함) · keys · values · items · update · copy · clear |
 
-```python
-orders = [
-    {"store": "강남", "item": "커피",   "qty": 3, "price": 4500},
-    {"store": "홍대", "item": "커피",   "qty": 2, "price": 4500},
-    {"store": "강남", "item": "케이크", "qty": 1, "price": 6000},
-    {"store": "홍대", "item": "티",     "qty": 4, "price": 4000},
-    {"store": "강남", "item": "티",     "qty": 2, "price": 4000},
-    {"store": "잠실", "item": "커피",   "qty": 5, "price": 4500},
-]
-```
-
-</div>
-<div>
-
-<div class="kicker">report · 지점별 판매 보고</div>
-
-```python
-report = {"date": "2024-01-05",
-          "stores": [{"name": "강남", "sales": {"coffee": 12, "tea": 5}},
-                     {"name": "홍대", "sales": {"coffee": 8,  "tea": 9}}]}
-```
-
-<Callout kind="tip" title="쓰는 곳">
-orders는 A-1 ~ A-3, report는 A-4와 템플릿 ⑯
+<Callout kind="danger" title="아직 안 배운 것 — 쓰지 않는다">
+리스트 · 딕셔너리 컴프리헨션 · lambda · <code>collections</code>(Counter 등) 모듈 · try-except
 </Callout>
 
-</div>
-</Grid>
+<Core color="ok">AI가 안 배운 방법을 권하면 따르지 않고, 배운 범위 안의 방법으로 다시 묻는다.</Core>
 
 <!--
-두 데이터를 노트북 첫 셀에 그대로 붙여 넣고 시작하게 한다. orders는 "딕셔너리를 원소로 갖는 리스트", report는 딕셔너리 안에 리스트, 그 안에 다시 딕셔너리가 든 복합 구조다.
+범위를 적지 않으면 AI가 collections.Counter로 두 명단을 빼는 한 줄 풀이(return list((Counter(participant) - Counter(completion)).keys())[0])를 권한다. 모듈은 LAB-10에서 배운다. 오늘은 빈 딕셔너리와 get으로 직접 센다.
+컴프리헨션 · lambda · Counter · try-except는 LAB-02 ~ 06 실습코드에 나오지 않는다(직접 확인).
 -->
 
 ---
 layout: section
 ---
 
-# A. 구현
+# 문제
 
-문제를 직접 푼다. 막히면 「내 프롬프트 템플릿.md」에서 템플릿을 꺼내 조언을 받는다 · 40분
+LAB-02 ~ LAB-06에서 배운 것을 모두 써야 풀리는 문제 하나
 
 ---
+class: dense
+---
 
-## #04. A-1 지점별 매출 합계
+## #03. 문제 — 완주하지 못한 선수
 
-<div class="kicker">orders에서 지점별 매출 합계(수량 × 가격)를 딕셔너리로 만든다</div>
+수많은 마라톤 선수들이 마라톤에 참여하였습니다. 단 한 명의 선수를 제외하고는 모든 선수가 마라톤을 완주하였습니다.
 
-<Flow color="pastel">
-<li><b>주문 한 건</b>지점 · 수량 · 가격 꺼내기</li>
-<li><b>매출</b>수량 × 가격</li>
-<li><b>지점별 누적</b>그 지점의 합계에 더한다</li>
-<li><b>결과</b>지점이 key인 딕셔너리</li>
-</Flow>
+마라톤에 참여한 선수들의 이름이 담긴 배열 participant와 완주한 선수들의 이름이 담긴 배열 completion이 주어질 때, 완주하지 못한 선수의 이름을 return 하도록 solution 함수를 작성해주세요.
 
-<Output label="정답">
+<div class="kicker">입출력 예</div>
 
-```text
-{'강남': 27500, '홍대': 25000, '잠실': 22500}
-```
+| participant | completion | return |
+|:--|:--|:--|
+| ["leo", "kiki", "eden"] | ["eden", "kiki"] | "leo" |
+| ["marina", "josipa", "nikola", "vinko", "filipa"] | ["josipa", "filipa", "marina", "nikola"] | "vinko" |
+| ["mislav", "stanko", "mislav", "ana"] | ["stanko", "ana", "mislav"] | "mislav" |
 
-</Output>
-
-<Callout kind="ai" title="막히면 ⑤ 단계로 쪼개기">
-LAB-02의 ⑤를 꺼내 처음부터 끝까지 해야 할 일을 단계 순서로 받고, 한 단계씩 쓰고 실행해 확인한다
-</Callout>
+<p class="small muted">출처: <a href="https://school.programmers.co.kr/learn/courses/30/lessons/42576" target="_blank" rel="noopener">프로그래머스 코딩테스트 연습 「완주하지 못한 선수」</a></p>
 
 <!--
-처음 나온 지점은 key를 새로 만들고, 이미 있는 지점은 기존 값에 더한다. get()이나 in으로 처리할 수 있다. 강남 = 3×4500 + 1×6000 + 2×4000 = 27500.
-여기서 "="로 덮어쓰는 실수가 B-1이다.
+문제 원문은 프로그래머스 그대로다(2023년 1월 25일 테스트케이스가 추가된 판).
+쓰는 문법: 함수 정의와 return(LAB-02), for · if(LAB-03), 리스트 순회(LAB-04), 빈 딕셔너리 · 키로 값 바꾸기 · get(키, 기본값) · keys(LAB-06).
+핵심 함정은 동명이인이다. 이름이 명단에 "있는지"만 보면 예제 #3에서 답을 못 찾는다. 이름마다 "몇 명인지"를 세어야 한다. 딕셔너리로 이름별 인원을 모아 세는 문제라 오늘 단원과 바로 이어진다.
 -->
 
 ---
 
-## #05. A-2 품목별 판매 수량 · A-3 매출 1위 지점
+## #04. 제한사항 · 입출력 예 설명과 기본 코드
 
-<Grid cols="2" align="start">
+<Grid cols="1fr 1fr" align="start">
 <div>
 
-<Tile kind="soft" color="py" tag="A-2" title="품목별 판매 수량">
+<div class="kicker">제한사항</div>
 
-orders에서 품목(item)별로 수량(qty)을 모아 더한다
+- 마라톤 경기에 참여한 선수의 수는 1명 이상 100,000명 이하입니다.
+- completion의 길이는 participant의 길이보다 1 작습니다.
+- 참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.
+- 참가자 중에는 동명이인이 있을 수 있습니다.
 
-</Tile>
+<div class="kicker">입출력 예 설명</div>
 
-<Output label="정답">
-
-```text
-{'커피': 10, '케이크': 1, '티': 6}
-```
-
-</Output>
+<Steps>
+<li>"leo"는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.</li>
+<li>"vinko"는 참여자 명단에는 있지만, 완주자 명단에는 없기 때문에 완주하지 못했습니다.</li>
+<li>"mislav"는 참여자 명단에는 두 명이 있지만, 완주자 명단에는 한 명밖에 없기 때문에 한명은 완주하지 못했습니다.</li>
+</Steps>
 
 </div>
 <div>
 
-<Tile kind="soft" color="ai" tag="A-3" title="매출 1위 지점">
-
-A-1 결과에서 가장 큰 값의 지점을 찾는다
-
-</Tile>
-
-<Stat value="강남" label="정답" color="ai" />
-
-</div>
-</Grid>
-
-<Core color="ok">A-2는 A-1과 같은 모양. 묶는 기준(key)과 더하는 값만 바뀐다</Core>
-
-<!--
-A-2: key가 store에서 item으로, 더하는 값이 qty × price에서 qty로 바뀔 뿐 A-1과 같은 구조다. 커피 3 + 2 + 5 = 10.
-A-3: items()로 key와 value를 함께 돌며 가장 큰 값을 기억해 두는 방식이 배운 범위 안에서 자연스럽다.
--->
-
----
-
-## #06. A-4 중첩 구조 꺼내기
-
-<Grid cols="3fr 2fr" align="center">
-<div>
-
-<div class="kicker">report에서 전체 지점의 coffee 판매량 합계를 구한다</div>
+<div class="kicker">기본 코드 템플릿</div>
 
 ```python
-report = {"date": "2024-01-05",
-          "stores": [{"name": "강남", "sales": {"coffee": 12, "tea": 5}},
-                     {"name": "홍대", "sales": {"coffee": 8,  "tea": 9}}]}
+def solution(participant, completion):
+    answer = ''
+    return answer
+
+participant = ["mislav", "stanko",
+               "mislav", "ana"]
+completion = ["stanko", "ana", "mislav"]
+# 기대 결과: mislav
+print(solution(participant, completion))
 ```
 
-<p>들어가는 순서 <Chip>report</Chip> → <Chip color="ai">"stores"</Chip> → <Chip kind="dashed" color="muted">?</Chip> → <Chip kind="dashed" color="muted">?</Chip> → <Chip color="ok">"coffee"</Chip></p>
-
-</div>
-<div>
-
-<Stat value="20" label="정답 · coffee 합계" color="ok" />
-
-<Callout kind="ai" title="막히면 새 템플릿 ⑯">
-값까지 가는 경로를 내가 먼저 적고 점검받는다. 다음 쪽에서 만든다
+<Callout kind="warn" title="동명이인">
+이름이 명단에 <b>있는지</b>가 아니라, 이름마다 <b>몇 명인지</b>를 봐야 한다
 </Callout>
 
 </div>
 </Grid>
 
 <!--
-report["stores"]는 리스트, 그 원소는 딕셔너리, 그 안의 "sales"가 다시 딕셔너리다. 지점마다 sales의 coffee를 꺼내 더하면 12 + 8 = 20.
-물음표 두 칸은 학생이 채우는 자리다(리스트의 원소 → "sales"). 이 구조는 LAB-12 OpenAPI의 JSON 응답과 같은 모양이다.
+제한사항과 입출력 예 설명은 프로그래머스 원문 그대로다(예제 #1 ~ #3). 원문은 문제 설명 · 제한사항 · 입출력 예 · 설명 순이지만, 한 쪽에 들어가지 않아 제한사항을 이 쪽으로 옮겼다.
+기본 코드 템플릿의 def 부분은 프로그래머스 Python3 편집기에 처음 들어 있는 코드와 같고, participant · completion · print 줄은 노트북에서 입출력 예를 확인하려고 덧붙인 것이다. 일부러 동명이인이 있는 예제 #3을 넣었다. 프로그래머스에 제출할 때는 solution 함수만 붙여 넣는다.
+-->
+
+---
+layout: section
+---
+
+# 풀이 단계
+
+설계 → 구현 → 원인 찾기, 세 단계로 푼다
+
+---
+
+## #05. AI와 함께 푸는 세 단계
+
+<Steps color="pastel">
+<li><b>AI에게 물어 문제를 확인하고 함수를 설계한다</b> — 내 정리를 점검받고, 처리 순서를 단계표로 받는다 <Chip color="ai">프롬프트 ② + ⑤</Chip></li>
+<li><b>코드를 직접 쓴다</b> — 단계표를 주석으로 옮겨 채우고, 결과를 예측한 뒤 실행한다 <Chip color="ok">코드 작성 · AI 없이</Chip></li>
+<li><b>틀리면 AI와 함께 원인을 찾아 고친다</b> — 예측과 실제 출력을 보내 갈라진 지점을 찾는다 <Chip color="ai">프롬프트 ⑬</Chip></li>
+</Steps>
+
+<Core color="ai">AI는 설계와 원인 찾기를 돕는다. 코드는 처음부터 끝까지 내가 쓴다.</Core>
+
+<!--
+LAB-03 · 04와 같은 세 단계다. 단계마다 쓸 템플릿을 붙였을 뿐이다.
+1단계를 건너뛰면 2단계에서 "이름이 있는지"만 보는 코드를 쓰기 쉽다. 동명이인을 정리에 넣었는지 꼭 점검받게 한다.
 -->
 
 ---
 class: dense
 ---
 
-## #07. 새 템플릿 ⑯ 값까지 가는 경로 묻기
+## #06. 1단계 — AI에게 물어 문제를 확인하고 함수를 설계한다
 
-<Callout icon="💡" title="중첩 구조에서 원하는 값까지 몇 단계로 들어가는지 내가 먼저 적고 점검받고 싶은 경우" color="pastel-2"></Callout>
+<Callout icon="💡" title="문제를 제대로 이해했는지 확인하고, 어떤 순서로 코드를 쓸지 정하고 싶은 경우" color="pastel-1"></Callout>
 
 <Grid cols="2fr 1fr" align="start">
 <div>
 
-<Prompt class="small" cols="2">
+<Prompt class="small" cols="2" title="프롬프트 실습 - ② + ⑤번 패턴">
 
 ````md
 ## 맥락
-파이썬 딕셔너리 단원을 배우는 중이야.
+파이썬 딕셔너리 단원을 배우는 중이야. 코딩 테스트 문제를 풀기 전에 문제를 내 말로 정리했어.
 
 ## 상황
-아래 구조에서 홍대 지점의 tea 판매량(9)을 꺼내고 싶어.
-{report 구조 붙여 넣기}
-내가 생각한 경로: report → "stores" → {내 생각} → ...
+문제: {문제 원문 붙여 넣기}
+
+내 정리:
+- 세어야 할 것: {내가 이해한 내용}
+- 두 명단을 쓰는 방법: {내가 이해한 내용}
+- 돌려줄 값: {내가 이해한 내용}
 
 ## 질문
-내 경로가 맞는지, 틀렸다면 몇 번째 단계에서 무엇이 틀렸는지 알려줘. 단계마다 그 단계의 값이 딕셔너리인지 리스트인지도 알려줘.
+1. 내 정리에서 문제와 다르게 이해한 부분과 빠진 부분을 짚어 줘
+2. 그다음 처음부터 끝까지 해야 할 일을 단계 순서로 나눠 줘
 
 ## 제약
-- 코드 대신 단계와 자료형으로 설명해
-- 딕셔너리 · 리스트 범위 안에서 설명해
+- 코드나 의사코드 없이 말로만
+- 배운 범위(함수 정의 · 조건문 · for · 리스트 · 딕셔너리 · get · keys · values · items) 안에서. 컴프리헨션 · lambda · collections 모듈은 쓰지 않는 방법으로
 
 ## 출력 형식
-| 단계 | 들어가는 방법(key 또는 인덱스) | 그 단계 값의 자료형 | 표로
+1은 | 내 정리 | 판정(맞음 / 보완) | 이유 | 표로
+2는 | 단계 | 할 일 | 끝나면 확인할 것 | 표로
 ````
 
 </Prompt>
@@ -257,9 +227,214 @@ class: dense
 <div>
 
 <div class="card ok">
-<h3><carbon:list-checked /> 사용 방법</h3>
+<h3><carbon:list-checked /> 학생 활동</h3>
 
-- 받은 단계를 한 단계씩 `print(type(...))`로 확인하며 코드를 쓴다
+- 문제를 다시 보지 않고 **세 줄**로 정리해 보낸다
+- **보완** 판정을 받은 줄은 내 말로 고친다
+- 받은 단계표를 노트북 **마크다운 셀**에 옮긴다
+
+</div>
+
+<Callout kind="warn" title="주의">
+문제 원문은 줄이지 않고 그대로 붙인다. 답에 Counter · 컴프리헨션이 섞이면 <code>## 제약</code>을 가리키며 다시 묻는다
+</Callout>
+
+</div>
+</Grid>
+
+<!--
+LAB-02의 ② 내 설명 점검받기와 ⑤ 단계로 쪼개기를 한 프롬프트로 묶었다(LAB-03 · 04와 같다).
+학생이 자주 빠뜨리는 정리: 동명이인이 있으니 이름별 인원을 센다, 완주자 명단으로 그 인원을 하나씩 줄인다, 남은 인원이 0보다 큰 이름 하나가 답이다, 답은 리스트가 아니라 이름 문자열 하나다.
+기대하는 단계표: ① 이름별 인원을 담을 빈 딕셔너리 준비 ② 참가자 명단을 하나씩 보며 그 이름의 인원을 1 늘림(처음 나온 이름은 0에서 시작) ③ 완주자 명단을 하나씩 보며 그 이름의 인원을 1 줄임 ④ 딕셔너리의 이름을 하나씩 보며 인원이 0보다 큰 이름을 찾음 ⑤ 그 이름을 돌려줌.
+AI가 "두 명단을 정렬해서 앞에서부터 비교"하는 방법을 내놓아도 배운 범위(sort · sorted)라 틀린 답은 아니다. 오늘은 딕셔너리 단원이므로 1의 방법으로 단계표를 다시 받게 한다.
+-->
+
+---
+class: dense
+---
+
+## #07. 2단계 — 단계표를 보고 코드를 직접 쓴다
+
+<Callout icon="💡" title="1단계에서 받은 단계표를 AI 없이 내 손으로 코드로 옮기는 단계" color="pastel-1"></Callout>
+
+<Grid cols="2fr 1fr" align="start">
+<div>
+
+<div class="kicker">단계표를 주석으로 옮긴 뼈대</div>
+
+```python
+def solution(participant, completion):
+    # 1. {단계표 1번}
+    # 2. {단계표 2번}
+    #    ...
+    # 5. {단계표 마지막 번}
+    return answer
+
+# 내 예측: ?
+print(solution(["leo", "kiki", "eden"], ["eden", "kiki"]))
+
+participant = ["mislav", "stanko", "mislav", "ana"]
+completion = ["stanko", "ana", "mislav"]
+# 내 예측: ?
+print(solution(participant, completion))
+```
+
+</div>
+<div>
+
+<div class="card ok">
+<h3><carbon:list-checked /> 학생 활동</h3>
+
+- 주석 아래에 **한 줄씩** 코드를 채운다
+- 실행하기 전에 두 print의 결과를 **예측**해 적는다
+- 실행해서 예측 · 기대 결과와 맞춰 본다
+
+</div>
+
+<Callout kind="tip" title="처음 나온 키를 세려면">
+<code>get(키, 0)</code>은 키가 없으면 0을 돌려준다. 없는 키를 <code>[키]</code>로 꺼내면 에러가 난다
+</Callout>
+
+</div>
+</Grid>
+
+<!--
+단계표의 각 줄이 코드 몇 줄이 되는지 직접 옮기는 것이 이 단계의 핵심이다. 주석은 지우지 말고 남겨 두게 한다. 3단계에서 어느 줄이 틀렸는지 찾을 때 쓴다.
+예측은 결과 값만 적는다. 첫 줄은 leo, 둘째 줄은 mislav. 자주 빗나가는 예측: 둘째 줄을 "없음"으로 봄(mislav가 완주자 명단에도 있으니 완주했다고 생각함).
+값이 다르면 반복문 안에 print(name, count)를 넣어 딕셔너리가 한 줄씩 어떻게 바뀌는지 본다(마무리 ⑯으로 이어짐).
+막힌 문법은 ④ 고르는 기준 묻기 정도만 허용하고 "코드로 써 줘"는 묻지 않게 한다.
+
+강사용 정답 코드(학생 자료에는 없음):
+def solution(participant, completion):
+    count = {}
+    for name in participant:
+        count[name] = count.get(name, 0) + 1
+    for name in completion:
+        count[name] = count[name] - 1
+    for name in count.keys():
+        if count[name] > 0:
+            return name
+
+입출력 예 세 개 → leo / vinko / mislav (직접 실행).
+완주자는 모두 참가자이므로 두 번째 반복에서는 count[name]으로 꺼내도 에러가 나지 않는다. count[name] -= 1로 써도 된다.
+정렬로 푸는 방법도 배운 범위 안이다: participant와 completion을 정렬한 뒤 같은 인덱스끼리 비교해 처음 다른 참가자를 돌려주고, 끝까지 같으면 participant의 마지막 이름을 돌려준다(직접 실행: leo, mislav).
+-->
+
+---
+class: dense
+---
+
+## #08. 3단계 — 틀리면 AI와 함께 원인을 찾아 고친다
+
+<Callout icon="💡" title="실행 결과가 기대 결과나 내 예측과 달라서, 어디서 왜 갈라졌는지 알고 싶은 경우" color="pastel-1"></Callout>
+
+<Grid cols="2fr 1fr" align="start">
+<div>
+
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑬번 패턴">
+
+````md
+## 맥락
+파이썬 딕셔너리 단원을 배우는 중이야.
+
+## 상황
+완주하지 못한 선수 solution 함수를 직접 썼는데 결과가 내 예측과 달랐어.
+```python
+{내가 쓴 코드}
+```
+내 예측: {예: mislav}
+실제 출력: {예: None · 에러가 났으면 에러 원문 그대로}
+
+## 질문
+내 예측이 어느 지점에서 실제 실행과 갈라졌는지, 왜 그렇게 실행되는지 알려줘.
+
+## 제약
+- 코드를 고쳐 쓰지 마. 실행 순서와 이유만 설명해
+- 리스트 · 딕셔너리 · get · keys 범위 안에서
+
+## 출력 형식
+| 갈라진 지점 | 내 예측 | 실제 | 이유 | 표로
+````
+
+</Prompt>
+
+</div>
+<div>
+
+<div class="card ok">
+<h3><carbon:list-checked /> 학생 활동</h3>
+
+- 예측과 실제 출력을 **그대로** 붙인다
+- 갈라진 지점과 이유만 받고, **고치는 건 내가** 한다
+- 고친 뒤 두 print를 다시 실행해 확인한다
+
+</div>
+
+<Callout kind="danger" title="에러가 났을 때">
+에러 메시지는 마지막 줄만이 아니라 <b>몇 번째 줄</b>에서 났는지까지 함께 붙인다
+</Callout>
+
+</div>
+</Grid>
+
+<!--
+LAB-03에서 배운 ⑬을 그대로 쓴다. AI 설명도 추측이므로, 고친 뒤 다른 입력으로 다시 예측 → 실행해 확인하게 한다.
+강사용 증상과 원인(모두 Python 3.13으로 직접 실행해 확인, 입출력 예 #1 / #2 / #3 순):
+KeyError: 'leo' — count[name] += 1처럼 처음 나온 이름을 get 없이 늘림. 빈 딕셔너리에 없는 키를 꺼내려 해서 첫 이름에서 바로 에러가 난다.
+TypeError: unsupported operand type(s) for +: 'NoneType' and 'int' — count.get(name) + 1처럼 기본값 0을 빼먹음. 없는 키의 get은 None을 돌려준다.
+leo / vinko / None — count[name] = 1처럼 늘리지 않고 1을 넣음. 동명이인 mislav가 1명으로 세어져 완주자 명단에서 0이 된다. 딕셔너리 없이 if name not in completion으로 찾아도 같은 결과(mislav는 완주자 명단에 있으므로)가 나온다.
+leo / '' / mislav — 마지막 반복의 if 아래에 else: return ""을 둠. 첫 이름(marina)이 0이라 바로 빈 문자열을 돌려주고 끝난다.
+leo / marina / mislav — 완주자 반복에서도 count.get(name, 0) + 1로 늘림(복사해 붙이고 - 로 안 바꿈). 모든 인원이 0보다 커서 첫 이름이 답이 된다.
+-->
+
+---
+class: dense
+---
+
+## #09. 마무리 — ⑯ 값까지 가는 경로 묻기
+
+<Callout icon="💡" title="정답은 나왔는데, 딕셔너리의 값 하나가 어떤 순서로 그 값이 됐는지 확실히 알고 싶은 경우" color="pastel-1"></Callout>
+
+<Grid cols="2fr 1fr" align="start">
+<div>
+
+<Prompt class="small" cols="2" title="프롬프트 실습 - ⑯번 패턴 (오늘 새 패턴)">
+
+````md
+## 맥락
+파이썬 딕셔너리 단원을 배우는 중이야. 완주하지 못한 선수 문제를 내가 풀었어.
+
+## 상황
+내가 쓴 코드:
+```python
+{내가 쓴 코드}
+```
+입력: 입출력 예 #3 (participant에 mislav가 두 명)
+"mislav"의 값이 마지막에 1이 되기까지 내가 생각한 경로:
+없음 → {내 생각} → ... → 1
+
+## 질문
+내 경로가 맞는지, 틀렸다면 몇 번째 단계에서 무엇이 틀렸는지 알려줘. 단계마다 어느 줄이 실행되어 값이 어떻게 바뀌는지도 알려줘.
+
+## 제약
+- 코드를 고쳐 쓰지 마. 단계와 값으로만 설명해
+- 리스트 · 딕셔너리 · get 범위 안에서
+
+## 출력 형식
+| 단계 | 실행된 줄 | 그때 꺼낸 이름 | "mislav"의 값 | 표로
+````
+
+</Prompt>
+
+</div>
+<div>
+
+<div class="card ok">
+<h3><carbon:list-checked /> 학생 활동</h3>
+
+- 보내기 전에 **내 경로**를 먼저 적는다
+- 반복문마다 `print(name, count)`를 넣어 실행한다
+- 찍힌 값과 받은 표를 단계마다 맞춰 본다
 
 </div>
 
@@ -271,256 +446,16 @@ class: dense
 </Grid>
 
 <!--
-템플릿 ⑯은 "내가 먼저 적고 점검받는" 조언 받기 단계의 마지막 새 템플릿이다. 지침 때문에 코드는 오지 않고 단계와 자료형이 표로 온다.
-학생이 자주 막히는 곳: report["stores"]가 리스트라서 "홍대"를 key로 넣으려는 경우. 그 단계에서 들어가는 방법은 인덱스(1)다. 단계마다 type()을 찍으면 dict → list → dict → dict 순서가 보인다.
--->
-
----
-layout: section
----
-
-# B. 결과가 이상할 때
-
-에러는 안 나는데 값이 틀렸다. 나눠 준 코드의 틀린 값을 찾아 고친다 · 25분
-
----
-
-## #08. B-1 지점별 합계가 이상하다
-
-<Grid cols="3fr 2fr" align="start">
-<div>
-
-```python
-totals = {}
-for o in orders:
-    store = o["store"]
-    qty = o["qty"]
-    price = o["price"]
-    totals[store] = qty * price
-print(totals)
-```
-
-<Output label="실행 결과">
-
-```text
-{'강남': 8000, '홍대': 16000, '잠실': 22500}
-```
-
-</Output>
-
-</div>
-<div>
-
-<Output label="기대한 값 · A-1 정답">
-
-```text
-{'강남': 27500, '홍대': 25000, '잠실': 22500}
-```
-
-</Output>
-
-<Callout kind="tip" title="막히면">
-짐작이 있으면 ⑧ 내 추측 확인 방법 묻기, 없으면 ⑦ 확인할 곳 묻기
-</Callout>
-
-</div>
-</Grid>
-
-<!--
-강사용 원인: = 는 덮어쓰기다. 누적은 기존 값에 더해야 한다. 그래서 각 지점의 마지막 주문 매출만 남는다(강남 티 2 × 4000 = 8000, 홍대 티 4 × 4000 = 16000). 잠실은 주문이 한 건이라 우연히 맞는다.
-⑦로 보내면 반복마다 totals를 찍어 보라는 답이 오는지 본다. 찍어 보면 강남 값이 13500 → 6000 → 8000으로 바뀌는 것이 보인다.
--->
-
----
-
-## #09. B-2 앞의 값이 사라졌다
-
-<Grid cols="2" align="center">
-<div>
-
-<div class="kicker">같은 key를 두 번 써서 딕셔너리를 만든다</div>
-
-```python
-prices = {"커피": 4500, "티": 4000, "커피": 5000}
-print(prices)
-```
-
-<Output label="실행 결과">
-
-```text
-{'커피': 5000, '티': 4000}
-```
-
-</Output>
-
-</div>
-<div>
-
-<Tile kind="fill" color="warn" tag="증상" title="앞의 값이 사라짐">
-
-처음 넣은 `"커피": 4500`이 결과에 없다. 에러도 나지 않는다
-
-</Tile>
-
-</div>
-</Grid>
-
-<Core color="ai">에러 없이 값이 사라지는 경우는 실행 결과를 눈으로 대조해야 찾는다</Core>
-
-<!--
-강사용 원인: key는 중복될 수 없다. 같은 key를 두 번 쓰면 뒤의 값이 남는다. 딕셔너리의 이해 단원 "key 중복" 재료.
--->
-
----
-layout: section
----
-
-# C. 에러 수정
-
-빨간 글씨가 떴다. 에러 코드의 원인을 찾아 고친다 · 25분
-
----
-
-## #10. C 진행 방법과 C-1
-
-<Steps color="ok">
-<li>나눠 준 코드를 내 노트북에서 실행한다</li>
-<li><b>⑩ 에러 원문 보내기</b>로 코드와 에러 메시지 전체를 그대로 붙인다</li>
-<li>원인과 고치는 방향만 받고, 수정은 <b>내가</b> 한다</li>
-<li><b>⑪ 같은 실수 막기</b>로 같은 에러가 나는 다른 경우를 받아 하나를 직접 만든다</li>
-</Steps>
-
-<Grid cols="2" align="center">
-<div>
-
-<div class="kicker">C-1 · totals는 A-1의 결과</div>
-
-```python
-totals["신촌"]
-```
-
-</div>
-<div>
-
-<Output label="에러">
-
-```text
-KeyError: '신촌'
-```
-
-</Output>
-
-</div>
-</Grid>
-
-<!--
-강사용 원인 C-1: 없는 key를 꺼냈다. get()으로 꺼내거나 in으로 먼저 확인한다.
-get()은 없는 key면 None(또는 지정한 기본값)을 돌려준다는 점을 실행으로 확인하게 한다.
--->
-
----
-
-### #10-1. C-2 · C-3 코드와 에러
-
-<Grid cols="2" align="start">
-<div>
-
-<div class="kicker">C-2</div>
-
-```python
-{["강남", "커피"]: 3}
-```
-
-<Output label="에러">
-
-```text
-TypeError: unhashable type: 'list'
-```
-
-</Output>
-
-</div>
-<div>
-
-<div class="kicker">C-3 · totals는 A-1의 결과</div>
-
-```python
-for k in totals:
-    del totals[k]
-```
-
-<Output label="에러">
-
-```text
-RuntimeError: dictionary changed size during iteration
-```
-
-</Output>
-
-</div>
-</Grid>
-
-<!--
-강사용 원인
-C-2: 리스트는 key가 될 수 없다. 튜플은 가능하다(("강남", "커피")).
-C-3: 반복하는 도중에 딕셔너리의 크기를 바꾸면 안 된다. 첫 번째 del 직후 다음 반복에서 에러가 난다.
-파이썬 버전에 따라 C-2의 메시지 문장이 조금 다를 수 있다. 학생 화면의 원문을 그대로 붙이게 한다.
--->
-
----
-layout: section
----
-
-# D. 정리
-
-새 템플릿을 모으고 오늘 고친 실수를 기록한다 · 10분
-
----
-layout: magazine
----
-
-## #11. 오늘의 결과물
-
-A-1 ~ A-4 풀이와 템플릿 ⑯. 「내 프롬프트 템플릿.md」에 ⑯을 추가하고 오늘 고친 실수를 한 줄 기록한다
-
-<Steps color="py">
-<li><b>A-1 ~ A-4 풀이</b> 지점별 합계 · 품목별 수량 · 1위 지점 · 중첩 구조</li>
-<li><b>템플릿 ⑯</b> 값까지 가는 경로 묻기</li>
-<li><b>실수 한 줄</b> 오늘 고친 실수 기록</li>
-</Steps>
-
-::right::
-
-<Tile kind="soft" color="ai" tag="데이터 분석으로" title="key별로 더하기">
-
-A-1의 "key별로 더하기"는 pandas `groupby`의 원리다
-
-</Tile>
-
-<Tile kind="soft" color="ok" tag="데이터 분석으로" title="중첩 구조">
-
-A-4 구조는 LAB-12 OpenAPI의 JSON 응답과 같은 모양이다
-
-</Tile>
-
-<!--
-결과물은 걷지 않고, 「내 프롬프트 템플릿.md」에 ⑯까지 들어갔는지만 둘러보며 확인한다. 이것으로 조언 받기 단계의 템플릿 ①~⑯이 모두 모인다.
--->
-
----
-
-## #12. 다음 LAB 예고 — 조언 받기에서 답 받기로
-
-<Timeline color="ai">
-<li><b>LAB-02 ~ 06</b>조언 받기 · 코드는 내가 쓰고 AI는 개념 · 순서 · 원인</li>
-<li class="now"><b>오늘 LAB-06</b>조언 받기 단계의 마지막 템플릿 ⑯</li>
-<li><b>LAB-07 ~</b>답 받기 · AI에게 코드를 직접 받는다</li>
-</Timeline>
-
-<Core color="ai">LAB-07부터는 AI에게 코드를 직접 받는 단계로 넘어간다</Core>
-
-<!--
-다음 LAB 예고. 자세한 내용(지침 바꾸기, 받은 코드 4단 확인)은 LAB-07-2 「AI에게 답을 받는 법」 개요 덱에서 다룬다. 여기서는 단계가 바뀐다는 것만 알린다.
+새 템플릿 ⑯. LAB-02의 ①~⑫, LAB-03의 ⑬, LAB-04의 ⑭, LAB-05의 ⑮ 뒤로 이어 매긴다. 값 하나가 지금 모습이 되기까지 거친 단계(중첩 구조라면 들어가는 key · 인덱스, 반복이라면 값이 바뀐 순서)를 내가 먼저 적고 점검받는 템플릿이다. 조언 받기 단계의 마지막 새 템플릿이다.
+기대하는 경로: 없음 → 1(참가자 첫 번째 mislav, get 기본값 0에 1을 더함) → 2(참가자 세 번째 mislav) → 1(완주자 세 번째 mislav에서 1을 뺌).
+print(name, count)를 두 반복에 넣으면 찍히는 값(직접 실행):
+mislav {'mislav': 1}
+stanko {'mislav': 1, 'stanko': 1}
+mislav {'mislav': 2, 'stanko': 1}
+ana {'mislav': 2, 'stanko': 1, 'ana': 1}
+stanko {'mislav': 2, 'stanko': 0, 'ana': 1}
+ana {'mislav': 2, 'stanko': 0, 'ana': 0}
+mislav {'mislav': 1, 'stanko': 0, 'ana': 0}
 -->
 
 ---
