@@ -3,11 +3,11 @@ theme: ./slidev-themes/hossam
 manuscript: true
 colorMode: dark
 fontScale: 1
-title: 파이썬 기초 · 딕셔너리 — 딕셔너리 종합문제
+title: 파이썬 기초 · 딕셔너리 — 완주하지 못한 선수
 layout: cover
 ---
 
-# 딕셔너리 종합문제
+# 완주하지 못한 선수 — 딕셔너리 종합문제
 
 AI에게 물으며 푸는 코딩 테스트 — 프로그래머스 「완주하지 못한 선수」
 

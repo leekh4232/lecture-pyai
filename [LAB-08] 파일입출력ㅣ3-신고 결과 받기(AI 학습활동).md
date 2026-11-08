@@ -3,11 +3,11 @@ theme: ./slidev-themes/hossam
 manuscript: true
 colorMode: dark
 fontScale: 1
-title: 파이썬 기초 · 파일입출력 — 파일입출력 종합문제
+title: 파이썬 기초 · 파일입출력 — 신고 결과 받기
 layout: cover
 ---
 
-# 파일입출력 종합문제
+# 신고 결과 받기 — 파일입출력 종합문제
 
 AI에게 코드를 받아 검증하며 푸는 코딩 테스트 — 프로그래머스 「신고 결과 받기」
 
@@ -39,7 +39,7 @@ LAB-02 ~ 08에서 배운 것을 모두 써야 풀리는 코딩 테스트 문제(
 
 </Callout>
 
-<Tile kind="soft" color="ai" tag="오늘 새로 더하는 템플릿" title="⑲ 데이터 정보와 함께 받기">
+<Tile kind="soft" color="ai" tag="오늘 새 템플릿" title="⑲ 데이터 정보와 함께 받기">
 LAB-07의 ⑰ · ⑱ 뒤로 이어 매긴다. AI는 내 파일을 모른다. 위치 · 인코딩 · 첫 몇 줄을 함께 보낸다
 </Tile>
 
@@ -52,7 +52,7 @@ LAB-07의 ⑰ · ⑱ 뒤로 이어 매긴다. AI는 내 파일을 모른다. 위
 
 ---
 
-## #02. 쓸 수 있는 문법 — 배운 것까지만
+## #02. 문법 범위
 
 <div class="kicker">받은 코드도 지금까지 배운 문법이어야 한다. 모든 프롬프트의 <code>## 제약</code>에 이 범위를 적는다</div>
 
@@ -63,7 +63,7 @@ LAB-07의 ⑰ · ⑱ 뒤로 이어 매긴다. AI는 내 파일을 모른다. 위
 | LAB-07 예외처리 | try · except · finally |
 | LAB-08 파일입출력 | open · close · with · read · readlines · write · 모드(r · w · a) · encoding(utf-8 · euc-kr) · CSV를 split으로 읽기 |
 
-<Callout kind="danger" title="아직 안 배운 것 — 쓰지 않는다">
+<Callout kind="danger" title="아직 안 배운 것">
 <code>csv</code> 모듈 · <code>pandas</code> · <code>set</code> · 리스트 · 딕셔너리 컴프리헨션 · lambda · <code>collections</code>(Counter 등)
 </Callout>
 
@@ -223,7 +223,7 @@ class: dense
 class: dense
 ---
 
-## #07. 오늘 더하는 것 — 신고 기록을 CSV 파일에서 읽는다
+## #07. 추가 조건 — CSV 파일 입력
 
 <Callout icon="💡" title="원래 문제는 report를 리스트로 받는다. 오늘은 신고 기록을 CSV 파일로 두고, 파일에서 읽어 report 리스트를 만든 뒤 solution을 부른다" color="pastel-1"></Callout>
 
@@ -290,12 +290,12 @@ layout: section
 
 ---
 
-## #08. AI와 함께 푸는 세 단계
+## #08. 세 단계 풀이
 
 <Steps color="pastel">
-<li><b>AI에게 물어 문제를 확인하고 함수를 설계한다</b> — 내 정리를 점검받고, 처리 순서를 단계표로 받는다 <Chip color="ai">프롬프트 ② + ⑤</Chip></li>
-<li><b>먼저 직접 시도하고, 막히면 코드를 받아 검증한다</b> — 내 파일 정보와 내 시도를 보내 코드를 받고, 4단 확인을 한다 <Chip color="ai">프롬프트 ⑲</Chip> <Chip color="ok">4단 확인</Chip></li>
-<li><b>틀리면 AI에게 고쳐 받는다</b> — 틀린 결과와 내가 생각한 원인을 보내 바꾼 줄만 받는다 <Chip color="ai">프롬프트 ⑱</Chip></li>
+<li><b>문제 확인 · 함수 설계</b> — 내 정리를 점검받고, 처리 순서를 단계표로 받는다 <Chip color="ai">프롬프트 ② + ⑤</Chip></li>
+<li><b>직접 시도 · 코드 받기 · 검증</b> — 내 파일 정보와 내 시도를 보내 코드를 받고, 4단 확인을 한다 <Chip color="ai">프롬프트 ⑲</Chip> <Chip color="ok">4단 확인</Chip></li>
+<li><b>수정 코드 받기</b> — 틀린 결과와 내가 생각한 원인을 보내 바꾼 줄만 받는다 <Chip color="ai">프롬프트 ⑱</Chip></li>
 </Steps>
 
 <Core color="ai">코드는 AI에게 받아도 된다. 4단 확인을 통과해야 내 코드다.</Core>
@@ -309,7 +309,7 @@ LAB-03 ~ 06과 같은 세 단계에서 2단계만 바뀌었다. 조언 받기 �
 class: dense
 ---
 
-## #09. 1단계 — AI에게 물어 문제를 확인하고 함수를 설계한다
+## #09. 1단계 — 문제 확인 · 함수 설계
 
 <Callout icon="💡" title="문제를 제대로 이해했는지 확인하고, 어떤 순서로 코드를 쓸지 정하고 싶은 경우" color="pastel-1"></Callout>
 
@@ -375,7 +375,7 @@ LAB-02의 ② 내 설명 점검받기와 ⑤ 단계로 쪼개기를 한 프롬�
 class: dense
 ---
 
-## #10. 2단계 — 먼저 직접 시도하고, 막히면 코드를 받아 검증한다
+## #10. 2단계 — 직접 시도 · 코드 받기 · 검증
 
 <Callout icon="💡" title="단계표대로 직접 써 보다 막혔고, 내 파일에 맞는 코드를 받아 검증하고 싶은 경우" color="pastel-1"></Callout>
 
@@ -480,7 +480,7 @@ report2.csv로 같은 순서를 밟고 solution(["con", "ryan"], report2, 3)이�
 class: dense
 ---
 
-## #11. 3단계 — 틀리면 AI에게 고쳐 받는다
+## #11. 3단계 — 수정 코드 받기
 
 <Callout icon="💡" title="받은 코드나 내가 고친 코드에서 에러가 나거나 값이 틀렸고, 원인을 짐작해 봤는데 어떻게 고칠지 막힌 경우" color="pastel-1"></Callout>
 
@@ -530,7 +530,7 @@ class: dense
 
 </div>
 
-<Callout kind="danger" title="에러가 파일 쪽이면">
+<Callout kind="danger" title="파일 쪽 에러">
 코드만 보지 말고 파일 이름 · 위치 · 인코딩 · 마지막 빈 줄을 먼저 확인한다
 </Callout>
 

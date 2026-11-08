@@ -1,0 +1,56 @@
+/* 사이드바 기본값과 컴포넌트 공통 토큰 */
+
+:root {
+  --sidebar-w: 0px; /* 발표 화면에서 사이드바가 켜지면 global-top.vue 가 실제 폭으로 바꾼다. editorial.css 가 #page-root 왼쪽 여백에 쓴다 */
+}
+/* 인쇄(브라우저 인쇄 · PDF 내보내기)에는 사이드바를 그리지 않으므로 본문 왼쪽 자리도 비우지 않는다 */
+@media print {
+  :root { --sidebar-w: 0px !important; }
+}
+
+/* 글자 크기는 rem 기준. 슬라이드 캔버스(1280×720)에서 1rem = 20px 이고, 캔버스가 창에 맞춰 통째로 축소된다 */
+html.editorial {
+  font-size: 20px;
+}
+
+/* 컴포넌트 공통 색 (흰 바탕 · 어두운 바탕).
+   상자(카드 · 콜아웃 · 타일 · 코드)는 직각이고 1px 가는 선과 4px 윗선으로 구분한다. 그림자는 쓰지 않는다(--sh 는 none). */
+html.editorial {
+  --card: #ffffff;
+  --fg: #16213a;
+  --fg-2: #4a5874;
+  --line-2: rgba(10, 20, 40, 0.16);
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --ease: cubic-bezier(0.22, 0.7, 0.3, 1);
+  --grid-gap: 32px;
+  --sh: none;
+  /* 반전 상자(Tile kind="fill"): 밝은 테마에서는 어두운 바탕에 밝은 글자, 어두운 테마에서는 그 반대.
+     -inv 색은 반전 바탕 위에 올리는 강조색이라 반대 테마의 색을 쓴다 */
+  --inv: #16213a;
+  --on-inv: #ffffff;
+  --on-inv-2: #b8c4d8;
+  --py-inv: #5fc9f8;
+  --ai-inv: #ff9c66;
+  --ok-inv: #5fe3a1;
+  --yellow-inv: #ffd45f;
+  --warn-inv: #ffcf5c;
+  --danger-inv: #ff6b7a;
+  --muted-inv: #93a3bd;
+}
+html.editorial.dark {
+  --card: #16213a;
+  --fg: #e8eef8;
+  --fg-2: #a9b6cc;
+  --line-2: rgba(255, 255, 255, 0.14);
+  --sh: none;
+  --inv: #e8eef8;
+  --on-inv: #0b1220;
+  --on-inv-2: #4a5874;
+  --py-inv: #0a7fc2;
+  --ai-inv: #d9611f;
+  --ok-inv: #1f9d63;
+  --yellow-inv: #a67c00;
+  --warn-inv: #b57a00;
+  --danger-inv: #c8323f;
+  --muted-inv: #5d6b85;
+}

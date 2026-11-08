@@ -3,11 +3,11 @@ theme: ./slidev-themes/hossam
 manuscript: true
 colorMode: dark
 fontScale: 1
-title: 파이썬 기초 · 프로그램 흐름제어 — 흐름제어 종합문제
+title: 파이썬 기초 · 프로그램 흐름제어 — 콜라츠 추측
 layout: cover
 ---
 
-# 흐름제어 종합문제
+# 콜라츠 추측 — 흐름제어 종합문제
 
 AI에게 물으며 푸는 코딩 테스트 — 프로그래머스 「콜라츠 추측」
 

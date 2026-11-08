@@ -1,0 +1,22 @@
+{
+  "name": "slidev-theme-editorial",
+  "version": "1.0.0",
+  "private": true,
+  "description": "발표용 Slidev 테마(편집 디자인 · 연세블루 팔레트 · 직각 상자 · 인포그래픽 컴포넌트 Bars · Flow · Hypo · Stats). d 키로 어둡게. sidebar: true/false(hossam 과 같은 목차 사이드바).",
+  "keywords": ["slidev-theme", "slidev"],
+  "slidev": {
+    "defaults": {
+      "aspectRatio": "16/9",
+      "canvasWidth": 1280,
+      "fonts": {
+        "sans": "Pretendard Variable",
+        "mono": "JetBrains Mono",
+        "local": "Pretendard Variable, Pretendard"
+      },
+      "transition": "fade",
+      "lineNumbers": false
+    },
+    "colorSchema": "both",
+    "highlighter": "shiki"
+  }
+}

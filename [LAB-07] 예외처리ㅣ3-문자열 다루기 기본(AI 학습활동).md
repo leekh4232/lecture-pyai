@@ -3,11 +3,11 @@ theme: ./slidev-themes/hossam
 manuscript: true
 colorMode: dark
 fontScale: 1
-title: 파이썬 기초 · 예외처리 — 예외처리 종합문제
+title: 파이썬 기초 · 예외처리 — 문자열 다루기 기본
 layout: cover
 ---
 
-# 예외처리 종합문제
+# 문자열 다루기 기본 — 예외처리 종합문제
 
 AI에게 코드를 받아 검증하며 푸는 코딩 테스트 — 프로그래머스 「문자열 다루기 기본」
 
@@ -39,7 +39,7 @@ LAB-03 ~ 06과 같은 틀(문제 하나, 세 단계)이다. ② 답 받기 단�
 
 </Callout>
 
-<Tile kind="soft" color="ai" tag="오늘 새로 더하는 템플릿" title="⑰ 코드 받기 · ⑱ 내 코드 고쳐 받기">
+<Tile kind="soft" color="ai" tag="오늘 새 템플릿" title="⑰ 코드 받기 · ⑱ 내 코드 고쳐 받기">
 LAB-06의 ⑯ 뒤로 이어 매긴다. 프롬프트는 <code>## 내 시도</code>를 더한 여섯 섹션
 </Tile>
 
@@ -52,7 +52,7 @@ LAB-06의 ⑯ 뒤로 이어 매긴다. 프롬프트는 <code>## 내 시도</code
 
 ---
 
-## #02. 쓸 수 있는 문법 — 배운 것까지만
+## #02. 문법 범위
 
 <div class="kicker">받은 코드도 지금까지 배운 문법이어야 한다. 모든 프롬프트의 <code>## 제약</code>에 이 범위를 적는다</div>
 
@@ -63,8 +63,8 @@ LAB-06의 ⑯ 뒤로 이어 매긴다. 프롬프트는 <code>## 내 시도</code
 | LAB-05 · 06 | 문자열 인덱싱 · 슬라이싱 · upper · lower · strip · replace · split · 딕셔너리 · get · items 등 |
 | LAB-07 예외처리 | if로 대비하기 · try · except · 예외 종류별 except · `as` 로 메시지 받기 · finally · Exception |
 
-<Callout kind="danger" title="아직 안 배운 것 — 받은 코드에 있으면 범위 안으로 다시 요청한다">
-리스트 컴프리헨션 · lambda · 모듈 import · <code>isdigit</code> · <code>isalpha</code> 같은 문자열 판별 함수
+<Callout kind="danger" title="아직 안 배운 것">
+받은 코드에 있으면 범위 안으로 다시 요청한다: 리스트 컴프리헨션 · lambda · 모듈 import · <code>isdigit</code> · <code>isalpha</code> 같은 문자열 판별 함수
 </Callout>
 
 <Core color="ok">받은 코드에 안 배운 문법이 있으면 4단 확인의 ② 범위에서 걸린다.</Core>
@@ -119,7 +119,7 @@ print(solution("a234"))  # False
 print(solution("1234"))  # True
 ```
 
-<Callout kind="tip" title="오늘의 예외처리와 이어지는 곳">
+<Callout kind="tip" title="예외처리 연결">
 <code>int("a234")</code>는 <b>ValueError</b>가 난다. 에러가 나는지가 곧 「숫자로만 구성됐는지」의 답이 된다
 </Callout>
 
@@ -144,12 +144,12 @@ layout: section
 
 ---
 
-## #04. AI와 함께 푸는 세 단계
+## #04. 세 단계 풀이
 
 <Steps color="pastel">
-<li><b>AI에게 물어 문제를 확인하고 함수를 설계한다</b> — 내 정리를 점검받고, 처리 순서를 단계표로 받는다 <Chip color="ai">프롬프트 ② + ⑤</Chip></li>
-<li><b>직접 시도한 뒤 코드를 받아 4단 확인한다</b> — 단계표대로 써 보고, 막힌 코드를 보내 이어서 완성한 코드를 받는다 <Chip color="ai">프롬프트 ⑰</Chip></li>
-<li><b>틀리면 고친 코드를 받는다</b> — 틀린 결과와 내가 짐작한 원인을 보내 바꾼 줄만 받는다 <Chip color="ai">프롬프트 ⑱</Chip></li>
+<li><b>문제 확인 · 함수 설계</b> — 내 정리를 점검받고, 처리 순서를 단계표로 받는다 <Chip color="ai">프롬프트 ② + ⑤</Chip></li>
+<li><b>직접 시도 · 코드 받기 · 4단 확인</b> — 단계표대로 써 보고, 막힌 코드를 보내 이어서 완성한 코드를 받는다 <Chip color="ai">프롬프트 ⑰</Chip></li>
+<li><b>수정 코드 받기</b> — 틀린 결과와 내가 짐작한 원인을 보내 바꾼 줄만 받는다 <Chip color="ai">프롬프트 ⑱</Chip></li>
 </Steps>
 
 <Core color="ai">코드를 쓰는 손은 AI로 넘어가도, 맞는지 판단하는 일은 내 몫이다.</Core>
@@ -163,7 +163,7 @@ LAB-03 ~ 06과 같은 세 단계다. 2단계만 "AI 없이 직접 쓴다"에서 
 class: dense
 ---
 
-## #05. 1단계 — AI에게 물어 문제를 확인하고 함수를 설계한다
+## #05. 1단계 — 문제 확인 · 함수 설계
 
 <Callout icon="💡" title="문제를 제대로 이해했는지 확인하고, 어떤 순서로 코드를 쓸지 정하고 싶은 경우" color="pastel-1"></Callout>
 
@@ -228,7 +228,7 @@ LAB-02의 ② 내 설명 점검받기와 ⑤ 단계로 쪼개기를 한 프롬�
 class: dense
 ---
 
-## #06. 2단계 — 직접 시도한 뒤 코드를 받는다
+## #06. 2단계 — 직접 시도 · 코드 받기
 
 <Callout icon="💡" title="단계표대로 직접 써 봤는데 끝까지 못 풀어서, 내 시도를 이어서 완성한 코드를 받고 싶은 경우" color="pastel-1"></Callout>
 
@@ -305,7 +305,7 @@ try에서 먼저 int(s)를 검사하고, 통과한 뒤 return len(s) == 4 or len
 layout: infographic
 ---
 
-## #07. 2단계 — 받은 코드를 4단 확인한다
+## #07. 2단계 — 받은 코드 4단 확인
 
 <Flow color="pastel">
 <li><carbon:play /><b>① 실행</b>입출력 예 두 줄과 아래 값을 넣어 대조<span class="small muted">"12345" → False · "123456" → True · "1e34" → False</span></li>
@@ -315,7 +315,7 @@ layout: infographic
 </Flow>
 
 <Grid cols="2" gap="12">
-<Tile kind="soft" color="ok" tag="① 실행에서 걸리면" title="3단계 ⑱로 고쳐 받는다">입출력 예만 통과하고 더 넣은 값에서 틀리는 코드가 자주 온다</Tile>
+<Tile kind="soft" color="ok" tag="① 실행 실패 시" title="3단계 ⑱ 고쳐 받기">입출력 예만 통과하고 더 넣은 값에서 틀리는 코드가 자주 온다</Tile>
 <Tile kind="soft" color="ai" tag="④ 변형 정답" title="&quot;12345&quot; → True · &quot;1234567&quot; → False">받은 코드의 어느 줄을 바꾸면 되는지 설명할 수 있어야 풀린다</Tile>
 </Grid>
 
@@ -333,7 +333,7 @@ int(s) 대신 float(s)로 바꿔 봄: 입출력 예 두 줄은 통과하지만 "
 class: dense
 ---
 
-## #08. 3단계 — 틀리면 고친 코드를 받는다
+## #08. 3단계 — 수정 코드 받기
 
 <Callout icon="💡" title="받은 코드나 내 코드가 확인 값에서 틀리거나 에러가 났고, 원인을 짐작해 봤는데 어떻게 고칠지 막힌 경우" color="pastel-1"></Callout>
 
@@ -383,7 +383,7 @@ class: dense
 
 </div>
 
-<Callout kind="danger" title="에러가 났을 때">
+<Callout kind="danger" title="에러 발생 시">
 트레이스백은 줄이지 않고 전체를 붙인다. 맨 아래 줄부터 읽는다
 </Callout>
 

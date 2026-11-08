@@ -3,11 +3,11 @@ theme: ./slidev-themes/hossam
 manuscript: true
 colorMode: dark
 fontScale: 1
-title: 파이썬 기초 · 문자열 — 문자열 종합문제
+title: 파이썬 기초 · 문자열 — 이상한 문자 만들기
 layout: cover
 ---
 
-# 문자열 종합문제
+# 이상한 문자 만들기 — 문자열 종합문제
 
 AI에게 물으며 푸는 코딩 테스트 — 프로그래머스 「이상한 문자 만들기」
 
