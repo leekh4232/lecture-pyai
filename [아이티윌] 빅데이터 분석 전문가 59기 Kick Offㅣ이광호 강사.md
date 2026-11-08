@@ -2,9 +2,9 @@
 theme: ./slidev-themes/jussam
 title: 빅데이터 분석 전문가 56기 · Kick-Off
 manuscript: true
-colorMode: light
+colorMode: dark
 exportDark: false
-fontScale: 1.5
+fontScale: 1.2
 vivid: true
 layout: cover
 eyebrow: 아이티윌
@@ -39,19 +39,87 @@ eyebrow: Chapter 1
 ---
 part: 1
 eyebrow: Chapter 1 · Background
+class: dense [&_li]:!ml-0
 ---
 
-# **교육** 안내
+# 데이터 분석 부트캠프 **단계별 커리큘럼**
 
-등록 상담 과정에서 이 내용 받으셨나요?
+<Grid cols="4" gap="14">
+<Stat sm n="920" unit="H" label="총 교육 시간" />
+<Stat sm n="115" unit="일" label="교육 기간" />
+<Stat sm n="30" unit="%" label="프로젝트 비중" />
+<Stat sm n="10" unit="개" label="핵심 교과목" />
+</Grid>
 
-<Grid cols="1.9fr 1fr" gap="28" align="center">
-<Figure h="440">
-<img src="./img/kickoff/curriculum-1.png" alt="머신러닝을 활용한 데이터 분석 부트캠프 훈련교과와 학습목표 1~2쪽" />
-</Figure>
-<Figure h="300">
-<img src="./img/kickoff/curriculum-2.png" alt="훈련교과와 학습목표 마지막 쪽. 파이널 프로젝트" />
-</Figure>
+<Grid cols="4" gap="14" align="stretch">
+<Card sm acc k="step 1" t="기초역량">
+
+- SQL 데이터 다루기
+- Python 프로그래밍 기초
+- Python 웹 데이터 수집
+
+</Card>
+<Card sm acc k="step 2" t="기초 통계">
+
+- NumPy·Pandas
+- Python 데이터 시각화
+- 탐색적 데이터 분석
+- 회귀분석
+
+</Card>
+<Card sm acc k="step 3" t="머신러닝 모델링">
+
+- Python 머신러닝 · 앙상블 · 교차검증
+- 딥러닝(TensorFlow · Keras)
+
+</Card>
+<Card sm acc k="step 4" t="실전 프로젝트">
+
+- 기획 · 분석 문제 정의
+- 수행 · AI 예측모델 개발
+- 평가 · 보고서 · 발표 · 포트폴리오
+
+</Card>
+</Grid>
+
+---
+part: 1
+eyebrow: Chapter 1 · Background
+eras:
+  ticks: ["1950's", "1960's", "1970's", "1980's", "1990's", "2000's", "2010's", "2020's"]
+  height: 320
+  step: 56
+  layers:
+    - title: Artificial<br>Intelligence
+      from: 0
+      items: [Rule-Based Systems, Fuzzy Logic, Evolutionary Algorithms, Natural Language Processing, Computer Vision]
+    - title: Machine<br>Learning
+      from: 3
+      items: [Supervised Learning, Unsupervised Learning, Reinforcement Learning]
+    - title: Deep<br>Learning
+      from: 6
+      items: ['ANN, CNN, RNN', 'GAN, GNN']
+---
+
+# 데이터 분석을 위한 **머신러닝 분류 방식** (1)
+
+<Eras v-bind="$frontmatter.eras" />
+
+---
+part: 1
+eyebrow: Chapter 1 · Background
+class: '[&_.card_.k]:!text-[14.3px] [&_.card_.t]:!text-[24.7px] [&_.card_.d]:!text-[18.2px]'
+---
+
+# 데이터 분석을 위한 **머신러닝 분류 방식** (2)
+
+AI, ML, DL, XAI
+
+<Grid cols="4" gap="18" align="stretch">
+<Card lg acc k="Artificial Intelligence" t="AI">인간의 지적 능력을 모방하는 기술</Card>
+<Card lg acc k="Machine Learning" t="ML">대규모 데이터를 분석하고 학습하여 패턴을 예측하는 기술</Card>
+<Card lg acc k="Deep Learning" t="DL">인공신경망을 기반으로 복잡한 데이터에서 고차원 패턴을 자동으로 학습하는 기술</Card>
+<Card lg acc k="Explainable AI" t="XAI">AI의 의사결정 과정을 사람이 이해할 수 있도록 설명해주는 기술 또는 접근 방법</Card>
 </Grid>
 
 ---
@@ -59,18 +127,7 @@ part: 1
 eyebrow: Chapter 1 · Background
 ---
 
-# 데이터 분석을 위한 **머신러닝 분류 방식** (1)
-
-<Figure paper>
-<img src="./img/kickoff/ai-ml-dl.png" alt="1950년대부터 2020년대까지 인공지능 안에 머신러닝, 머신러닝 안에 딥러닝이 포함되는 관계" />
-</Figure>
-
----
-part: 1
-eyebrow: Chapter 1 · Background
----
-
-# 데이터 분석을 위한 **머신러닝 분류 방식** (2)
+# 데이터 분석을 위한 **머신러닝 분류 방식** (3)
 
 사회 문제 해결을 위한 인공지능 → 주로 머신러닝을 의미 (Lundberg et al., 2024)
 
@@ -91,22 +148,6 @@ eyebrow: Chapter 1 · Background
 - 특히 표 형식의 데이터에서 압도적인 성능 차이를 보여줌 (Grinsztajn, Oyallon, & Varoquaux, 2022; Shwartz-Ziv & Armon, 2022)
 
 </Card>
-</Grid>
-
----
-part: 1
-eyebrow: Chapter 1 · Background
----
-
-# 데이터 분석을 위한 **머신러닝 분류 방식** (3)
-
-AI, ML, DL, XAI
-
-<Grid cols="4" gap="18" align="stretch">
-<Card lg acc k="Artificial Intelligence" t="AI">인간의 지적 능력을 모방하는 기술</Card>
-<Card lg acc k="Machine Learning" t="ML">대규모 데이터를 분석하고 학습하여 패턴을 예측하는 기술</Card>
-<Card lg acc k="Deep Learning" t="DL">인공신경망을 기반으로 복잡한 데이터에서 고차원 패턴을 자동으로 학습하는 기술</Card>
-<Card lg acc k="Explainable AI" t="XAI">AI의 의사결정 과정을 사람이 이해할 수 있도록 설명해주는 기술 또는 접근 방법</Card>
 </Grid>
 
 ---
