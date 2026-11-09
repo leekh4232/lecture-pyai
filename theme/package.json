@@ -1,0 +1,25 @@
+{
+  "name": "slidev-theme-hossam",
+  "version": "1.0.0",
+  "private": true,
+  "description": "코딩 강의용 Slidev 테마(기본은 어두운 바탕, d 키로 밝게, 직각 상자). sidebar: true/false(왼쪽 목차 사이드바). 콜아웃·프롬프트·출력·타일·핵심 한 줄·칩·단계·격자 컴포넌트.",
+  "keywords": [
+    "slidev-theme",
+    "slidev"
+  ],
+  "slidev": {
+    "defaults": {
+      "aspectRatio": "16/9",
+      "canvasWidth": 1280,
+      "fonts": {
+        "sans": "Pretendard Variable",
+        "mono": "JetBrains Mono",
+        "local": "Pretendard Variable, Pretendard"
+      },
+      "transition": "slide-left",
+      "lineNumbers": true
+    },
+    "colorSchema": "both",
+    "highlighter": "shiki"
+  }
+}
