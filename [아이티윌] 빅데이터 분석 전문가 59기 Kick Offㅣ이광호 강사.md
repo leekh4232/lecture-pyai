@@ -1,6 +1,6 @@
 ---
 theme: ./slidev-themes/jussam
-title: 빅데이터 분석 전문가 56기 · Kick-Off
+title: 빅데이터 분석 전문가 59기 · Kick-Off
 manuscript: true
 colorMode: dark
 exportDark: false
@@ -11,7 +11,7 @@ eyebrow: 아이티윌
 footer: 이광호 강사
 ---
 
-# 빅데이터 분석 전문가 56기<br>**Kick-Off**
+# 빅데이터 분석 전문가 59기<br>**Kick-Off**
 
 ---
 layout: magazine
@@ -19,12 +19,28 @@ layout: magazine
 
 # 반갑습니다
 
-이 광 호<br>leekh4232@yonsei.ac.kr
+이 광 호<br>leekh4232@gmail.com
 
 - 연세대학교 공학석사
 - 아이티윌 - 데이터분석/머신러닝 강의
 - 메가스터디IT아카데미 - 프론트엔드/백엔드/데이터 분석 강의
 - KT, U+ 프로젝트 다수 참여
+- 모바일 게임 개발
+
+---
+eyebrow: communication
+---
+
+# **Communication**
+
+<Grid cols="2" gap="80">
+<Figure h="300" caption="단톡방">
+<img src="./img/kickoff/qr-group-chat.png" alt="단톡방 입장 QR 코드" />
+</Figure>
+<Figure h="300" caption="1:1 톡방">
+<img src="./img/kickoff/qr-direct-chat.png" alt="1:1 톡방 입장 QR 코드" />
+</Figure>
+</Grid>
 
 ---
 layout: section
@@ -69,14 +85,14 @@ class: dense [&_li]:!ml-0
 </Card>
 <Card sm acc k="step 3" t="머신러닝 모델링">
 
-- Python 머신러닝 · 앙상블 · 교차검증
-- 딥러닝(TensorFlow · Keras)
+- Python 머신러닝
+- 딥러닝<br/>(TensorFlow · Keras)
 
 </Card>
 <Card sm acc k="step 4" t="실전 프로젝트">
 
 - 기획 · 분석 문제 정의
-- 수행 · AI 예측모델 개발
+- 데이터 탐색 · 모델링
 - 평가 · 보고서 · 발표 · 포트폴리오
 
 </Card>
@@ -92,13 +108,23 @@ eras:
   layers:
     - title: Artificial<br>Intelligence
       from: 0
-      items: [Rule-Based Systems, Fuzzy Logic, Evolutionary Algorithms, Natural Language Processing, Computer Vision]
+      items:
+        - { t: Rule-Based Systems, d: 규칙 기반 시스템 · 사람이 정한 if-then 규칙으로 판단 }
+        - { t: Fuzzy Logic, d: 퍼지 논리 · 참과 거짓 사이의 애매한 정도를 다룸 }
+        - { t: Evolutionary Algorithms, d: 진화 알고리즘 · 생물의 진화를 흉내 내 좋은 답을 찾음 }
+        - { t: Natural Language Processing, d: 자연어 처리 · 사람의 말과 글을 이해하고 만들어 냄 }
+        - { t: Computer Vision, d: 컴퓨터 비전 · 이미지와 영상을 인식 }
     - title: Machine<br>Learning
       from: 3
-      items: [Supervised Learning, Unsupervised Learning, Reinforcement Learning]
+      items:
+        - { t: Supervised Learning, d: 지도학습 · 정답이 있는 데이터로 학습 }
+        - { t: Unsupervised Learning, d: 비지도학습 · 정답 없이 패턴과 군집을 찾음 }
+        - { t: Reinforcement Learning, d: 강화학습 · 보상을 받으며 행동을 익힘 }
     - title: Deep<br>Learning
       from: 6
-      items: ['ANN, CNN, RNN', 'GAN, GNN']
+      items:
+        - { t: 'ANN, CNN, RNN', d: 기본 신경망 · 이미지 · 순서 데이터 }
+        - { t: 'GAN, GNN', d: 생성 모델 · 그래프 데이터 }
 ---
 
 # 데이터 분석을 위한 **머신러닝 분류 방식** (1)
@@ -125,9 +151,45 @@ AI, ML, DL, XAI
 ---
 part: 1
 eyebrow: Chapter 1 · Background
+class: 'dense tight [&_.card-sm]:!p-[12px] [&_.card_.d]:!text-center [&_.item]:!py-[8px] [&_.numlist_.dd]:!mt-0'
 ---
 
-# 데이터 분석을 위한 **머신러닝 분류 방식** (3)
+# 사회과학 연구와 **데이터 분석**
+
+<Grid cols="1fr 1.1fr" gap="36" align="start">
+<div>
+
+### 사회과학
+
+- 인간의 사회적 행동과 상호작용,<br>그리고 이를 이루는 집단과 제도를<br>과학적으로 탐구하는 분야
+- 자연과학이 자연현상의 법칙을 탐구한다면,<br>사회과학은 인간과 사회 현상을<br>설명・예측하고 개선하는 것을 목표로 함
+- 사회 현상을 이해·설명·예측하기 위해<br>질문 → 데이터 → 증거 기반 답변 을 도출하는<br>체계적 탐구
+
+</div>
+<div>
+
+### 사회과학 분야의 연구 예시
+
+일반적으로 말하는 데이터 분석 과정을 "연구"라고 함
+
+<Card sm acc>기후 변화 인식이 에너지 소비 행동에 미치는 영향:<br>설문조사와 스마트미터 데이터를 활용한 혼합 방법 연구</Card>
+
+<NumList>
+<Item title="질문">기후 위기에 대한 인식 수준이 가정의 에너지 절약 행동에 영향을 주는가?</Item>
+<Item title="데이터">전국 설문조사 응답, 스마트미터 전력 사용 기록, 기상 자료</Item>
+<Item title="증거 기반 답변">통계 분석 + 머신러닝으로 인식·행동 간 관계를 설명하고<br/>정책 시뮬레이션 제공</Item>
+</NumList>
+
+</div>
+</Grid>
+
+---
+part: 1
+eyebrow: Chapter 1 · Background
+class: 'tight [&_.kicker.acc]:!mt-[8px] [&_.card]:!pb-[12px]'
+---
+
+# 사회 문제 해결을 위한 **머신러닝과 딥러닝**
 
 사회 문제 해결을 위한 인공지능 → 주로 머신러닝을 의미 (Lundberg et al., 2024)
 
@@ -156,41 +218,6 @@ eyebrow: Chapter 1 · Background
 class: dense
 ---
 
-# 사회과학 연구와 **데이터 분석**
-
-<Grid cols="1fr 1.1fr" gap="36" align="start">
-<div>
-
-### 사회과학
-
-- 인간의 사회적 행동과 상호작용,<br>그리고 이를 이루는 집단과 제도를<br>과학적으로 탐구하는 분야
-- 자연과학이 자연현상의 법칙을 탐구한다면,<br>사회과학은 인간과 사회 현상을<br>설명・예측하고 개선하는 것을 목표로 함
-- 사회 현상을 이해·설명·예측하기 위해<br>질문 → 데이터 → 증거 기반 답변 을 도출하는<br>체계적 탐구
-
-</div>
-<div>
-
-### 사회과학 분야의 연구 예시
-
-일반적으로 말하는 데이터 분석 과정을 "연구"라고 함
-
-<Card sm acc>기후 변화 인식이 에너지 소비 행동에 미치는 영향:<br>설문조사와 스마트미터 데이터를 활용한 혼합 방법 연구</Card>
-
-<NumList>
-<Item title="질문">기후 위기에 대한 인식 수준이 가정의 에너지 절약 행동에 영향을 주는가?</Item>
-<Item title="데이터">전국 설문조사 응답, 스마트미터 전력 사용 기록, 기상 자료</Item>
-<Item title="증거 기반 답변">통계 분석 + 머신러닝으로<br>인식–행동 간 관계를 설명하고 정책 시뮬레이션 제공</Item>
-</NumList>
-
-</div>
-</Grid>
-
----
-part: 1
-eyebrow: Chapter 1 · Background
-class: dense
----
-
 # **데이터 분석 프로세스** (1)
 
 본 훈련 과정을 통해 이 프로세스를 단계별로 습득하는 것을 목표로 함
@@ -198,29 +225,22 @@ class: dense
 <Grid cols="2" gap="20" align="stretch">
 <Card acc k="01" t="데이터 수집・가공">
 
-DATABASE (SQL)<br>API, Crawling (Python)
+**수집** · DATABASE(SQL) · API, Crawling(Python)
 
-- 데이터 구조 점검
-- 데이터 정제 (품질 문제 해결)
-- 데이터 정리/병합
-- 데이터 재구조화(Re-shaping)
-- 정보 조합
-- 파생변수 생성
-- 범주형 변수 인코딩
-- 수학적 변환(로그변환, 스케일링)
+- **점검·정제** · 데이터 구조 점검 · 품질 문제 해결
+- **정리** · 정리/병합 · 재구조화(Re-shaping) · 정보 조합
+- **변수 가공** · 파생변수 생성 · 범주형 변수 인코딩
+- **변환** · 수학적 변환(로그변환, 스케일링)
 
 </Card>
 <Card acc k="02" t="탐색적 데이터 분석">
 
-- 기초 통계량
-- 단변량 분석
-- 이변량 분석
-- 기본 다변량 분석(pairplot, heatmap)
-- 시계열 패턴 분석
-- 통계적 검정 방법 선택(t-test, ANOVA, 카이제곱 등)
-- 변수 간 상관관계 분석
-- 데이터 분포 형태 관찰
-- 데이터 구조 이해 및 시각적 요약
+**목표** · 데이터 구조 이해 및 시각적 요약
+
+- **기초** · 기초 통계량 · 데이터 분포 형태 관찰
+- **변량별** · 단변량 · 이변량 · 기본 다변량 분석(pairplot, heatmap)
+- **관계** · 변수 간 상관관계 분석 · 시계열 패턴 분석
+- **검정** · 통계적 검정(t-test, ANOVA, 카이제곱 등)
 
 </Card>
 </Grid>
@@ -262,70 +282,68 @@ class: dense
 part: 1
 eyebrow: Chapter 1 · Background
 nodemap:
-  w: 1000
-  h: 582.5
+  w: 1600
+  h: 580
   nodes:
-    - { label: '연구주제 선정', x: 0.0, y: 15.7, w: 171.7, h: 43.2, kind: term }
-    - { label: '데이터 수집', x: 0.0, y: 89.1, w: 171.7, h: 58.9, kind: io }
-    - { label: '탐색적 데이터 분석', x: 0.0, y: 174.4, w: 171.7, h: 58.9, kind: box }
-    - { label: 'K-Fold / GridSearchCV', x: 290.7, y: 249.2, w: 204.1, h: 71.6, kind: box }
-    - { label: 'LinearRegression', x: 545.9, y: 0.0, w: 152.9, h: 58.9, kind: box }
-    - { label: 'KNN Regression', x: 545.9, y: 77.3, w: 152.9, h: 58.9, kind: box }
-    - { label: 'Decision Tree <br>Regression', x: 545.9, y: 154.5, w: 152.9, h: 58.9, kind: box }
-    - { label: 'SGD Regression', x: 545.9, y: 225.7, w: 152.9, h: 58.9, kind: box }
-    - { label: 'Random Forest', x: 545.9, y: 296.8, w: 152.9, h: 58.9, kind: box }
-    - { label: 'Surport <br>Vector Machine', x: 545.9, y: 367.9, w: 152.9, h: 58.9, kind: box }
-    - { label: 'LightGBM', x: 545.9, y: 439.0, w: 152.9, h: 58.9, kind: box }
-    - { label: 'CatBoost', x: 545.9, y: 510.2, w: 152.9, h: 58.9, kind: box }
-    - { label: '성능평가<br>(R^2, MSE, RMSE /<br>Over, Under Fitting)', x: 748.1, y: 248.2, w: 189.1, h: 72.6, kind: box }
-    - { label: '요인선정<br>(상관분석/분산분석)', x: 0.0, y: 255.6, w: 171.7, h: 58.9, kind: box }
-    - { label: '분위수 분할', x: 177.2, y: 349.0, w: 171.7, h: 58.9, kind: box }
-    - { label: '군집분석<br>(KMeans/DBScan)', x: 116.4, y: 439.0, w: 171.7, h: 58.9, kind: box }
-    - { label: '차원축소<br>(PCA)', x: 65.4, y: 523.7, w: 171.7, h: 58.9, kind: box }
-    - { label: 'Votting', x: 830.4, y: 6.1, w: 98.1, h: 58.9, kind: box }
-    - { label: 'Bagging', x: 830.4, y: 89.1, w: 98.1, h: 58.9, kind: box }
-    - { label: 'feature importance<br>SHAP', x: 748.1, y: 385.8, w: 189.1, h: 60.1, kind: box }
-    - { label: '결과해석', x: 756.8, y: 504.5, w: 171.7, h: 58.9, kind: io }
-    - { label: 'Boosting', x: 830.4, y: 168.7, w: 98.1, h: 58.9, kind: box }
+    - { label: '연구주제 선정', x: 0, y: 0, w: 190, h: 44, kind: term }
+    - { label: '데이터 수집', x: 0, y: 84, w: 190, h: 56, kind: io }
+    - { label: '탐색적 데이터 분석', x: 0, y: 170, w: 190, h: 56, kind: box }
+    - { label: '요인선정<br>(상관분석/분산분석)', x: 0, y: 256, w: 190, h: 60, kind: box }
+    - { label: '분위수 분할', x: 260, y: 350, w: 190, h: 56, kind: box }
+    - { label: '군집분석<br>(KMeans/DBScan)', x: 260, y: 430, w: 190, h: 56, kind: box }
+    - { label: '차원축소<br>(PCA)', x: 260, y: 510, w: 190, h: 56, kind: box }
+    - { label: 'K-Fold / GridSearchCV', x: 520, y: 256, w: 210, h: 60, kind: box }
+    - { label: 'LinearRegression', x: 800, y: 0, w: 190, h: 56, kind: box }
+    - { label: 'KNN Regression', x: 800, y: 72, w: 190, h: 56, kind: box }
+    - { label: 'Decision Tree<br>Regression', x: 800, y: 144, w: 190, h: 56, kind: box }
+    - { label: 'SGD Regression', x: 800, y: 216, w: 190, h: 56, kind: box }
+    - { label: 'Random Forest', x: 800, y: 288, w: 190, h: 56, kind: box }
+    - { label: 'Support<br>Vector Machine', x: 800, y: 360, w: 190, h: 56, kind: box }
+    - { label: 'LightGBM', x: 800, y: 432, w: 190, h: 56, kind: box }
+    - { label: 'CatBoost', x: 800, y: 504, w: 190, h: 56, kind: box }
+    - { label: '성능평가<br>(R², MSE, RMSE /<br>Over·Under Fitting)', x: 1060, y: 250, w: 200, h: 72, kind: box }
+    - { label: 'feature importance<br>SHAP', x: 1060, y: 400, w: 200, h: 56, kind: box }
+    - { label: '결과해석', x: 1060, y: 510, w: 200, h: 56, kind: io }
+    - { label: 'Voting', x: 1340, y: 60, w: 150, h: 56, kind: box }
+    - { label: 'Bagging', x: 1340, y: 150, w: 150, h: 56, kind: box }
+    - { label: 'Boosting', x: 1340, y: 240, w: 150, h: 56, kind: box }
   edges:
-    - 'M85.8,58.9 L85.8,89.1'
-    - 'M85.8,148.0 L85.8,174.4'
-    - 'M698.9,29.4 L724.7,29.4 L724.7,284.5 L747.2,284.5'
-    - 'M698.9,106.7 L724.7,106.7 L724.7,284.5 L747.2,284.5'
-    - 'M698.9,184.0 L724.4,184.0 L724.4,286.0 L748.8,286.0'
-    - 'M698.9,286.0 L724.4,286.0 L724.4,255.1 L748.8,255.1'
-    - 'M698.9,326.2 L724.4,326.2 L724.4,285.0 L748.8,285.0'
-    - 'M698.9,397.4 L724.7,397.4 L724.7,284.5 L747.2,284.5'
-    - 'M698.9,468.5 L724.7,468.5 L724.7,284.5 L747.2,284.5'
-    - 'M698.9,539.6 L724.7,539.6 L724.7,284.5 L747.2,284.5'
-    - 'M85.8,233.3 L85.8,255.6'
-    - 'M171.7,285.0 L290.7,285.0'
-    - 'M141.8,314.4 L141.8,378.5 L177.2,378.5'
-    - 'M348.9,378.5 L392.7,378.5 L392.7,320.8'
-    - 'M288.1,468.5 L419.6,468.5 L419.6,320.8'
-    - 'M33.0,314.4 L33.0,553.1 L65.4,553.1'
-    - 'M237.1,568.3 L452.9,568.3 L452.9,320.8'
-    - 'M842.7,320.8 L842.7,385.8'
-    - 'M842.7,445.9 L842.7,504.5'
-    - 'M776.3,248.2 L776.3,35.6 L830.4,35.6'
-    - 'M790.1,248.2 L790.1,118.5 L830.4,118.5'
-    - 'M804.8,248.2 L804.8,198.1 L830.4,198.1'
-    - 'M928.5,35.6 L1000.0,35.6 L1000.0,305.5 L937.2,305.5'
-    - 'M928.5,118.5 L981.4,118.5 L981.4,284.5 L937.2,284.5'
-    - 'M928.5,198.1 L962.7,198.1 L962.7,264.3 L937.2,264.3'
-    - 'M85.8,314.4 L85.8,468.5 L116.4,468.5'
-    - 'M151.2,523.7 L151.2,510.9 L202.2,510.9 L202.2,497.9'
-    - 'M202.2,439.0 L202.2,425.6 L263.1,425.6 L263.1,407.9'
-    - 'M237.1,541.8 L323.4,541.8 L323.4,407.9'
-    - 'M494.7,285.0 L521.6,285.0 L521.6,106.7 L545.9,106.7'
-    - 'M494.7,285.0 L521.6,285.0 L521.6,184.0 L545.9,184.0'
-    - 'M494.7,285.0 L521.6,285.0 L521.6,29.4 L545.9,29.4'
-    - 'M494.7,285.0 L521.6,285.0 L521.6,326.2 L545.9,326.2'
-    - 'M494.7,285.0 L521.6,285.0 L521.6,397.4 L545.9,397.4'
-    - 'M494.7,285.0 L521.6,285.0 L521.6,468.5 L545.9,468.5'
-    - 'M494.7,285.0 L521.6,285.0 L521.6,255.1 L545.9,255.1'
-    - 'M494.7,285.0 L521.6,285.0 L521.6,539.6 L545.9,539.6'
-  height: 470
+    - 'M95,44 L95,84'
+    - 'M95,140 L95,170'
+    - 'M95,226 L95,256'
+    - 'M190,286 L520,286'
+    - 'M150,316 L150,378 L260,378'
+    - 'M95,316 L95,458 L260,458'
+    - 'M40,316 L40,538 L260,538'
+    - 'M450,378 L585,378 L585,316'
+    - 'M450,458 L625,458 L625,316'
+    - 'M450,538 L665,538 L665,316'
+    - 'M730,286 L765,286 L765,28 L800,28'
+    - 'M990,28 L1025,28 L1025,286 L1060,286'
+    - 'M730,286 L765,286 L765,100 L800,100'
+    - 'M990,100 L1025,100 L1025,286 L1060,286'
+    - 'M730,286 L765,286 L765,172 L800,172'
+    - 'M990,172 L1025,172 L1025,286 L1060,286'
+    - 'M730,286 L765,286 L765,244 L800,244'
+    - 'M990,244 L1025,244 L1025,286 L1060,286'
+    - 'M730,286 L765,286 L765,316 L800,316'
+    - 'M990,316 L1025,316 L1025,286 L1060,286'
+    - 'M730,286 L765,286 L765,388 L800,388'
+    - 'M990,388 L1025,388 L1025,286 L1060,286'
+    - 'M730,286 L765,286 L765,460 L800,460'
+    - 'M990,460 L1025,460 L1025,286 L1060,286'
+    - 'M730,286 L765,286 L765,532 L800,532'
+    - 'M990,532 L1025,532 L1025,286 L1060,286'
+    - 'M1260,270 L1300,270 L1300,88 L1340,88'
+    - 'M1490,88 L1540,88 L1540,302 L1260,302'
+    - 'M1260,270 L1300,270 L1300,178 L1340,178'
+    - 'M1490,178 L1540,178 L1540,302 L1260,302'
+    - 'M1260,270 L1300,270 L1300,268 L1340,268'
+    - 'M1490,268 L1540,268 L1540,302 L1260,302'
+    - 'M1160,322 L1160,400'
+    - 'M1160,456 L1160,510'
+  height: 340
+class: '[&_.nm-node]:!text-[11px]'
 ---
 
 # **데이터 분석 프로세스** (상세)
@@ -356,6 +374,7 @@ roadmap:
     - { label: 기초 수학 및 통계, from: 1, to: 3.18 }
     - { label: EDA / Tablueau, from: 1, to: 2.07 }
     - { label: 머신러닝, from: 2.07, to: 4.92 }
+class: '[&_.rm-track]:!h-[32px] [&_.roadmap]:!gap-[6px] [&_.rm-band]:!h-[38px]'
 ---
 
 # 데이터 분석 프로세스에 따른 **교과목 학습 계획**
@@ -384,19 +403,19 @@ eyebrow: Chapter 2 · Curriculum Roadmap
 이런걸 합니다…
 
 <Grid cols="1fr 1.1fr" gap="28" align="start">
-<div>
-<Figure h="90">
+<div class="tight">
+<Figure h="70">
 <img src="./img/kickoff/class-code.png" alt="ols 로 dist ~ speed 회귀 모델을 만들고 summary 를 출력하는 코드 세 줄" />
 </Figure>
-<Figure h="330">
+<Figure h="232">
 <img src="./img/kickoff/class-ols-summary.png" alt="OLS Regression Results 출력. R-squared, F-statistic, 계수와 p-value 에 번호를 붙여 강조" />
 </Figure>
 </div>
-<div>
-<Figure h="130">
+<div class="tight">
+<Figure h="95">
 <img src="./img/kickoff/class-result-table.png" alt="코로나19 이후 매출액 차이를 종속변수로 한 회귀분석 결과표" />
 </Figure>
-<Figure h="290">
+<Figure h="207">
 <img src="./img/kickoff/class-regression-plot.png" alt="키와 몸무게의 산점도와 회귀식 wgt = 80 + 2(hgt)" />
 </Figure>
 </div>
@@ -411,11 +430,11 @@ eyebrow: Chapter 2 · Curriculum Roadmap
 
 그래서 이렇게 설명을 합니다.
 
-<Grid cols="1.35fr 1fr" gap="32" align="center">
-<Figure h="450">
+<Grid cols="1.5fr 1fr" gap="32" align="center">
+<Figure h="322">
 <img src="./img/kickoff/regression-types.png" alt="단순회귀, 다중회귀, 로지스틱 회귀, 다항회귀, 곡선회귀, 비선형회귀의 모형과 설명 표" />
 </Figure>
-<Figure h="340">
+<Figure h="265">
 <img src="./img/kickoff/reaction.jpg" alt="이게 뭔 소리 하는 거에요 라는 자막이 달린 방송 화면" />
 </Figure>
 </Grid>
@@ -423,15 +442,34 @@ eyebrow: Chapter 2 · Curriculum Roadmap
 ---
 part: 2
 eyebrow: Chapter 2 · Curriculum Roadmap
+class: 'tight [&_.chip]:!text-[12px] [&_.chip]:!py-0 [&_.card-sm]:!p-[14px] [&_.card_.k]:!mb-[6px] [&_.card_.t]:!text-[16px] [&_.card_.t]:!mb-[6px] [&_.card_.d_p+p]:!mt-[6px] [&_.card_.d]:!leading-[1.9]'
 ---
 
 # 데이터 분석 **수업 예시**
 
-이만큼을 공부해야 합니다.
+이만큼을 공부해야 합니다. 머신러닝은 크게 세 갈래이고, 갈래마다 문제 유형과 대표 알고리즘이 있습니다.
 
-<Figure paper>
-<img src="./img/kickoff/ml-algorithms.png" alt="Machine Learning 아래 지도학습, 비지도학습, 앙상블 기법과 각 알고리즘을 나눈 계층도" />
-</Figure>
+<Branch src="Machine Learning · 머신러닝" :n="3">
+<Card sm acc k="supervised learning" t="지도학습 · 정답이 있는 데이터">
+
+<p><b>회귀</b> 숫자 예측 · <Chip>Linear</Chip><Chip>Ridge</Chip><Chip>Lasso</Chip><Chip>KNN</Chip><Chip>Decision Tree</Chip><Chip>SVM</Chip><Chip>SGD</Chip></p>
+<p><b>분류</b> 범주 예측 · <Chip>Logistic</Chip><Chip>KNN</Chip><Chip>Decision Tree</Chip><Chip>SVM</Chip><Chip>SGD</Chip><Chip>Naive Bayes</Chip></p>
+
+</Card>
+<Card sm acc k="unsupervised learning" t="비지도학습 · 정답 없이 구조 발견">
+
+<p><b>군집</b> 비슷한 것끼리 묶기 · <Chip color="ok">K-Means</Chip><Chip color="ok">DBSCAN</Chip><Chip color="ok">Hierarchical</Chip></p>
+<p><b>차원 축소</b> 변수 줄이기 · <Chip color="ok">PCA</Chip><Chip color="ok">t-SNE</Chip></p>
+
+</Card>
+<Card sm acc k="ensemble methods" t="앙상블 · 여러 모델을 합치기">
+
+<p><b>Voting</b> 투표로 결정 · <Chip color="ai">Hard</Chip><Chip color="ai">Soft</Chip></p>
+<p><b>Bagging</b> 병렬로 학습해 평균 · <Chip color="ai">Random Forest</Chip></p>
+<p><b>Boosting</b> 앞 모델의 오차를 보완 · <Chip color="ai">XGBoost</Chip><Chip color="ai">LightGBM</Chip><Chip color="ai">CatBoost</Chip></p>
+
+</Card>
+</Branch>
 
 ---
 part: 2
@@ -507,18 +545,3 @@ eyebrow: 당부의 말 · 07 / 07
 ---
 
 # 지각, 결석, 조퇴로 인한<br>훈련 공백은 본인의 몫입니다.
-
----
-eyebrow: communication
----
-
-# **Communication**
-
-<Grid cols="2" gap="80">
-<Figure h="400" caption="단톡방">
-<img src="./img/kickoff/qr-group-chat.png" alt="단톡방 입장 QR 코드" />
-</Figure>
-<Figure h="400" caption="1:1 톡방">
-<img src="./img/kickoff/qr-direct-chat.png" alt="1:1 톡방 입장 QR 코드" />
-</Figure>
-</Grid>
