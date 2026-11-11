@@ -89,8 +89,22 @@ function markPlaceholders() {
     }
   }
 }
-onMounted(markPlaceholders)
-onUpdated(markPlaceholders)
+// 프롬프트 안에 붙여 넣은 터미널 표(+---+ · | … | 로 시작하고 끝나는 줄)는 칸이 맞도록 고정폭 글꼴로 그린다.
+// "| 순서 | 절 | 표로" 같은 출력 형식 줄은 | 로 끝나지 않아 대상이 아니다.
+// 표 줄은 블록으로 그려 줄 간격을 좁힌다. 블록 뒤의 줄바꿈 글자는 빈 줄이 되므로 지운다(innerText 가 블록 사이에 줄바꿈을 넣어 복사 결과는 같다).
+const TERM = /^\s*[+|].*[+|]\s*$/
+function markTerminal() {
+  if (kind.value !== 'prompt' || !box.value) return
+  for (const line of box.value.querySelectorAll('.line')) {
+    if (!TERM.test(line.textContent ?? '')) continue
+    line.classList.add('term')
+    const next = line.nextSibling
+    if (next?.nodeType === Node.TEXT_NODE && next.textContent === '\n') next.remove()
+  }
+}
+function markAll() { markPlaceholders(); markTerminal() }
+onMounted(markAll)
+onUpdated(markAll)
 </script>
 
 <template>
@@ -139,6 +153,7 @@ onUpdated(markPlaceholders)
 .prompt-body :deep(code), .prompt-body :deep(.line) { font-family: "Pretendard Variable", Pretendard, sans-serif !important; font-size: 1rem; line-height: 1.6; color: var(--text) !important; white-space: pre-wrap; word-break: keep-all; overflow-wrap: anywhere; }
 .prompt-body :deep(span) { color: var(--text) !important; }
 .prompt-body :deep(.ph) { color: var(--yellow) !important; font-weight: 800; }   /* 치환 자리 {...} */
+.prompt-body :deep(.line.term) { font-family: "JetBrains Mono", Consolas, "Apple SD Gothic Neo", monospace !important; font-size: 0.66rem; line-height: 1.3; white-space: pre; display: block; font-variant-ligatures: none; }   /* 터미널 표 줄 */
 /* 상자 바탕이 밝은 테마에서도 밝으므로 Shiki 색(어두운 바탕용)을 테마 색으로 바꿔 강조한다: 제목·함수 / 연산자·키워드 / 문자열 / 목록 기호 / 주석 */
 .prompt-body :deep(span[style*="#91CBFF" i]) { color: var(--py) !important; }
 .prompt-body :deep(span[style*="#FF9492" i]) { color: var(--danger) !important; }

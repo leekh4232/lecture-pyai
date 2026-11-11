@@ -49,13 +49,14 @@ def render_table(b):
     for i in range(0,n,per):
         part='\n'.join([h,sep]+rows[i:i+per]); res.append((h_table(part),part))
     return res
-files={re.match(r'Lv\d-(\d+)-',unicodedata.normalize("NFC",f)).group(1):f for f in os.listdir(SRC) if f.endswith(".md")}
+files={re.match(r'Lv\d-([A-Z0-9]+)-',unicodedata.normalize("NFC",f)).group(1):f for f in os.listdir(SRC) if f.endswith(".md") and re.match(r'Lv\d-',unicodedata.normalize("NFC",f))}
 out=[]; report=[]
 for idx,num in enumerate(ORDER):
     pn=FIRST_PN+idx; sec=FIRST_SEC+idx; tag=f"#{sec:02d}"
     s=open(os.path.join(SRC,files[num]),encoding="utf-8").read()
     title=re.match(r'# \[Lv\.(\d)\] (.*)',s); lv,name=title.group(1),title.group(2).strip()
-    url=re.search(r'- 링크: (\S+)',s).group(1)
+    m_url=re.search(r'- 링크: (https?://\S+)',s); url=m_url.group(1) if m_url else ''
+    custom=not num.isdigit()   # L05P1 처럼 직접 만든 문제
     secs={m.group(1):m.group(2) for m in re.finditer(r'^## (\S+)\n(.*?)(?=^## |\Z)',s,flags=re.S|re.M)}
     assert not re.search(r'^#{3,} ',s,flags=re.M),num
     desc=blocks(secs.get('테이블','')); prob=blocks(secs['문제']); ex=blocks(secs.get('예시',''))
@@ -63,14 +64,22 @@ for idx,num in enumerate(ORDER):
     drop=lambda bs:[(k,b) for k,b in bs if not b.startswith('본 문제는')]
     desc,prob,ex=drop(desc),drop(prob),drop(ex)
     if not desc:  # 문제 절 안에 구조표가 있음
-        ti=[i for i,(k,_) in enumerate(prob) if k=='table'][0]
+        # 구조표(머리행이 NAME | TYPE 또는 Column name)가 여러 개면 마지막 구조표까지 테이블 설명으로 본다
+        isstruct=lambda b: re.match(r'\|\s*(NAME|Column name)\s*\|\s*TYPE',b,flags=re.I) is not None
+        st=[i for i,(k,b) in enumerate(prob) if k=='table' and isstruct(b)]
+        ti=st[-1] if st else [i for i,(k,_) in enumerate(prob) if k=='table'][0]
         desc=prob[:ti+1]; prob=prob[ti+1:]
     if not ex:    # 예시 절이 없으면 결과 표부터 예시로 넘김
         ti=[i for i,(k,_) in enumerate(prob) if k=='table'][0]
         ex=prob[ti:]; prob=prob[:ti]
         k,last=prob[-1]; m=re.match(r'(.*작성해주세요\.)\s*(SQL을 실행하면.*)$',last,flags=re.S)
         if m: prob[-1]=(k,m.group(1)); ex=[('p',m.group(2))]+ex
-    struct=[b for k,b in desc if k=='table']; assert len(struct)==1,num
+    struct=[b for k,b in desc if k=='table']; assert struct,num
+    # 테이블이 여러 개(JOIN 문제)면 테이블마다 앞의 설명 문단과 묶어 나란히 둔다
+    groups=[]; buf=[]
+    for k,b in desc:
+        if k=='table': groups.append((buf,b)); buf=[]
+        else: buf.append(b)
     left=[b for k,b in desc if k!='table']
     task=' '.join(b.replace('\n',' ') for k,b in prob if k!='table'); assert all(k!='table' for k,_ in prob),num
     hl=sum(h_p(b,HALF) for b in left); hr=h_table(struct[0],HALF)
@@ -79,10 +88,21 @@ for idx,num in enumerate(ORDER):
     chips=False; est-=50; tight=est>655
     page=("---\nclass: tight\n---\n\n" if tight else "---\n\n")+f"## {tag}. 문제 {pn} — {name}\n\n"
     if chips: page+=f'<p><Chip color="py">Level {lv}</Chip> <Chip kind="outline" color="py">프로그래머스 {num}</Chip> {url}</p>\n\n'
-    page+='<Grid cols="2" align="start">\n<div>\n\n'+'\n\n'.join(left)+'\n\n</div>\n<div>\n\n'+struct[0]+'\n\n</div>\n</Grid>\n\n'
-    tagattr='' if chips else f' tag="Level {lv} · 프로그래머스 {num}"'
+    if len(struct)==1:
+        page+='<Grid cols="2" align="start">\n<div>\n\n'+'\n\n'.join(left)+'\n\n</div>\n<div>\n\n'+struct[0]+'\n\n</div>\n</Grid>\n\n'
+    else:
+        # 테이블이 여러 개면 한 화면에 들어가지 않는다: 문제 쪽에는 설명 문단과 문제 상자만 두고,
+        # 바로 뒤 「테이블 구조」 쪽에 구조표를 테이블 이름과 함께 나란히 둔다
+        page+='\n\n'.join(left)+'\n\n'
+        names=[]
+        for ps,t in groups:
+            m=re.search(r'`([A-Z][A-Z0-9_]+)`',' '.join(ps)); names.append(m.group(1) if m else '')
+        struct_page=f"---\n\n### {tag}-1. 테이블 구조\n\n"+f'<Grid cols="{len(groups)}" align="start">\n'+''.join(f'<div>\n\n<div class="kicker">{n}</div>\n\n{t}\n\n</div>\n' for n,(ps,t) in zip(names,groups))+'</Grid>\n\n'
+    tagattr='' if chips else (f' tag="직접 만든 문제"' if custom else f' tag="Level {lv} · 프로그래머스 {num}"')
     page+=f'<Callout kind="plain" color="py" icon="📝" title="문제"{tagattr}>\n\n{task}\n\n</Callout>\n\n'
     out.append(page); report.append((tag,'문제',est,'tight' if tight else ''))
+    off=0
+    if len(struct)>1: out.append(struct_page); report.append((f"{tag}-1",'테이블 구조',0,'')); off=1
     # 예시 쪽
     pieces=[]
     for k,b in ex:
@@ -100,7 +120,8 @@ for idx,num in enumerate(ORDER):
     clean=[([x[1] for x in pg],sum(x[0] for x in pg)) for pg in pages]
     for j,(mds,hh) in enumerate(clean,1):
         t='입출력 예시' if len(clean)==1 else f'입출력 예시 ({j})'
-        out.append(f"---\n\n### {tag}-{j}. {t}\n\n"+'\n\n'.join(mds)+'\n\n'); report.append((f"{tag}-{j}",t,142+hh,''))
-open(OUT,"w",encoding="utf-8").write(''.join(out))
+        out.append(f"---\n\n### {tag}-{j+off}. {t}\n\n"+'\n\n'.join(mds)+'\n\n'); report.append((f"{tag}-{j+off}",t,142+hh,''))
+# Slidev 코드 강조기에 없는 언어(dbml 등)는 쪽 전체를 깨뜨리므로 text 로 바꾼다
+open(OUT,"w",encoding="utf-8").write(re.sub(r'^```dbml$','```text',''.join(out),flags=re.M))
 for r in report: print(r)
 print("쪽 수:",len(report))
