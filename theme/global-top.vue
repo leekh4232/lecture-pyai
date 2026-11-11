@@ -31,13 +31,15 @@ function shortTitle(raw: string) {
 // 표지(1쪽)와 프런트매터 hideInToc: true 인 슬라이드(종료 페이지 등)는 목록에 넣지 않는다
 const items = computed(() =>
   slides.value
-    .map(s => ({ no: s.no, title: s.no === 1 || s.meta?.slide?.frontmatter?.hideInToc ? '' : shortTitle(s.meta?.slide?.title ?? ''), sub: (s.meta?.slide?.level ?? 2) >= 3 }))
+    .map(s => ({ no: s.no, title: s.no === 1 || s.meta?.slide?.frontmatter?.hideInToc ? '' : shortTitle(s.meta?.slide?.title ?? ''), sub: (s.meta?.slide?.level ?? 2) >= 3, sec: (s.meta?.slide?.level ?? 2) === 1 }))
     .filter(s => s.title),
 )
 // ---- ### 항목 접기: 바로 위 ## 항목(parent) 아래로 묶고, 펼친 묶음만 보인다 ----
 const tocItems = computed(() => {
   let parent = 0
-  const list = items.value.map(it => { if (!it.sub) parent = it.no; return { ...it, parent } })
+  // 간지(# 제목 슬라이드)가 나온 뒤의 ## · ### 항목은 간지보다 한 단계 들여 쓴다. 간지가 없는 덱은 그대로다
+  let afterSec = false
+  const list = items.value.map(it => { if (!it.sub) parent = it.no; if (it.sec) afterSec = true; return { ...it, parent, inSec: afterSec && !it.sec } })
   const kids = new Set(list.filter(it => it.sub).map(it => it.parent))
   return list.map(it => ({ ...it, hasKids: kids.has(it.no) }))
 })
@@ -317,7 +319,7 @@ onUnmounted(() => {
       <template v-for="it in tocItems" :key="it.no">
         <li
           v-if="!it.sub || openGroup === it.parent"
-          :class="{ current: it.no === currentPage || (it.no === hiddenCurParent), done: it.no < currentPage, sub: it.sub }"
+          :class="{ current: it.no === currentPage || (it.no === hiddenCurParent), done: it.no < currentPage, sub: it.sub, 'in-sec': it.inSec }"
           @click="pick(it.no)"
         >
           <span class="txt" :title="it.title">{{ it.title }}</span>
@@ -421,6 +423,8 @@ onUnmounted(() => {
 }
 .toc-list li:hover { background: rgba(10,127,194,.08); }
 .toc-list li.sub { padding-left: 24px; }   /* ### 슬라이드: 한 단계 들여쓰기 */
+.toc-list li.in-sec { padding-left: 24px; }   /* 간지 아래의 ## 슬라이드: 간지보다 한 단계 들여쓰기 */
+.toc-list li.in-sec.sub { padding-left: 40px; }   /* 간지 아래의 ### 슬라이드: 두 단계 */
 .toc-list li.sub .txt { font-size: .93em; }
 .toc-list li .caret {
   margin-left: auto; flex: 0 0 auto; width: 20px; height: 20px; border: none; background: none; padding: 0;

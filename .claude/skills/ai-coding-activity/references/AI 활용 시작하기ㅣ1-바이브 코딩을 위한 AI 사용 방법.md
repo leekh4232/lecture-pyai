@@ -1,0 +1,409 @@
+---
+theme: ./theme
+manuscript: true
+colorMode: dark
+fontScale: 1
+title: AI 활용 시작하기 · 바이브 코딩을 위한 AI 사용 방법
+layout: cover
+---
+
+# 바이브 코딩을 위한 AI 사용 방법
+
+AI 지침 설정과 올바른 프롬프트 작성 방법
+
+<p class="sub">AI 활용 시작하기 (1) / ITWILL - 주영아·이광호 강사</p>
+
+---
+
+## #01. 바이브 코딩(Vibe Coding)이란
+
+<Callout kind="eli5" title="유래">
+
+- 2025년 2월 안드레이 카파시(Andrej Karpathy)의 글에서 시작.     
+  - "분위기(vibe)에 몸을 맡기고, 코드가 있다는 사실조차 잊는다"    
+- 하고 싶은 것을 말로 설명하고, AI가 만든 결과를 보며 다시 말로 고치는 방식.
+
+</Callout>
+
+<Grid cols="2" align="start">
+<div class="card ok">
+<h3>좋아지는 것</h3>
+
+- 아이디어에서 동작하는 결과까지의 시간 단축
+- 문법 · 라이브러리 이름 대신 "무엇을 만들지"에 집중
+- 처음 보는 언어 · 도구도 바로 시도 가능
+
+</div>
+<div class="card ai">
+<h3>무너지는 곳</h3>
+
+- 왜 돌아가는지 모름 → 고장 나면 못 고침
+- 설명 못 하는 코드 → 발표 · 질의응답에서 드러남
+- 그럴듯하면 검증 생략 → 틀린 분석이 그대로 나감
+
+</div>
+</Grid>
+
+<Callout kind="real" title="권장하는 자세">
+바이브 코딩은 도구이지 목표가 아님. 익히는 단계에서는 <b>코드는 내가, AI는 방향 · 해석 · 오류 진단</b>. 설명할 수 있게 된 뒤에 맡기는 범위를 넓힘
+</Callout>
+
+---
+
+## #02. AI의 세 갈래 — 생성형 · 에이전틱 · 피지컬
+
+![생성형 · 에이전틱 · 피지컬 AI가 각각 입력을 받아 무엇을 하고, 사람은 어떤 역할을 하는지 비교한 그림](./Images/ai-three-types.svg)
+
+---
+layout: cards
+---
+
+## #03. AI 유형별 특징
+
+<div class="py">
+
+#### 생성형 AI — 질문하고 답을 받는다
+
+- **언제**: 개념을 이해하려고 질문하고 답을 얻을 때
+- **입력**: 질문(프롬프트). 맥락 · 상황 · 제약을 적어서
+- **출력**: 글 · 코드 · 이미지. 어디까지나 초안
+- **사람의 역할**: 받은 답을 직접 옮겨 쓰고, 돌려서 확인
+- **종류**: ChatGPT · Claude · Gemini 채팅
+
+</div>
+<div class="ok">
+
+#### 에이전틱 AI — 맡기고 결과를 검토한다
+
+- **언제**: 작업을 맡기고 결과물을 만들어야 할 때
+- **입력**: 목표와 규칙(`CLAUDE.md`). 작게 나눠서
+- **출력**: 끝난 작업 · 고친 파일. 계획 → 도구 사용 → 실행을 스스로 반복
+- **사람의 역할**: 방향을 정하고, 바뀐 내용(diff)을 읽고 승인
+- **종류**: Claude Code · Codex · Cursor 에이전트
+
+</div>
+<div class="ai">
+
+#### 피지컬 AI — 현실에서 움직이게 한다
+
+- **언제**: 현실의 물건을 옮기고 다루는 일을 맡길 때
+- **입력**: 작업 환경. 센서 · 카메라가 보는 현장
+- **출력**: 로봇의 움직임. 상황을 판단해 몸으로 수행
+- **사람의 역할**: 작업 환경과 안전을 관리
+- **종류** 자율주행차 · 휴머노이드 · 물류 로봇
+
+</div>
+
+---
+
+## #04. 생성형 AI와 에이전틱 AI의 차이
+
+<div class="fill-img"><img src="./Images/agentic-vs-chat.svg" alt="채팅형 생성형 AI와 에이전틱 AI로 코딩할 때 사람이 하는 일 비교" /></div>
+
+---
+
+## #05. 먼저, 생성형 AI부터 올바르게
+
+<Core color="ai">AI를 올바르게 사용하기 위해서는 먼저 채팅창에서 <span class="hl ok">잘 묻고 · 생성된 결과를 확인하는</span> 습관을 갖추는 것이 중요하다. </Core>
+
+<Timeline color="pastel">
+<li class="now"><b>1단계 · 지금</b>생성형 AI — ChatGPT 채팅에서 묻고 답 받기</li>
+<li><b>2단계 · 다음</b>에이전틱 AI — 맡기고 결과를 검토</li>
+</Timeline>
+
+<span class="kicker">왜 생성형 AI부터?</span>
+
+<Grid cols="3" gap="12">
+<Tile kind="soft" color="py" tag="기본기가 같다" title="묻기 · 받기 · 확인">에이전트에게 맡길 때도 그대로 쓰는 세 동작을 채팅창에서 먼저 몸에 익힌다</Tile>
+<Tile kind="soft" color="ok" tag="결과가 바로 보인다" title="질문 하나, 답 하나">어디가 틀렸는지 즉시 드러나 AI를 가려 읽는 판단력이 빨리 는다</Tile>
+<Tile kind="soft" color="warn" tag="실수 비용이 작다" title="읽고 버리면 끝">에이전트는 파일을 직접 고치므로 결과를 걸러낼 눈이 먼저 필요하다</Tile>
+</Grid>
+
+---
+
+### #05-1. ChatGPT부터 시작하는 이유
+
+목표는 에이전틱 AI(Claude Code). 지침과 프롬프트 쓰는 법은 **돈과 준비물 없이 바로 시작할 수 있는 ChatGPT에서 먼저** 익힘
+
+| | ChatGPT (채팅) | Gemini (채팅) | Claude Code (에이전트) |
+|:--|:--|:--|:--|
+| 가격 | 무료로 시작<br/>(유료 Go $8 · Plus $20 / 월) | 무료로 시작<br/>(유료 AI Plus · AI Pro $19.99 / 월) | Claude Pro $20/월<br/>(Max $100 · $200) |
+| 시작 | 브라우저 · 앱 로그인으로 끝 | 구글 계정으로 로그인하면 끝 | 설치 후 터미널 · VS Code 에서 프로젝트 폴더 열기 |
+| 잘하는 작업 | 개념 설명 · 코드 조각 작성 · 에러 메시지 해석 · 글 다듬기 | 구글 검색 기반 최신 정보 요약 · 드라이브 문서 · 스프레드시트 · 유튜브 영상 요약 | 프로젝트 전체를 읽고 여러 파일 고치기 · 실행 → 테스트 → 에러 수정 반복 |
+| 못하는 작업 | 내 프로젝트 폴더 읽기 · 파일 직접 고치기 · 내 환경에서 실행하기 | 파일 수정 · 실행 (채팅 전용) · 무료는 가벼운 모델(Flash-Lite)이라 긴 추론이 약함 | 결과가 맞는지 최종 판단 (사람 몫) · 터미널 없이 쓰기 · 무료로 쓰기 |
+
+<span class="small muted">가격은 2026년 10월 미국 달러 기준 · 세금 별도. 사용 전 chatgpt.com/pricing · gemini.google/subscriptions · claude.com/pricing 재확인</span>
+
+---
+
+## #06. 두 영상으로 보는 AI 사용 시 주의할 점
+
+<Grid cols="2" align="start">
+<div>
+
+<div class="kicker">영상 1 · 샌드위치 코딩</div>
+
+<YoutubeCard id="3VG2OgkRJK0" width="100%" height="240" />
+
+<p class="small muted">아이들이 쓴 레시피를 아빠가 글자 그대로 따라 하기 (3분 51초)</p>
+
+<Tile kind="soft" color="py" title="AI는 '내 뜻'이 아니라 '내 말'을 따른다">머릿속 전제는 전달되지 않고, 애매한 말은 그럴듯한 쪽으로 읽힌다.</Tile>
+
+</div>
+<div>
+
+<div class="kicker ai">영상 2 · 토니 스타크의 시간여행 시뮬레이션</div>
+
+<YoutubeCard id="A-nNPoQn6Ok" width="100%" height="240" />
+
+<p class="small muted">토니가 AI 프라이데이에게 모델링을 시키는 장면 (2분 4초)</p>
+
+<Tile kind="soft" color="ai" title="생각은 사람이, 계산은 AI가">아이디어와 방향은 사람 몫. 모르는 영역은 요청도 애매할 수 밖에 없다.</Tile>
+
+</div>
+</Grid>
+
+---
+class: tight
+---
+
+## #07. AI는 내 판단을 돕는 도구 — 세 가지 원칙
+
+<p>두 영상이 말하는 것은 하나. 코드는 <span class="hl py">내가 직접 쓰고</span>, AI에게는 <b>방향 · 해석 · 진단</b>만 묻는다.</p>
+
+<Grid cols="3" gap="12">
+<Tile kind="soft" color="py" tag="① 빠짐없이 적어서 건네기 · 영상 1" title="AI는 '내 뜻'이 아니라 '내 말'을 따른다">맥락 · 상황 · 제약은 머릿속이 아니라 프롬프트에 적는다. 결과가 엉뚱하면 AI를 탓하기 전에 빠진 조건부터 찾는다</Tile>
+<Tile kind="soft" color="ai" tag="② 방향은 내가 정하기 · 영상 2" title="생각은 사람이, 계산은 AI가">무엇을 시도할지는 내가 고르고, AI에게는 갈림길의 판단 기준 · 결과를 읽는 법 · 에러의 원인 후보만 받는다</Tile>
+<Tile kind="soft" color="ok" tag="③ 검증은 내가 하기 · 영상 2" title="AI의 답은 가설이다">직접 돌려 확인하기 전까지는 결과가 아니다. 설명할 수 없는 결과는 내보내지 않는다</Tile>
+</Grid>
+
+<Grid cols="2" gap="12">
+<Tile kind="fill" color="danger" tag="✗ 묻지 않는 것" title="코드 써 줘 · 내 코드 고쳐 줘 · 결론 써 줘">받아 쓰면 배우는 게 없고, 틀려도 알아채지 못한다</Tile>
+<Tile kind="soft" color="ok" tag="○ 대신 이렇게" title="내가 짠 코드야. 어디가 이상한지 힌트만 줘">고치는 손은 내 손. AI는 어디를 볼지만 짚어 준다</Tile>
+</Grid>
+
+<Core color="ok">기준은 하나 — <span class="hl ok">"내가 이걸 설명할 수 있는가?"</span></Core>
+
+---
+
+## #08. 효율적인 AI 사용을 위한 필수 설정
+
+매번 반복되는 요청은 지침으로 한 번만 설정
+
+<Callout kind="eli5" title="AI 지침이란">
+한 번 설정하면 모든 대화에 기본 전제로 작동하는 전역 프롬프트
+</Callout>
+
+<div class="kicker">효율적인 코딩 학습을 위한 AI 기본 지침의 필수 구성요소</div>
+
+<Grid cols="2" align="start">
+<div>
+
+<Steps>
+<li>역할은 방향성 · 해석 · 오류 진단 셋으로 한정</li>
+<li>영역(SQL · 파이썬 · 분석)이 모호하면 나에게 확인 받기</li>
+<li>코드는 어떤 형태로도 출력 금지</li>
+</Steps>
+
+</div>
+<div>
+
+<Steps start="4">
+<li>사실 / 추론 / 추측 구분 표시</li>
+<li>답변 끝에 "내가 확인할 점" 2~3줄 덧붙이기</li>
+</Steps>
+
+</div>
+</Grid>
+
+---
+
+### #08-1. ChatGPT 지침 설정 ① 설정 열기
+
+<Steps>
+<li>왼쪽 아래 내 계정 이름 클릭</li>
+<li>메뉴에서 <b>설정</b> 선택</li>
+</Steps>
+
+<div class="fill-img"><img src="./Images/chatgpt-settings-open.png" alt="ChatGPT 왼쪽 아래 계정 메뉴에서 설정 열기" /></div>
+
+---
+
+### #08-2. ChatGPT 지침 설정 ② 지침 입력
+
+<Steps start="3">
+<li>설정 창 왼쪽에서 <b>개인 맞춤 설정</b> 선택</li>
+<li><b>사용자 지정 지침</b> 칸에 지침 붙여 넣기</li>
+</Steps>
+
+<div class="fill-img"><img src="./Images/chatgpt-custom-instructions.png" alt="ChatGPT 설정의 개인 맞춤 설정에서 사용자 지정 지침 입력" /></div>
+
+---
+
+### #08-3. ChatGPT 지침 설정 ③ 지침 내용
+
+배포 파일 「ChatGPT 지침.md」의 내용을 그대로 사용
+
+| 묶음 | 항목 | 담긴 내용 |
+|:--|:--:|:--|
+| 역할 · 코드 금지 | 1~7 | 조교 역할, 3영역, 코드 출력 · 수정 금지 |
+| 사고 방식 | 8~10 | 근거 먼저, 사실 / 추론 표기, 창작 금지 |
+| 영역별 지침 | 11~22 | 파이썬 · SQL · 데이터 분석 각각의 돕는 방식 |
+| 출력 · 문체 | 23~28 | 표 · 개조식, "내가 확인할 점", 간결한 어투 |
+
+---
+class: dense
+---
+
+## #09. 질문을 잘 던지는 법 — 프롬프트는 마크다운으로
+
+<Prompt title="좋은 예 — 맥락 · 상황 · 질문 · 제약 · 출력 형식을 ## 제목으로 구분" cols="3">
+
+````md
+## 맥락
+SQL을 익히는 중이야. 쿼리는 내가 쓸게.
+
+## 상황
+주문 · 고객 테이블을 조인했더니
+예상보다 행 수가 많아졌어.
+
+## 질문
+원인 후보와, 내가 직접
+확인할 방법을 알려줘.
+
+## 제약
+- 쿼리문은 주지 마
+- 개념과 순서 위주로 정리해
+
+## 출력 형식
+| 원인 후보 | 확인 방법 |
+위 표로 정리해.
+
+마지막에
+"내가 확인할 점" 2~3줄
+````
+
+</Prompt>
+
+<Grid cols="4" gap="12">
+<Tile kind="fill" color="danger" tag="✗ 나쁜 예" title="“이 코드 왜 안 돼? 고쳐줘”">맥락도 제약도 없어 AI가 짐작으로 답한다</Tile>
+<Tile kind="soft" color="py" tag="○ 좋은 점 1" title="지시를 빠뜨리지 않음"><code>##</code> 제목이 경계가 되어 제약 · 출력 형식이 묻히지 않는다</Tile>
+<Tile kind="soft" color="ai" tag="○ 좋은 점 2" title="지시와 자료가 섞이지 않음">코드 · 에러 메시지는 코드 상자에 넣어 지시문과 구별한다</Tile>
+<Tile kind="soft" color="ok" tag="○ 좋은 점 3" title="고쳐 쓰기 쉬움"><code>.md</code>로 저장해 두고 <code>## 상황</code>만 바꿔 재사용한다</Tile>
+</Grid>
+
+---
+
+## #10. AI관련 용어 (1) — 환각(Hallucination)
+
+<Callout kind="eli5" title="환각(Hallucination)">
+<b>AI의 거짓말</b>
+</Callout>
+
+AI가 그럴듯하게 지어낸 것을 사람이 그대로 믿었을 때 생긴 사건들
+
+| 분야 | 사건 | 결과 |
+|:--|:--|:--|
+| 법률 (2023 · 미국) | ChatGPT가 알려 준 판례 6건을 서면에 인용 → 전부 존재하지 않는 판례 | 변호사 · 로펌에 벌금 5,000달러 (Mata v. Avianca) |
+| 고객 상담 (2024 · 캐나다) | 에어캐나다 챗봇이 규정과 다른 조문 할인 안내 | "챗봇의 말도 회사 책임" → 배상 명령 |
+| 코딩 (2025 · 연구) | AI가 추천한 패키지 이름의 약 20%가 존재하지 않음 → 공격자가 그 이름으로 악성 패키지 등록 (slopsquatting) | 확인 없이 설치하면 악성 코드를 직접 실행 |
+
+<Callout kind="warn">
+공통점은 AI가 틀린 것이 아니라 <b>사람이 확인하지 않은 것</b>. 책임은 AI가 아니라 그 답을 쓴 사람에게
+</Callout>
+
+---
+
+### #10-1. Hallucination 대표 사례 — 세종대왕 맥북프로 던짐 사건
+
+2023년 2월, 존재하지 않는 사건을 묻자 ChatGPT가 실록 기록 · 시대 · 관리 이름까지 지어내 답한 일. 환각의 대표 사례로 SNS에 널리 퍼졌다.
+
+<p><Chip color="ai">질문</Chip> 조선왕조실록에도 기록된 세종대왕 맥북프로 던짐 사건에 대해 알려줘.</p>
+
+<Callout kind="plain" color="danger" icon="🤖" title="ChatGPT 답변 전문 (2023년 2월 · GPT-3.5)" class="small">
+
+세종대왕의 맥북프로 던짐 사건은 역사서적인 조선왕조실록에 기록된 일화로, 15세기 조선시대 세종대왕이 새로 개발한 훈민정음(한글)의 초고를 작성하던 중, 문서 작성 중단에 대한 담당자에게 분노하여 맥북 프로와 함께 그를 방으로 던진 사건입니다.
+
+세종대왕은 훈민정음 개발을 위해 열심히 노력하던 중, 한글 문자를 이해하지 못하는 당시의 관료들이 문서 작성을 돕기 위해 임명한 기획관 중 한 명인 최환(崔煥)에게 작성 중단 사실을 듣게 되었습니다. 세종대왕은 이에 분노하여 최환을 부르고, 맥북프로를 함께 들고 그를 방으로 불러들이며 화를 내었습니다. 이후, 세종대왕은 훈민정음의 초고 작성을 다른 담당자에게 넘겨주게 되었습니다.
+
+이 사건은 조선시대의 통치자로서 세종대왕이 어떻게 민족문화를 발전시키기 위해 노력했는지를 보여주는 일화로 유명합니다. 또한, 세종대왕의 열정과 업무처리에 대한 철저한 태도를 보여주는 사례로도 언급하고 있습니다.
+
+</Callout>
+
+<p><Chip kind="outline" color="danger">지어낸 것</Chip> 실록에 있다는 '기록' · 15세기의 맥북프로 · 가공 인물 <b>최환(崔煥)</b>과 '기획관'이라는 직책 · 그럴듯한 교훈까지</p>
+
+<Core color="danger">질문에 거짓 전제가 섞여 있어도 AI는 그 전제 위에서 자신 있게 이야기를 짓는다 — 전제부터 의심할 것.</Core>
+
+---
+
+### #10-2. Hallucination 대표 사례 — 가짜 질병 '빅소니마니아'
+
+2024년 스웨덴 예테보리대 연구진이 가짜 눈질환 정보를 블로그 2건과 프리프린트 논문 2건에 흘리자 이를 학습한 AI들이 실재하는 병처럼 안내했다.
+
+<p><Chip color="ai">질문</Chip> "눈이 따갑고 눈꺼풀이 분홍빛이야. 화면을 오래 봤는데 뭘까?" · "빅소니마니아(bixonimania)가 뭐야?"</p>
+
+<Callout kind="plain" color="danger" icon="🤖" title="AI 답변 (2024년 4월 · Nature 2026년 4월 보도 인용)" class="small">
+
+**Copilot** — "Bixonimania is indeed an intriguing and relatively rare condition." (빅소니마니아는 확실히 흥미롭고 비교적 드문 질환입니다.)
+
+**Gemini** — "Bixonimania is a condition caused by excessive exposure to blue light." (빅소니마니아는 블루라이트에 과도하게 노출되어 생기는 질환입니다.)
+
+**ChatGPT** — 증상을 말하면 결막염 → 알레르기 → "화면을 오래 보셨나요?" → 색소침착 → 빅소니마니아 순으로 좁혀 가며 그 병일 수 있다고 안내했다 (연구진 인터뷰 · 대화 전문은 공개되지 않음)
+
+</Callout>
+
+<p><Chip kind="outline" color="danger">논문에 심어 둔 단서</Chip> 존재하지 않는 대학(Asteria Horizon University, Nova City) · 제1저자 'Lazljiv Izgubljenovic'(= 거짓말쟁이 루저) · 연구비 '반지 원정대 대학 · 은하 삼총사' · 본문에 "이 논문은 전부 지어낸 것"이라고 명시</p>
+
+<Core color="danger"><span class="hl danger">학습 데이터에 심은 잘못된 정보</span>를 AI가 사실처럼 포장해서 알려줬다.</Core>
+
+---
+class: dense
+---
+
+## #11. AI관련 용어 (2) — AI 슬롭(Slop)
+
+<Callout kind="eli5" title="슬롭(slop)">
+<b>AI로 대량 생산된 질 낮은 디지털 콘텐츠</b>
+</Callout>
+
+<Callout kind="warn" title="워크슬롭(workslop)">
+좋아 보이지만 과제를 진전시킬 알맹이가 없는 AI 생성 업무 결과물
+</Callout>
+
+<Grid cols="3" align="start">
+<div class="card py">
+<h3>흔한 형태</h3>
+
+- SNS 피드의 AI 이미지 · 영상
+- 검색 상위의 AI 블로그 글
+- AI로 찍어낸 전자책 · 음악
+
+</div>
+<div class="card ai">
+<h3>확산 원인</h3>
+
+- 만드는 비용이 0에 가까움
+- 품질 대신 양과 클릭 수로 승부
+- 알고리즘이 요청 없이도 밀어 줌
+
+</div>
+<div class="card ok">
+<h3>부작용</h3>
+
+- 진짜 정보가 묻힘
+- 검색과 AI가 슬롭을 다시 학습
+- 읽는 사람의 시간과 신뢰 소모
+
+</div>
+</Grid>
+
+---
+layout: cover
+hideInToc: true
+---
+
+# 감사합니다
+
+질문과 토론 환영
+
+<p class="sub">AI 활용 시작하기 (1) / ITWILL - 주영아·이광호 강사</p>
