@@ -526,4 +526,4 @@ hideInToc: true
 
 질문과 토론 환영
 
-<p class="sub">AI 활용 시작하기 3 · ITWILL · {teacher} 강사</p>
+<p class="sub">AI 활용 시작하기 3 · ITWILL · 주영아·이광호 강사</p>

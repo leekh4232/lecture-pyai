@@ -1,4 +1,4 @@
-DECK = "[LAB-03] SQL 함수ㅣ6-AI와 함께 문제 풀기(AI 학습활동)"
+DECK = "[LAB-03] SQL 함수ㅣ6-AI 활용 학습 활동"
 UNIT = "함수"
 RANGE = "SELECT · WHERE · 검색 연산자 · ORDER BY · LIMIT · SQL 함수(문자열 · 숫자 · 날짜 · 형변환 · 조건 · 집계) 범위 안에서만"
 NOTES = ["정답 SQL은 LAB-03까지 배운 범위(SELECT · WHERE · ORDER BY · LIMIT · SQL 함수) 안의 문법만 씀. `GROUP BY`는 아직 배우지 않음"]

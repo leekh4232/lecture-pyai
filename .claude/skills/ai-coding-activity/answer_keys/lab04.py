@@ -1,4 +1,4 @@
-DECK = "[LAB-04] 그룹조회ㅣ3-AI와 함께 문제 풀기(AI 학습활동)"
+DECK = "[LAB-04] 그룹조회ㅣ3-AI 활용 학습 활동"
 UNIT = "그룹 조회"
 RANGE = "SELECT · WHERE · ORDER BY · LIMIT · SQL 함수 · GROUP BY · HAVING · DISTINCT · 윈도우 함수 범위 안에서만"
 NOTES = [

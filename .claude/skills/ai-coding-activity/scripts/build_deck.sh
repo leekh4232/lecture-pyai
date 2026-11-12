@@ -10,11 +10,11 @@ theme: ./theme
 manuscript: true
 colorMode: dark
 fontScale: 1
-title: 데이터베이스 · AI와 함께 문제 풀기
+title: 데이터베이스 · AI 활용 학습 활동
 layout: cover
 ---
 
-# AI와 함께 문제 풀기
+# AI 활용 학습 활동
 
 코딩 테스트 문제의 풀이 과정을 AI의 도움으로 찾아가기
 

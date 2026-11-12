@@ -1,4 +1,4 @@
-DECK = "[LAB-06] 고급 데이터 조회ㅣ6-AI와 함께 문제 풀기(AI 학습활동)"
+DECK = "[LAB-06] 고급 데이터 조회ㅣ6-AI 활용 학습 활동"
 UNIT = "고급 데이터 조회"
 RANGE = "SELECT · WHERE · ORDER BY · LIMIT · SQL 함수 · GROUP BY · HAVING · JOIN · UNION · 서브쿼리 범위 안에서만"
 NOTES = [

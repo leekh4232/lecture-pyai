@@ -61,7 +61,7 @@ def structure(tables):
 P = cfg["P"]
 o = []
 w = o.append
-w(f"# {cfg['DECK'].split('(')[0].strip()} 모범답안\n")
+w(f"# {cfg['DECK'].split('(')[0].strip()} 풀이\n")
 w(f"「{cfg['DECK']}」 덱의 문제 {len(P)}개에 대한 정답 SQL과, 두 템플릿(방향 묻기 · 원인 묻기)을 빈칸 없이 채운 프롬프트를 담았다.\n")
 
 for n, p in enumerate(P, 1):
