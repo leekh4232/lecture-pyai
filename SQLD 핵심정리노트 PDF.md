@@ -1,8 +1,5 @@
 # SQLD 핵심정리노트
 
-- 원본: SQLD 핵심정리노트 PDF
-- 보완: 제목에 (보완)이 붙은 항목은 https://summer-record.tistory.com/162 (CC BY-NC-ND) 의 내용으로 채움
-
 ## 1과목 1장. 데이터 모델링의 이해
 
 ### 핵심 요약
